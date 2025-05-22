@@ -11,8 +11,9 @@
     "check-types": "tsc --noEmit"
   },
   "dependencies": {
-    "@repo/ui": "workspace:*",
     "@repo/db": "workspace:*",
+    "@repo/ui": "workspace:*",
+    "better-auth": "^1.2.8",
     "next": "^15.2.4",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
