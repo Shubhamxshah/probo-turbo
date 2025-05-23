@@ -3,6 +3,20 @@
 import { useEffect, useRef, useState } from 'react';
 import { Button } from '@repo/ui/components/base/button';
 import { cn } from '@repo/ui/lib/utils';
+import  { authClient } from "@/lib/auth-client"
+
+const response = await authClient.phoneNumber.sendOtp({
+  phoneNumber: "+1234567890", 
+}).then(() =>   console.log("otp sent"))
+
+console.log(response)
+
+const verify = await authClient.phoneNumber.verify({
+  phoneNumber: "+1234567890", 
+  code: "456789" 
+}).then(() => console.log("otp verify function called"))
+
+console.log(verify)
 
 export default function DemoPage() {
   return (
