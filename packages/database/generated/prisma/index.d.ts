@@ -1199,6 +1199,8 @@ export namespace Prisma {
     image: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    phoneNumber: string | null
+    phoneNumberVerified: boolean | null
   }
 
   export type UserMaxAggregateOutputType = {
@@ -1209,6 +1211,8 @@ export namespace Prisma {
     image: string | null
     createdAt: Date | null
     updatedAt: Date | null
+    phoneNumber: string | null
+    phoneNumberVerified: boolean | null
   }
 
   export type UserCountAggregateOutputType = {
@@ -1219,6 +1223,8 @@ export namespace Prisma {
     image: number
     createdAt: number
     updatedAt: number
+    phoneNumber: number
+    phoneNumberVerified: number
     _all: number
   }
 
@@ -1231,6 +1237,8 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
+    phoneNumber?: true
+    phoneNumberVerified?: true
   }
 
   export type UserMaxAggregateInputType = {
@@ -1241,6 +1249,8 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
+    phoneNumber?: true
+    phoneNumberVerified?: true
   }
 
   export type UserCountAggregateInputType = {
@@ -1251,6 +1261,8 @@ export namespace Prisma {
     image?: true
     createdAt?: true
     updatedAt?: true
+    phoneNumber?: true
+    phoneNumberVerified?: true
     _all?: true
   }
 
@@ -1334,6 +1346,8 @@ export namespace Prisma {
     image: string | null
     createdAt: Date
     updatedAt: Date
+    phoneNumber: string | null
+    phoneNumberVerified: boolean | null
     _count: UserCountAggregateOutputType | null
     _min: UserMinAggregateOutputType | null
     _max: UserMaxAggregateOutputType | null
@@ -1361,6 +1375,8 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    phoneNumber?: boolean
+    phoneNumberVerified?: boolean
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -1374,6 +1390,8 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    phoneNumber?: boolean
+    phoneNumberVerified?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -1384,6 +1402,8 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    phoneNumber?: boolean
+    phoneNumberVerified?: boolean
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -1394,9 +1414,11 @@ export namespace Prisma {
     image?: boolean
     createdAt?: boolean
     updatedAt?: boolean
+    phoneNumber?: boolean
+    phoneNumberVerified?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "emailVerified" | "image" | "createdAt" | "updatedAt" | "phoneNumber" | "phoneNumberVerified", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     sessions?: boolean | User$sessionsArgs<ExtArgs>
     accounts?: boolean | User$accountsArgs<ExtArgs>
@@ -1419,6 +1441,8 @@ export namespace Prisma {
       image: string | null
       createdAt: Date
       updatedAt: Date
+      phoneNumber: string | null
+      phoneNumberVerified: boolean | null
     }, ExtArgs["result"]["user"]>
     composites: {}
   }
@@ -1851,6 +1875,8 @@ export namespace Prisma {
     readonly image: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
+    readonly phoneNumber: FieldRef<"User", 'String'>
+    readonly phoneNumberVerified: FieldRef<"User", 'Boolean'>
   }
     
 
@@ -5593,7 +5619,9 @@ export namespace Prisma {
     emailVerified: 'emailVerified',
     image: 'image',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
+    updatedAt: 'updatedAt',
+    phoneNumber: 'phoneNumber',
+    phoneNumberVerified: 'phoneNumberVerified'
   };
 
   export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
@@ -5736,6 +5764,8 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    phoneNumber?: StringNullableFilter<"User"> | string | null
+    phoneNumberVerified?: BoolNullableFilter<"User"> | boolean | null
     sessions?: SessionListRelationFilter
     accounts?: AccountListRelationFilter
   }
@@ -5748,6 +5778,8 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    phoneNumberVerified?: SortOrderInput | SortOrder
     sessions?: SessionOrderByRelationAggregateInput
     accounts?: AccountOrderByRelationAggregateInput
   }
@@ -5763,6 +5795,8 @@ export namespace Prisma {
     image?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
+    phoneNumber?: StringNullableFilter<"User"> | string | null
+    phoneNumberVerified?: BoolNullableFilter<"User"> | boolean | null
     sessions?: SessionListRelationFilter
     accounts?: AccountListRelationFilter
   }, "id" | "email">
@@ -5775,6 +5809,8 @@ export namespace Prisma {
     image?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    phoneNumber?: SortOrderInput | SortOrder
+    phoneNumberVerified?: SortOrderInput | SortOrder
     _count?: UserCountOrderByAggregateInput
     _max?: UserMaxOrderByAggregateInput
     _min?: UserMinOrderByAggregateInput
@@ -5791,6 +5827,8 @@ export namespace Prisma {
     image?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
+    phoneNumber?: StringNullableWithAggregatesFilter<"User"> | string | null
+    phoneNumberVerified?: BoolNullableWithAggregatesFilter<"User"> | boolean | null
   }
 
   export type SessionWhereInput = {
@@ -6023,6 +6061,8 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
+    phoneNumber?: string | null
+    phoneNumberVerified?: boolean | null
     sessions?: SessionCreateNestedManyWithoutUserInput
     accounts?: AccountCreateNestedManyWithoutUserInput
   }
@@ -6035,6 +6075,8 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
+    phoneNumber?: string | null
+    phoneNumberVerified?: boolean | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
   }
@@ -6047,6 +6089,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumberVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
     accounts?: AccountUpdateManyWithoutUserNestedInput
   }
@@ -6059,6 +6103,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumberVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
   }
@@ -6071,6 +6117,8 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
+    phoneNumber?: string | null
+    phoneNumberVerified?: boolean | null
   }
 
   export type UserUpdateManyMutationInput = {
@@ -6081,6 +6129,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumberVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type UserUncheckedUpdateManyInput = {
@@ -6091,6 +6141,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumberVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
   }
 
   export type SessionCreateInput = {
@@ -6389,6 +6441,11 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type BoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type SessionListRelationFilter = {
     every?: SessionWhereInput
     some?: SessionWhereInput
@@ -6422,6 +6479,8 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    phoneNumber?: SortOrder
+    phoneNumberVerified?: SortOrder
   }
 
   export type UserMaxOrderByAggregateInput = {
@@ -6432,6 +6491,8 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    phoneNumber?: SortOrder
+    phoneNumberVerified?: SortOrder
   }
 
   export type UserMinOrderByAggregateInput = {
@@ -6442,6 +6503,8 @@ export namespace Prisma {
     image?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
+    phoneNumber?: SortOrder
+    phoneNumberVerified?: SortOrder
   }
 
   export type StringWithAggregatesFilter<$PrismaModel = never> = {
@@ -6500,6 +6563,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type BoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type UserScalarRelationFilter = {
@@ -6684,6 +6755,10 @@ export namespace Prisma {
     set?: Date | string
   }
 
+  export type NullableBoolFieldUpdateOperationsInput = {
+    set?: boolean | null
+  }
+
   export type SessionUpdateManyWithoutUserNestedInput = {
     create?: XOR<SessionCreateWithoutUserInput, SessionUncheckedCreateWithoutUserInput> | SessionCreateWithoutUserInput[] | SessionUncheckedCreateWithoutUserInput[]
     connectOrCreate?: SessionCreateOrConnectWithoutUserInput | SessionCreateOrConnectWithoutUserInput[]
@@ -6816,6 +6891,11 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
+  export type NestedBoolNullableFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
   export type NestedStringWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel>
     in?: string[] | ListStringFieldRefInput<$PrismaModel>
@@ -6892,6 +6972,14 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
+  }
+
+  export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
+    not?: NestedBoolNullableWithAggregatesFilter<$PrismaModel> | boolean | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedBoolNullableFilter<$PrismaModel>
+    _max?: NestedBoolNullableFilter<$PrismaModel>
   }
 
   export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
@@ -7062,6 +7150,8 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
+    phoneNumber?: string | null
+    phoneNumberVerified?: boolean | null
     accounts?: AccountCreateNestedManyWithoutUserInput
   }
 
@@ -7073,6 +7163,8 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
+    phoneNumber?: string | null
+    phoneNumberVerified?: boolean | null
     accounts?: AccountUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -7100,6 +7192,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumberVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     accounts?: AccountUpdateManyWithoutUserNestedInput
   }
 
@@ -7111,6 +7205,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumberVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     accounts?: AccountUncheckedUpdateManyWithoutUserNestedInput
   }
 
@@ -7122,6 +7218,8 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
+    phoneNumber?: string | null
+    phoneNumberVerified?: boolean | null
     sessions?: SessionCreateNestedManyWithoutUserInput
   }
 
@@ -7133,6 +7231,8 @@ export namespace Prisma {
     image?: string | null
     createdAt: Date | string
     updatedAt: Date | string
+    phoneNumber?: string | null
+    phoneNumberVerified?: boolean | null
     sessions?: SessionUncheckedCreateNestedManyWithoutUserInput
   }
 
@@ -7160,6 +7260,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumberVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     sessions?: SessionUpdateManyWithoutUserNestedInput
   }
 
@@ -7171,6 +7273,8 @@ export namespace Prisma {
     image?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    phoneNumber?: NullableStringFieldUpdateOperationsInput | string | null
+    phoneNumberVerified?: NullableBoolFieldUpdateOperationsInput | boolean | null
     sessions?: SessionUncheckedUpdateManyWithoutUserNestedInput
   }
 

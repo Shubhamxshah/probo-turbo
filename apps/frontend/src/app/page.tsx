@@ -1,322 +1,186 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { authClient } from '@/lib/auth-client';
+import { useState } from 'react';
+import { Input } from '@repo/ui/components/base/input';
 import { Button } from '@repo/ui/components/base/button';
-import { cn } from '@repo/ui/lib/utils';
-import  { authClient } from "@/lib/auth-client"
+import { useRouter } from 'next/navigation';
 
-const response = await authClient.phoneNumber.sendOtp({
-  phoneNumber: "+1234567890", 
-}).then(() =>   console.log("otp sent"))
 
-console.log(response)
+export default function AuthLanding() {
+  const router = useRouter();
+  const [showPhoneInput, setShowPhoneInput] = useState(false);
+  const [showOtpInput, setShowOtpInput] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState('');
+  const [otp, setOtp] = useState('');
+  const [error, setError] = useState('');
 
-const verify = await authClient.phoneNumber.verify({
-  phoneNumber: "+1234567890", 
-  code: "456789" 
-}).then(() => console.log("otp verify function called"))
+  const handleGoogleLogin = async () => {
+    try {
+      await authClient.signIn.social({
+        provider: 'google',
+        callbackURL: '/dashboard',
+        errorCallbackURL: '/',
+      });
+    } catch (err) {
+      console.log('google login failed', err);
+    }
+  };
 
-console.log(verify)
+  const handlePhoneLogin = async () => {
+    setShowPhoneInput(true);
+  };
 
-export default function DemoPage() {
-  return (
-    <>
-      <Particles
-        refresh
-        quantity={100}
-        ease={80}
-        color={'#000000'}
-        className="absolute inset-0 -z-40"
-      />
+  const sendingOtp = async () => {
+    if (phoneNumber.length < 10) {
+      setError('Phone number must be at least 10 digits');
+      return;
+    }
 
-      <div className="flex min-h-screen flex-col items-center justify-center space-y-6">
-        <DemoCard />
-      </div>
-    </>
-  );
-}
+    try {
+      await authClient.phoneNumber.sendOtp({ phoneNumber: phoneNumber });
+      setError(''); // Clear error on success
+      setShowOtpInput(true); // If you want to proceed
+    } catch (error) {
+      console.log('error sending code to phoneNumber', error);
+      setError('Failed to send OTP. Please try again.');
+    }
+  };
 
-/*------------------------------------------
-  Internal components
-------------------------------------------*/
-const DemoCard = () => {
-  return (
-    <div className="flex flex-col items-center space-y-4 rounded-xl border p-6 shadow-2xl bg-background">
-      <h1 className="text-2xl text-center">
-        <span className="block">Turborepo</span>
-        <span className="block">Shadcn/ui</span>
-        <span className="block">Tailwind CSS v4</span>
-      </h1>
+  const verifyOtp = async () => {
+    if (otp.length !== 6 ) {
+      setError("otp must be 6 digit long")
+      return;
+    }
 
-      <p>Here is your shadcn button.</p>
-      <Button onClick={() => alert('🎉Clicked')}>Button</Button>
-    </div>
-  );
-};
+    try {
+      const verify = await authClient.phoneNumber.verify({
+        phoneNumber: phoneNumber, 
+        code: otp
+      })
 
-interface MousePosition {
-  x: number;
-  y: number;
-}
+      console.log(verify)
 
-function MousePosition(): MousePosition {
-  const [mousePosition, setMousePosition] = useState<MousePosition>({
-    x: 0,
-    y: 0,
-  });
-
-  useEffect(() => {
-    const handleMouseMove = (event: MouseEvent) => {
-      setMousePosition({ x: event.clientX, y: event.clientY });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-    };
-  }, []);
-
-  return mousePosition;
-}
-
-interface ParticlesProps {
-  className?: string;
-  quantity?: number;
-  staticity?: number;
-  ease?: number;
-  size?: number;
-  refresh?: boolean;
-  color?: string;
-  vx?: number;
-  vy?: number;
-}
-function hexToRgb(hex: string): number[] {
-  hex = hex.replace('#', '');
-
-  if (hex.length === 3) {
-    hex = hex
-      .split('')
-      .map((char) => char + char)
-      .join('');
+      if (verify?.data?.status) {
+        router.push("/dashboard")
+      }
+    } catch (error) {
+      console.log("couldnt verify otp", error) 
+    }
   }
 
-  const hexInt = parseInt(hex, 16);
-  const red = (hexInt >> 16) & 255;
-  const green = (hexInt >> 8) & 255;
-  const blue = hexInt & 255;
-  return [red, green, blue];
-}
-
-const Particles: React.FC<ParticlesProps> = ({
-  className = '',
-  quantity = 100,
-  staticity = 50,
-  ease = 50,
-  size = 0.4,
-  refresh = false,
-  color = '#ffffff',
-  vx = 0,
-  vy = 0,
-}) => {
-  const canvasRef = useRef<HTMLCanvasElement>(null);
-  const canvasContainerRef = useRef<HTMLDivElement>(null);
-  const context = useRef<CanvasRenderingContext2D | null>(null);
-  const circles = useRef<Circle[]>([]);
-  const mousePosition = MousePosition();
-  const mouse = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
-  const canvasSize = useRef<{ w: number; h: number }>({ w: 0, h: 0 });
-  const dpr = typeof window !== 'undefined' ? window.devicePixelRatio : 1;
-
-  useEffect(() => {
-    if (canvasRef.current) {
-      context.current = canvasRef.current.getContext('2d');
-    }
-    initCanvas();
-    animate();
-    window.addEventListener('resize', initCanvas);
-
-    return () => {
-      window.removeEventListener('resize', initCanvas);
-    };
-  }, [color]);
-
-  useEffect(() => {
-    onMouseMove();
-  }, [mousePosition.x, mousePosition.y]);
-
-  useEffect(() => {
-    initCanvas();
-  }, [refresh]);
-
-  const initCanvas = () => {
-    resizeCanvas();
-    drawParticles();
-  };
-
-  const onMouseMove = () => {
-    if (canvasRef.current) {
-      const rect = canvasRef.current.getBoundingClientRect();
-      const { w, h } = canvasSize.current;
-      const x = mousePosition.x - rect.left - w / 2;
-      const y = mousePosition.y - rect.top - h / 2;
-      const inside = x < w / 2 && x > -w / 2 && y < h / 2 && y > -h / 2;
-      if (inside) {
-        mouse.current.x = x;
-        mouse.current.y = y;
-      }
-    }
-  };
-
-  type Circle = {
-    x: number;
-    y: number;
-    translateX: number;
-    translateY: number;
-    size: number;
-    alpha: number;
-    targetAlpha: number;
-    dx: number;
-    dy: number;
-    magnetism: number;
-  };
-
-  const resizeCanvas = () => {
-    if (canvasContainerRef.current && canvasRef.current && context.current) {
-      circles.current.length = 0;
-      canvasSize.current.w = canvasContainerRef.current.offsetWidth;
-      canvasSize.current.h = canvasContainerRef.current.offsetHeight;
-      canvasRef.current.width = canvasSize.current.w * dpr;
-      canvasRef.current.height = canvasSize.current.h * dpr;
-      canvasRef.current.style.width = `${canvasSize.current.w}px`;
-      canvasRef.current.style.height = `${canvasSize.current.h}px`;
-      context.current.scale(dpr, dpr);
-    }
-  };
-
-  const circleParams = (): Circle => {
-    const x = Math.floor(Math.random() * canvasSize.current.w);
-    const y = Math.floor(Math.random() * canvasSize.current.h);
-    const translateX = 0;
-    const translateY = 0;
-    const pSize = Math.floor(Math.random() * 2) + size;
-    const alpha = 0;
-    const targetAlpha = parseFloat((Math.random() * 0.6 + 0.1).toFixed(1));
-    const dx = (Math.random() - 0.5) * 0.1;
-    const dy = (Math.random() - 0.5) * 0.1;
-    const magnetism = 0.1 + Math.random() * 4;
-    return {
-      x,
-      y,
-      translateX,
-      translateY,
-      size: pSize,
-      alpha,
-      targetAlpha,
-      dx,
-      dy,
-      magnetism,
-    };
-  };
-
-  const rgb = hexToRgb(color);
-
-  const drawCircle = (circle: Circle, update = false) => {
-    if (context.current) {
-      const { x, y, translateX, translateY, size, alpha } = circle;
-      context.current.translate(translateX, translateY);
-      context.current.beginPath();
-      context.current.arc(x, y, size, 0, 2 * Math.PI);
-      context.current.fillStyle = `rgba(${rgb.join(', ')}, ${alpha})`;
-      context.current.fill();
-      context.current.setTransform(dpr, 0, 0, dpr, 0, 0);
-
-      if (!update) {
-        circles.current.push(circle);
-      }
-    }
-  };
-
-  const clearContext = () => {
-    if (context.current) {
-      context.current.clearRect(0, 0, canvasSize.current.w, canvasSize.current.h);
-    }
-  };
-
-  const drawParticles = () => {
-    clearContext();
-    const particleCount = quantity;
-    for (let i = 0; i < particleCount; i++) {
-      const circle = circleParams();
-      drawCircle(circle);
-    }
-  };
-
-  const remapValue = (
-    value: number,
-    start1: number,
-    end1: number,
-    start2: number,
-    end2: number
-  ): number => {
-    const remapped = ((value - start1) * (end2 - start2)) / (end1 - start1) + start2;
-    return remapped > 0 ? remapped : 0;
-  };
-
-  const animate = () => {
-    clearContext();
-    circles.current.forEach((circle: Circle, i: number) => {
-      // Handle the alpha value
-      const edge = [
-        circle.x + circle.translateX - circle.size, // distance from left edge
-        canvasSize.current.w - circle.x - circle.translateX - circle.size, // distance from right edge
-        circle.y + circle.translateY - circle.size, // distance from top edge
-        canvasSize.current.h - circle.y - circle.translateY - circle.size, // distance from bottom edge
-      ];
-      const closestEdge = edge.reduce((a, b) => Math.min(a, b));
-      const remapClosestEdge = parseFloat(remapValue(closestEdge, 0, 20, 0, 1).toFixed(2));
-      if (remapClosestEdge > 1) {
-        circle.alpha += 0.02;
-        if (circle.alpha > circle.targetAlpha) {
-          circle.alpha = circle.targetAlpha;
-        }
-      } else {
-        circle.alpha = circle.targetAlpha * remapClosestEdge;
-      }
-      circle.x += circle.dx + vx;
-      circle.y += circle.dy + vy;
-      circle.translateX +=
-        (mouse.current.x / (staticity / circle.magnetism) - circle.translateX) / ease;
-      circle.translateY +=
-        (mouse.current.y / (staticity / circle.magnetism) - circle.translateY) / ease;
-
-      drawCircle(circle, true);
-
-      // circle gets out of the canvas
-      if (
-        circle.x < -circle.size ||
-        circle.x > canvasSize.current.w + circle.size ||
-        circle.y < -circle.size ||
-        circle.y > canvasSize.current.h + circle.size
-      ) {
-        // remove the circle from the array
-        circles.current.splice(i, 1);
-        // create a new circle
-        const newCircle = circleParams();
-        drawCircle(newCircle);
-        // update the circle position
-      }
-    });
-    window.requestAnimationFrame(animate);
-  };
-
   return (
-    <div
-      className={cn('pointer-events-none', className)}
-      ref={canvasContainerRef}
-      aria-hidden="true"
-    >
-      <canvas ref={canvasRef} className="size-full" />
+    <div className="min-h-screen bg-gray-50 flex items-center justify-center px-4">
+      <div className="max-w-md w-full bg-white rounded-xl shadow-lg border border-gray-200 p-8">
+        <div className="text-center mb-8">
+          <h1 className="text-2xl font-semibold text-gray-900 mb-2">Welcome back</h1>
+          <p className="text-gray-600 text-sm">Sign in to your account</p>
+        </div>
+
+        {!showPhoneInput && (
+          <div className="space-y-4">
+            <button
+              onClick={handleGoogleLogin}
+              className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-red-300 rounded-lg text-red-600 hover:bg-red-50 hover:border-red-400 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+            >
+              <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
+                <path
+                  d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"
+                  fill="#4285F4"
+                />
+                <path
+                  d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"
+                  fill="#34A853"
+                />
+                <path
+                  d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"
+                  fill="#FBBC05"
+                />
+                <path
+                  d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"
+                  fill="#EA4335"
+                />
+              </svg>
+              {'Continue with Google'}
+            </button>
+
+            <div className="flex items-center my-6">
+              <div className="flex-1 border-t border-gray-300"></div>
+              <span className="px-4 text-sm text-gray-500">or</span>
+              <div className="flex-1 border-t border-gray-300"></div>
+            </div>
+
+            <button
+              onClick={handlePhoneLogin}
+              className="w-full flex items-center justify-center gap-3 px-4 py-3 border border-emerald-300 rounded-lg text-emerald-600 hover:bg-emerald-50 hover:border-emerald-400 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-medium"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"
+                />
+              </svg>
+              {'Continue with Phone'}
+            </button>
+          </div>
+        )}
+
+        {showPhoneInput && !showOtpInput && (
+          <div className="space-y-4">
+            <div className="flex rounded-md overflow-hidden border border-red-300">
+              <div className="flex items-center px-4 bg-gray-100 text-gray-700 border-r border-red-300">
+                +91
+              </div>
+              <Input
+                className="flex-1 border-none focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:outline-none shadow-none"
+                onChange={(e) => {
+                  setPhoneNumber(e.target.value);
+                }}
+                placeholder="Enter phone number"
+              />
+            </div>
+            {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+            <Button className="w-full mt-4" onClick={sendingOtp}>
+              Submit
+            </Button>
+          </div>
+        )}
+
+        {showPhoneInput && showOtpInput && (
+          <div className="space-y-4">
+            <div className="flex rounded-md overflow-hidden border border-red-300">
+              <Input
+                className="flex-1 border-none focus:ring-0 focus:outline-none focus-visible:ring-0 focus-visible:outline-none shadow-none"
+                onChange={(e) => {
+                  setOtp(e.target.value);
+                }}
+                placeholder="Enter Otp"
+              />
+            </div>
+            {error && <p className="text-red-500 text-sm mt-2">{error}</p>}
+            
+            <Button className="w-full mt-4" onClick={verifyOtp}>
+              Submit
+            </Button>
+          </div>
+        )}
+
+
+        <div className="mt-8 text-center">
+          <p className="text-xs text-gray-500">
+            By continuing, you agree to our{' '}
+            <a href="#" className="text-blue-600 hover:underline">
+              Terms of Service
+            </a>{' '}
+            and{' '}
+            <a href="#" className="text-blue-600 hover:underline">
+              Privacy Policy
+            </a>
+          </p>
+        </div>
+      </div>
     </div>
   );
-};
+}
