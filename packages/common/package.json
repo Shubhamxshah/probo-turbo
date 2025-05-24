@@ -6,7 +6,9 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "exports": {
-    "./types": "./src/types.ts"
+    "./types": "./src/types.ts", 
+    "./kafkaProducer": "./src/kafka/producer.ts", 
+    "./kafkaConsumer": "./src/kafka/consumer.ts"
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*"
@@ -17,7 +19,7 @@
   "type": "commonjs",
   "description": "",
   "dependencies": {
+    "kafkajs": "^2.2.4",
     "zod": "^3.24.2"
   }
 }
-
