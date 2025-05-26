@@ -2,6 +2,6 @@ import { Router } from 'express';
 
 const eventRouter = Router();
 
-eventRouter.post("/:event", (req, res) => {
-  
+eventRouter.post("/:event", async (req, res) => {
+  const event = req.params.event;
 })

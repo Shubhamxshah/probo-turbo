@@ -1,5 +1,6 @@
 import express from "express";
 import cors from "cors"
+import { init } from "./start";
 
 const app = express();
 app.use(express.json());
@@ -10,3 +11,7 @@ const PORT = process.env.PORT || 3001;
 app.listen(() => {
   console.log(`server listening on port ${PORT}`)
 })
+
+init();
+
+
