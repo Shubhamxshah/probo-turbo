@@ -41,7 +41,7 @@ export class RedisManager {
       this.client.subscribe(id, (message) => {
         if (message && typeof message === "string") {
           this.client.unsubscribe(id);
-          resolve(message);
+          resolve(JSON.parse(message));
         }
       })
       this.publisher.lpush("archiverMessages", JSON.stringify({clientId: id, message }));
