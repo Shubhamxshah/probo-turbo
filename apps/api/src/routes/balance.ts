@@ -19,7 +19,7 @@ balanceRouter.post('/check', async (req, res) => {
   res.status(response.status).json({ message: response.message });
 });
 
-balanceRouter.post('/add', async (req, res) => {
+balanceRouter.post('/addfree', async (req, res) => {
   const { userId, amount } = req.body;
 
   const response = await RedisManager.getInstance().ArchiverProcessor({

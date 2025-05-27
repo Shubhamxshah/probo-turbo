@@ -16,5 +16,18 @@ userRouter.post("/:userId", async (req, res) => {
   res.status(response.status).json({message: response.message})
 });
 
+userRouter.post("/mint", async (req, res) => {
+  const {userId, noOfTokens, event} = req.body;
 
+  const response = await RedisManager.getInstance().EngineProcessor({
+    type: "mint_tokens", 
+    payload: {
+      userId, 
+      noOfTokens,
+      event
+    }
+  })
+
+  res.status(response.status).json({message: response.message})
+});
 
