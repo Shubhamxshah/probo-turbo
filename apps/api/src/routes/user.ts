@@ -1,19 +1,20 @@
 import { Router } from 'express';
 import { RedisManager } from '../config/redisManager';
 
-const eventRouter = Router();
+const userRouter = Router();
 
-eventRouter.post("/:event", async (req, res) => {
-  const event = req.params.event;
+userRouter.post("/:userId", async (req, res) => {
+  const userId = req.params.userId;
 
   const response = await RedisManager.getInstance().ArchiverProcessor({
-    type: "create_event", 
+    type: "create_user", 
     payload: {
-      eventName: event
+      userId
     }
   })
 
   res.status(response.status).json({message: response.message})
 });
+
 
 
