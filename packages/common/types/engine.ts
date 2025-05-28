@@ -1,6 +1,12 @@
 export interface Orderbook {
-  YES: tradeValues;
-  NO: tradeValues;
+  YES: {
+    bids: tradeValues;
+    asks: tradeValues;
+  },
+  NO: {
+    bids: tradeValues;
+    asks: tradeValues;
+  }
 }
 
 interface tradeValues {
@@ -33,7 +39,7 @@ interface PriceValue {
 interface tradeOrders {
   userId: string;
   quantity: number;
-  type: 'YES' | 'NO';
+  intent: 'BUY' | 'SELL';
 }
 
 export interface Balances {

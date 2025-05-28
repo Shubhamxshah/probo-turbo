@@ -44,5 +44,5 @@ export type MessageFromApi = {
   }
 }
 
-type YesNo = "YES" | "NO"
+export type YesNo = "YES" | "NO"
 

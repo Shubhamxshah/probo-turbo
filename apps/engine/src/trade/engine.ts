@@ -1,5 +1,5 @@
 import { Balances, eventInitialize, Orderbook, StockBalances } from '@repo/common/types/engine';
-import { MessageFromApi } from '@repo/common/types/fromApi';
+import { MessageFromApi, YesNo } from '@repo/common/types/fromApi';
 import fs from 'fs';
 import { RedisManager } from '../config/redisManager';
 
@@ -92,8 +92,17 @@ export class Engine {
       case 'mint_tokens':
         try {
           const { userId, event, noOfTokens } = message.payload;
-          const simpleres = MintTokens(userId, event, noOfTokens);
-        } catch (error) {}
+          const simpleres = this.MintTokens(userId, event, noOfTokens);
+          RedisManager.getInstance().sendToApi(clientId, {
+            type: 'simpleres',
+            payload: {
+              simpleres,
+            },
+          });
+        } catch (error) {
+          console.log('error adding money', error);
+        }
+        break;
       case 'buy_tokens':
       case 'sell_tokens':
     }
@@ -125,36 +134,40 @@ export class Engine {
     }
   }
 
-MintTokens(userId: string, event: string, noOfTokens: number) {
-  const totalAmount = noOfTokens * 2 * 10;
+  MintTokens(userId: string, event: string, noOfTokens: number) {
+    const totalAmount = noOfTokens * 2 * 10;
 
-  const userBalance = this.balances.get(userId);
-  if (!userBalance) {
-    return `user does not exist`;
+    const userBalance = this.balances.get(userId);
+    if (!userBalance) {
+      return `user does not exist`;
+    }
+
+    if (userBalance.available < totalAmount) {
+      return `insufficient balance, can't mint`;
+    }
+
+    userBalance.available -= totalAmount;
+
+    let userStocks = this.stockBalances.get(userId);
+    if (!userStocks) {
+      userStocks = {};
+      this.stockBalances.set(userId, userStocks);
+    }
+
+    if (!userStocks[event]) {
+      userStocks[event] = {
+        YES: { available: 0, locked: 0 },
+        NO: { available: 0, locked: 0 },
+      };
+    }
+
+    userStocks[event].YES.available += noOfTokens;
+    userStocks[event].NO.available += noOfTokens;
+
+    return `minted ${noOfTokens} YES and NO tokens for ${userId} in ${event}`;
   }
 
-  if (userBalance.available < totalAmount) {
-    return `insufficient balance, can't mint`;
-  }
-
-  userBalance.available -= totalAmount;
-
-  let userStocks = this.stockBalances.get(userId);
-  if (!userStocks) {
-    userStocks = {};
-    this.stockBalances.set(userId, userStocks);
-  }
-
-  if (!userStocks[event]) {
-    userStocks[event] = {
-      YES: { available: 0, locked: 0 },
-      NO: { available: 0, locked: 0 },
-    };
-  }
-
-  userStocks[event].YES.available += noOfTokens;
-  userStocks[event].NO.available += noOfTokens;
-
-  return `minted ${noOfTokens} YES and NO tokens for ${userId} in ${event}`;
-}
+  sellOrder(userId: string, event: string, noOfTokens: string, type: YesNo) {
+      
+  };
 }
