@@ -1,3 +1,4 @@
+import { MessageFromEngine } from "@repo/common/types/fromEngine";
 import Redis from "ioredis";
 
 export class RedisManager {
@@ -16,7 +17,7 @@ export class RedisManager {
     return this.instance;
   }
 
-  public sendToApi(message: string, clientId: string) {
+  public sendToApi(clientId: string, message: MessageFromEngine) {
       this.client.publish(clientId, JSON.stringify(message));
   }
 

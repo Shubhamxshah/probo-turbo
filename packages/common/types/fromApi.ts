@@ -1,4 +1,4 @@
-export type MessageToEngine = {
+export type MessageFromApi = {
   type: "create_user", 
   payload: {
     userId: string

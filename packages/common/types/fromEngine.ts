@@ -1,5 +1,7 @@
-export type MessageFromOrderbook = {
-  status: number, 
-  message: string
+export type MessageFromEngine = {
+  type: string, 
+  payload: {
+    simpleres: string
+  }
 }
 

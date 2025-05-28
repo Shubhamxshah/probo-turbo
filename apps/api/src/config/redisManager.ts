@@ -1,6 +1,6 @@
 import Redis from 'ioredis';
 import { v4 as uuidv4 } from 'uuid';
-import { MessageFromOrderbook, MessageToEngine } from '@repo/common/types';
+import { MessageFromApi } from '@repo/common/types/fromApi';
 
 export class RedisManager {
   private client: Redis;
@@ -21,7 +21,7 @@ export class RedisManager {
     return this.instance;
   }
 
-  public async EngineProcessor(message: MessageToEngine) {
+  public async EngineProcessor(message: MessageFromApi) {
     return new Promise<MessageFromOrderbook>((resolve) => {
       const id = uuidv4();
       this.client.subscribe(id, (response) => {
@@ -35,7 +35,7 @@ export class RedisManager {
   }
 
   //TODO: type MessageToArchiver
-  public async ArchiverProcessor(message: MessageToEngine ) {
+  public async ArchiverProcessor(message: MessageFromApi ) {
     return new Promise<MessageFromOrderbook>((resolve) => {
       const id = uuidv4();
       this.client.subscribe(id, (message) => {
