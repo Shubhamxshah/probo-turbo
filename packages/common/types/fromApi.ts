@@ -44,9 +44,5 @@ export type MessageToEngine = {
   }
 }
 
-export type MessageFromOrderbook = {
-  status: number, 
-  message: string
-}
-
 type YesNo = "YES" | "NO"
+

@@ -6,7 +6,7 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "exports": {
-    "./types": "./src/types.ts", 
+    "./types/*": "./types/*.ts", 
     "./kafkaProducer": "./src/kafka/producer.ts", 
     "./kafkaConsumer": "./src/kafka/consumer.ts"
   },
