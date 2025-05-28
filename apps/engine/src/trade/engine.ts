@@ -1,4 +1,4 @@
-import { Balances, Orderbook, StockBalances } from '@repo/common/types/engine';
+import { Balances, eventInitialize, Orderbook, StockBalances } from '@repo/common/types/engine';
 import { MessageFromApi } from '@repo/common/types/fromApi';
 import fs from 'fs';
 import { RedisManager } from '../config/redisManager';
@@ -78,6 +78,7 @@ export class Engine {
   }
 
   createEvent(event: string) {
-              
+    this.orderBook.set(event, eventInitialize)
+    return `new event ${event} created`
   }
 }
