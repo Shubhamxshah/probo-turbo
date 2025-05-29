@@ -32,7 +32,8 @@ export type MessageFromApi = {
     userId: string, 
     event: string, 
     noOfTokens: string, 
-    type: YesNo
+    type: YesNo, 
+    price: number 
   }
 } | {
   type: "sell_tokens", 
@@ -40,7 +41,8 @@ export type MessageFromApi = {
     userId: string, 
     event: string, 
     noOfTokens: string, 
-    type: YesNo 
+    type: YesNo, 
+    price: number 
   }
 }
 

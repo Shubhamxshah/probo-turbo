@@ -167,7 +167,11 @@ export class Engine {
     return `minted ${noOfTokens} YES and NO tokens for ${userId} in ${event}`;
   }
 
-  sellOrder(userId: string, event: string, noOfTokens: string, type: YesNo) {
-      
+  sellOrder(userId: string, event: string, noOfTokens: string, type: YesNo, price: number) {
+    // see if there are bids you can fulfill 
+    const orderbook = this.orderBook.get(event)
+    if (orderbook.type.bids.
+    // see if there are asks in reverse order you can nullify with. 
+    // finally place it on asks side 
   };
 }

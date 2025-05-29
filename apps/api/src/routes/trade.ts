@@ -4,7 +4,7 @@ import { RedisManager } from '../config/redisManager';
 const tradeRouter = Router();
 
 tradeRouter.post("/buy", async (req, res) => {
-  const {userId, noOfTokens, type, event} = req.body;
+  const {userId, noOfTokens, type, event, price} = req.body;
 
   const response = await RedisManager.getInstance().EngineProcessor({
     type: "buy_tokens", 
@@ -12,7 +12,8 @@ tradeRouter.post("/buy", async (req, res) => {
       userId, 
       noOfTokens,
       type, 
-      event
+      event, 
+      price
     }
   })
 
@@ -20,7 +21,7 @@ tradeRouter.post("/buy", async (req, res) => {
 });
 
 tradeRouter.post("/sell", async (req, res) => {
-  const {userId, noOfTokens, type, event} = req.body;
+  const {userId, noOfTokens, type, event, price} = req.body;
 
   const response = await RedisManager.getInstance().EngineProcessor({
     type: "sell_tokens", 
@@ -28,7 +29,8 @@ tradeRouter.post("/sell", async (req, res) => {
       userId, 
       noOfTokens,
       type, 
-      event
+      event, 
+      price
     }
   })
 
