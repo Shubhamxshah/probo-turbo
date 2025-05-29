@@ -193,8 +193,13 @@ export class Engine {
       return `invalid orders, event doesnt exist in orderbook`
     }
 
+    const reverseType: YesNo = type === 'YES' ? "NO" : 'YES';
+    const reversePrice: AllowedPrice = (1000 - Number(price)).toString() as AllowedPrice;
+
+    let bids = orderbook[type].bids[price];
+    let asks = orderbook[reverseType].asks[reversePrice];
+   
     while (remainingQuantity > 0) {
-      let bids = orderbook[type].bids[price]
       if ( bids.total > 0) {
         if(bids.orders[0]!.quantity >= remainingQuantity) {
           bids.orders[0]!.quantity -= remainingQuantity;
@@ -208,11 +213,10 @@ export class Engine {
           const sellerBalance = this.balances.get(userId);
           sellerBalance!.available += noOfTokens * Number(price);
 
-          remainingQuantity = 0;
-
           if (bids.orders[0]!.quantity === 0) {
             bids.orders.shift();
           }
+          remainingQuantity = 0;
           return `Order filled completely`
         } else {
           let quantity = bids.orders[0]!.quantity;
@@ -231,9 +235,35 @@ export class Engine {
           bids.orders.shift();
           return `Order filled partially`         
         }
-      } else if () {
-        // see if there are asks in reverse order you can nullify with.
-        return 
+      } else {
+        return 'No bids at the ask price, trying to nullify with reverse Type asks ' 
+      }
+    }
+    // see if there are asks in reverse order you can nullify with.
+    while (remainingQuantity > 0) {
+      if (asks.total > 0) {
+        if (asks.orders[0]!.quantity >= remainingQuantity) {
+          asks.orders[0]!.quantity -= remainingQuantity;
+          const askerId = asks.orders[0]!.userId;
+           const askerStocks = this.stockBalances.get(askerId);
+          askerStocks![event]![reverseType].locked -= remainingQuantity;
+          const askerBalance = this.balances.get(askerId);
+          askerBalance!.available += noOfTokens * Number(price);
+
+          sellerStocks[event][type].locked -= remainingQuantity;
+          const sellerBalance = this.balances.get(userId);
+          sellerBalance!.available += noOfTokens * Number(price);
+
+          if (asks.orders[0]!.quantity === 0) {
+            asks.orders.shift();
+          }
+          remainingQuantity = 0;
+          return `Order filled completely`
+        } else {
+
+        }
+      } else {
+        return `cant fulfill even in reverse ask orders, will place it in asks to fulfill as pending`
       }
     }
     // finally place it on asks side
