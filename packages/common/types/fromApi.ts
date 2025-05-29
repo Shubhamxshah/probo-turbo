@@ -31,18 +31,18 @@ export type MessageFromApi = {
   payload: {
     userId: string, 
     event: string, 
-    noOfTokens: string, 
+    noOfTokens: number, 
     type: YesNo, 
-    price: number 
+    price: string  
   }
 } | {
   type: "sell_tokens", 
   payload: {
     userId: string, 
     event: string, 
-    noOfTokens: string, 
+    noOfTokens: number, 
     type: YesNo, 
-    price: number 
+    price: string 
   }
 }
 
