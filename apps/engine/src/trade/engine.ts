@@ -175,16 +175,67 @@ export class Engine {
 
   sellOrder(userId: string, event: string, noOfTokens: number, type: YesNo, price: AllowedPrice) {
     // see if there are bids you can fulfill
-    const orderbook = this.orderBook.get(event);
-    const remainingQuantity = noOfTokens;
-    while (remainingQuantity > 0) {
-      if (orderbook![type].bids[price].total > 0) {
-        
-      } else {
+    
+    const sellerStocks = this.stockBalances.get(userId);
+    if (!sellerStocks || !sellerStocks[event]) {
+      return `invalid order, seller doesnt contain this stocks`
+    }
+    if (sellerStocks[event][type].available < noOfTokens) {
+      return `user doesnt have enough stocks to sell`
+    }
 
+    let remainingQuantity = noOfTokens;
+    sellerStocks[event][type].available -= remainingQuantity;
+    sellerStocks[event][type].locked += remainingQuantity;
+
+    const orderbook = this.orderBook.get(event);
+    if (!orderbook) {
+      return `invalid orders, event doesnt exist in orderbook`
+    }
+
+    while (remainingQuantity > 0) {
+      let bids = orderbook[type].bids[price]
+      if ( bids.total > 0) {
+        if(bids.orders[0]!.quantity >= remainingQuantity) {
+          bids.orders[0]!.quantity -= remainingQuantity;
+          const bidderId = bids.orders[0]!.userId;
+          const bidderStocks = this.stockBalances.get(bidderId);
+          bidderStocks![event]![type].available += remainingQuantity;
+          const bidderBalance = this.balances.get(bidderId);
+          bidderBalance!.locked -= noOfTokens * Number(price);
+
+          sellerStocks[event][type].locked -= remainingQuantity;
+          const sellerBalance = this.balances.get(userId);
+          sellerBalance!.available += noOfTokens * Number(price);
+
+          remainingQuantity = 0;
+
+          if (bids.orders[0]!.quantity === 0) {
+            bids.orders.shift();
+          }
+          return `Order filled completely`
+        } else {
+          let quantity = bids.orders[0]!.quantity;
+          bids.orders[0]!.quantity = 0;
+          const bidderId = bids.orders[0]!.userId;
+          const bidderStocks = this.stockBalances.get(bidderId);
+          bidderStocks![event]![type].available += quantity;
+          const bidderBalance = this.balances.get(bidderId);
+          bidderBalance!.locked -= quantity * Number(price);
+
+          sellerStocks[event][type].locked -= quantity;
+          const sellerBalance = this.balances.get(userId);
+          sellerBalance!.available += quantity * Number(price);
+
+          remainingQuantity -= quantity;
+          bids.orders.shift();
+          return `Order filled partially`         
+        }
+      } else if () {
+        // see if there are asks in reverse order you can nullify with.
+        return 
       }
     }
-    // see if there are asks in reverse order you can nullify with.
     // finally place it on asks side
   }
 }

@@ -2,11 +2,11 @@ export interface Orderbook {
   YES: {
     bids: tradeValues;
     asks: tradeValues;
-  },
+  };
   NO: {
     bids: tradeValues;
     asks: tradeValues;
-  }
+  };
 }
 
 interface tradeValues {
@@ -61,164 +61,340 @@ export interface StockBalances {
 
 export const eventInitialize = {
   YES: {
-    '50': {
-      total: 0,
-      orders: [],
+    bids: {
+      '50': {
+        total: 0,
+        orders: [],
+      },
+      '100': {
+        total: 0,
+        orders: [],
+      },
+      '150': {
+        total: 0,
+        orders: [],
+      },
+      '200': {
+        total: 0,
+        orders: [],
+      },
+      '250': {
+        total: 0,
+        orders: [],
+      },
+      '300': {
+        total: 0,
+        orders: [],
+      },
+      '350': {
+        total: 0,
+        orders: [],
+      },
+      '400': {
+        total: 0,
+        orders: [],
+      },
+      '450': {
+        total: 0,
+        orders: [],
+      },
+      '500': {
+        total: 0,
+        orders: [],
+      },
+      '550': {
+        total: 0,
+        orders: [],
+      },
+      '600': {
+        total: 0,
+        orders: [],
+      },
+      '650': {
+        total: 0,
+        orders: [],
+      },
+      '700': {
+        total: 0,
+        orders: [],
+      },
+      '750': {
+        total: 0,
+        orders: [],
+      },
+      '800': {
+        total: 0,
+        orders: [],
+      },
+      '850': {
+        total: 0,
+        orders: [],
+      },
+      '900': {
+        total: 0,
+        orders: [],
+      },
+      '950': {
+        total: 0,
+        orders: [],
+      },
     },
-    '100': {
-      total: 0,
-      orders: [],
-    },
-    '150': {
-      total: 0,
-      orders: [],
-    },
-    '200': {
-      total: 0,
-      orders: [],
-    },
-    '250': {
-      total: 0,
-      orders: [],
-    },
-    '300': {
-      total: 0,
-      orders: [],
-    },
-    '350': {
-      total: 0,
-      orders: [],
-    },
-    '400': {
-      total: 0,
-      orders: [],
-    },
-    '450': {
-      total: 0,
-      orders: [],
-    },
-    '500': {
-      total: 0,
-      orders: [],
-    },
-    '550': {
-      total: 0,
-      orders: [],
-    },
-    '600': {
-      total: 0,
-      orders: [],
-    },
-    '650': {
-      total: 0,
-      orders: [],
-    },
-    '700': {
-      total: 0,
-      orders: [],
-    },
-    '750': {
-      total: 0,
-      orders: [],
-    },
-    '800': {
-      total: 0,
-      orders: [],
-    },
-    '850': {
-      total: 0,
-      orders: [],
-    },
-    '900': {
-      total: 0,
-      orders: [],
-    },
-    '950': {
-      total: 0,
-      orders: [],
+    asks : {
+      '50': {
+        total: 0,
+        orders: [],
+      },
+      '100': {
+        total: 0,
+        orders: [],
+      },
+      '150': {
+        total: 0,
+        orders: [],
+      },
+      '200': {
+        total: 0,
+        orders: [],
+      },
+      '250': {
+        total: 0,
+        orders: [],
+      },
+      '300': {
+        total: 0,
+        orders: [],
+      },
+      '350': {
+        total: 0,
+        orders: [],
+      },
+      '400': {
+        total: 0,
+        orders: [],
+      },
+      '450': {
+        total: 0,
+        orders: [],
+      },
+      '500': {
+        total: 0,
+        orders: [],
+      },
+      '550': {
+        total: 0,
+        orders: [],
+      },
+      '600': {
+        total: 0,
+        orders: [],
+      },
+      '650': {
+        total: 0,
+        orders: [],
+      },
+      '700': {
+        total: 0,
+        orders: [],
+      },
+      '750': {
+        total: 0,
+        orders: [],
+      },
+      '800': {
+        total: 0,
+        orders: [],
+      },
+      '850': {
+        total: 0,
+        orders: [],
+      },
+      '900': {
+        total: 0,
+        orders: [],
+      },
+      '950': {
+        total: 0,
+        orders: [],
+      },
     },
   },
   NO: {
-    '50': {
-      total: 0,
-      orders: [],
+    bids: {
+      '50': {
+        total: 0,
+        orders: [],
+      },
+      '100': {
+        total: 0,
+        orders: [],
+      },
+      '150': {
+        total: 0,
+        orders: [],
+      },
+      '200': {
+        total: 0,
+        orders: [],
+      },
+      '250': {
+        total: 0,
+        orders: [],
+      },
+      '300': {
+        total: 0,
+        orders: [],
+      },
+      '350': {
+        total: 0,
+        orders: [],
+      },
+      '400': {
+        total: 0,
+        orders: [],
+      },
+      '450': {
+        total: 0,
+        orders: [],
+      },
+      '500': {
+        total: 0,
+        orders: [],
+      },
+      '550': {
+        total: 0,
+        orders: [],
+      },
+      '600': {
+        total: 0,
+        orders: [],
+      },
+      '650': {
+        total: 0,
+        orders: [],
+      },
+      '700': {
+        total: 0,
+        orders: [],
+      },
+      '750': {
+        total: 0,
+        orders: [],
+      },
+      '800': {
+        total: 0,
+        orders: [],
+      },
+      '850': {
+        total: 0,
+        orders: [],
+      },
+      '900': {
+        total: 0,
+        orders: [],
+      },
+      '950': {
+        total: 0,
+        orders: [],
+      },
     },
-    '100': {
-      total: 0,
-      orders: [],
-    },
-    '150': {
-      total: 0,
-      orders: [],
-    },
-    '200': {
-      total: 0,
-      orders: [],
-    },
-    '250': {
-      total: 0,
-      orders: [],
-    },
-    '300': {
-      total: 0,
-      orders: [],
-    },
-    '350': {
-      total: 0,
-      orders: [],
-    },
-    '400': {
-      total: 0,
-      orders: [],
-    },
-    '450': {
-      total: 0,
-      orders: [],
-    },
-    '500': {
-      total: 0,
-      orders: [],
-    },
-    '550': {
-      total: 0,
-      orders: [],
-    },
-    '600': {
-      total: 0,
-      orders: [],
-    },
-    '650': {
-      total: 0,
-      orders: [],
-    },
-    '700': {
-      total: 0,
-      orders: [],
-    },
-    '750': {
-      total: 0,
-      orders: [],
-    },
-    '800': {
-      total: 0,
-      orders: [],
-    },
-    '850': {
-      total: 0,
-      orders: [],
-    },
-    '900': {
-      total: 0,
-      orders: [],
-    },
-    '950': {
-      total: 0,
-      orders: [],
+    asks : {
+      '50': {
+        total: 0,
+        orders: [],
+      },
+      '100': {
+        total: 0,
+        orders: [],
+      },
+      '150': {
+        total: 0,
+        orders: [],
+      },
+      '200': {
+        total: 0,
+        orders: [],
+      },
+      '250': {
+        total: 0,
+        orders: [],
+      },
+      '300': {
+        total: 0,
+        orders: [],
+      },
+      '350': {
+        total: 0,
+        orders: [],
+      },
+      '400': {
+        total: 0,
+        orders: [],
+      },
+      '450': {
+        total: 0,
+        orders: [],
+      },
+      '500': {
+        total: 0,
+        orders: [],
+      },
+      '550': {
+        total: 0,
+        orders: [],
+      },
+      '600': {
+        total: 0,
+        orders: [],
+      },
+      '650': {
+        total: 0,
+        orders: [],
+      },
+      '700': {
+        total: 0,
+        orders: [],
+      },
+      '750': {
+        total: 0,
+        orders: [],
+      },
+      '800': {
+        total: 0,
+        orders: [],
+      },
+      '850': {
+        total: 0,
+        orders: [],
+      },
+      '900': {
+        total: 0,
+        orders: [],
+      },
+      '950': {
+        total: 0,
+        orders: [],
+      },
     },
   },
 };
 
-export type AllowedPrice = "50" | "100" | "150" | "200" | "250" | "300"
-  | "350" | "400" | "450" | "500" | "550" | "600"
-  | "650" | "700" | "750" | "800" | "850" | "900" | "950";
-
+export type AllowedPrice =
+  | '50'
+  | '100'
+  | '150'
+  | '200'
+  | '250'
+  | '300'
+  | '350'
+  | '400'
+  | '450'
+  | '500'
+  | '550'
+  | '600'
+  | '650'
+  | '700'
+  | '750'
+  | '800'
+  | '850'
+  | '900'
+  | '950';
