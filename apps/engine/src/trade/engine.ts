@@ -203,6 +203,7 @@ export class Engine {
       if ( bids.total > 0) {
         if(bids.orders[0]!.quantity >= remainingQuantity) {
           bids.orders[0]!.quantity -= remainingQuantity;
+          bids.total -= remainingQuantity;
           const bidderId = bids.orders[0]!.userId;
           const bidderStocks = this.stockBalances.get(bidderId);
           bidderStocks![event]![type].available += remainingQuantity;
@@ -232,6 +233,7 @@ export class Engine {
           sellerBalance!.available += quantity * Number(price);
 
           remainingQuantity -= quantity;
+          bids.total -= quantity;
           bids.orders.shift();
           return `Order filled partially`         
         }
@@ -244,8 +246,9 @@ export class Engine {
       if (asks.total > 0) {
         if (asks.orders[0]!.quantity >= remainingQuantity) {
           asks.orders[0]!.quantity -= remainingQuantity;
+          asks.total -= remainingQuantity;
           const askerId = asks.orders[0]!.userId;
-           const askerStocks = this.stockBalances.get(askerId);
+          const askerStocks = this.stockBalances.get(askerId);
           askerStocks![event]![reverseType].locked -= remainingQuantity;
           const askerBalance = this.balances.get(askerId);
           askerBalance!.available += noOfTokens * Number(price);
@@ -260,12 +263,30 @@ export class Engine {
           remainingQuantity = 0;
           return `Order filled completely`
         } else {
+          let quantity = asks.orders[0]!.quantity;
+          asks.orders[0]!.quantity = 0;
+          const askerId = asks.orders[0]!.userId;
+          const askerStocks = this.stockBalances.get(askerId);
+          askerStocks![event]![reverseType].locked -= quantity;
+          const askerBalance = this.balances.get(askerId);
+          askerBalance!.locked += quantity * Number(price);
 
+          sellerStocks[event][type].locked -= quantity;
+          const sellerBalance = this.balances.get(userId);
+          sellerBalance!.available += quantity * Number(price);
+
+          remainingQuantity -= quantity;
+          asks.total -= quantity;
+          bids.orders.shift();
+          return `Order filled partially`         
         }
       } else {
         return `cant fulfill even in reverse ask orders, will place it in asks to fulfill as pending`
       }
     }
+
     // finally place it on asks side
+    orderbook[type].asks[price].orders.push({userId, quantity: remainingQuantity })
+    orderbook[type].asks[price].total += remainingQuantity;
   }
 }
