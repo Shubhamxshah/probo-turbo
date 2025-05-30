@@ -109,8 +109,21 @@ export class Engine {
           console.log('error adding money', error);
         }
         break;
-      case 'buy_tokens':
       case 'sell_tokens':
+        try {
+          const { userId, event, noOfTokens, type, price } = message.payload;
+          const simpleres = this.sellOrder(userId, event, noOfTokens, type, price);
+          RedisManager.getInstance().sendToApi(clientId, {
+            type: 'simpleres',
+            payload: {
+              simpleres,
+            },
+          });
+        } catch(e) {
+          console.log("error selling stock", e)
+        }
+      break;
+      case 'buy_tokens':
     }
   }
 
@@ -193,6 +206,8 @@ export class Engine {
       return `invalid orders, event doesnt exist in orderbook`;
     }
 
+    let status = "matching now..."
+
     const reverseType: YesNo = type === 'YES' ? 'NO' : 'YES';
     const reversePrice: AllowedPrice = (1000 - Number(price)).toString() as AllowedPrice;
 
@@ -218,7 +233,7 @@ export class Engine {
             bids.orders.shift();
           }
           remainingQuantity = 0;
-          return `Order filled completely`;
+          status = `Order filled completely`;
         } else {
           let quantity = bids.orders[0]!.quantity;
           bids.orders[0]!.quantity = 0;
@@ -235,10 +250,10 @@ export class Engine {
           remainingQuantity -= quantity;
           bids.total -= quantity;
           bids.orders.shift();
-          return `Order filled partially`;
+         status = `Order filled partially`;
         }
       } else {
-        return 'No bids at the ask price, trying to nullify with reverse Type asks ';
+        status = 'No bids at the ask price, trying to nullify with reverse Type asks ';
       }
     }
     // see if there are asks in reverse order you can nullify with.
@@ -261,7 +276,7 @@ export class Engine {
             asks.orders.shift();
           }
           remainingQuantity = 0;
-          return `Order filled completely`;
+          status = `Order filled completely`;
         } else {
           let quantity = asks.orders[0]!.quantity;
           asks.orders[0]!.quantity = 0;
@@ -278,10 +293,10 @@ export class Engine {
           remainingQuantity -= quantity;
           asks.total -= quantity;
           bids.orders.shift();
-          return `Order filled partially`;
+          status = `Order filled partially`;
         }
       } else {
-        return `cant fulfill even in reverse ask orders, will place it in asks to fulfill as pending`;
+        status = `cant fulfill even in reverse ask orders, will place it in asks to fulfill as pending`;
       }
     }
 
@@ -289,6 +304,9 @@ export class Engine {
     if (remainingQuantity > 0) {
       orderbook[type].asks[price].orders.push({ userId, quantity: remainingQuantity });
       orderbook[type].asks[price].total += remainingQuantity;
+      status = `order placed, waiting to be matched`
     }
+
+    return status;
   }
 }

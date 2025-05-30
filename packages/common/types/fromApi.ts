@@ -1,3 +1,5 @@
+import type { AllowedPrice } from "./engine"
+
 export type MessageFromApi = {
   type: "create_user", 
   payload: {
@@ -33,7 +35,7 @@ export type MessageFromApi = {
     event: string, 
     noOfTokens: number, 
     type: YesNo, 
-    price: string  
+    price: AllowedPrice
   }
 } | {
   type: "sell_tokens", 
@@ -42,7 +44,7 @@ export type MessageFromApi = {
     event: string, 
     noOfTokens: number, 
     type: YesNo, 
-    price: string 
+    price: AllowedPrice
   }
 }
 

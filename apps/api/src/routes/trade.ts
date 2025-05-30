@@ -1,50 +1,64 @@
 import { Router } from 'express';
 import { RedisManager } from '../config/redisManager';
+import { AllowedPrice, allowedPrices } from '@repo/common/types/engine';
 
 const tradeRouter = Router();
 
-tradeRouter.post("/buy", async (req, res) => {
-  const {userId, noOfTokens, type, event, price} = req.body;
+function isAllowedPrice(value: any): value is AllowedPrice {
+  return allowedPrices.includes(value);
+}
 
-  if (typeof userId !== "string" || typeof noOfTokens !== "number" || (type !== "YES" && type !== "NO") || typeof event !== "string" || typeof price !== "string") {
-    res.status(400).json({error: "invalid types"})
-    return 
+tradeRouter.post('/buy', async (req, res) => {
+  const { userId, noOfTokens, type, event, price } = req.body;
+  if (
+    typeof userId !== 'string' ||
+    typeof noOfTokens !== 'number' ||
+    (type !== 'YES' && type !== 'NO') ||
+    typeof event !== 'string' ||
+    !isAllowedPrice(price)
+  ) {
+    res.status(400).json({ error: 'invalid types' });
+    return;
   }
 
   const response = await RedisManager.getInstance().EngineProcessor({
-    type: "buy_tokens", 
+    type: 'buy_tokens',
     payload: {
-      userId, 
+      userId,
       noOfTokens,
-      type, 
-      event, 
-      price
-    }
-  })
+      type,
+      event,
+      price,
+    },
+  });
 
-  res.status(response.status).json({message: response.message})
+  res.status(response.status).json({ message: response.message });
 });
 
-tradeRouter.post("/sell", async (req, res) => {
-  const {userId, noOfTokens, type, event, price} = req.body;
+tradeRouter.post('/sell', async (req, res) => {
+  const { userId, noOfTokens, type, event, price } = req.body;
 
-  if (typeof userId !== "string" || typeof noOfTokens !== "number" || (type !== "YES" && type !== "NO") || typeof event !== "string" || typeof price !== "string") {
-    res.status(400).json({error: "invalid types"})
-    return 
+  if (
+    typeof userId !== 'string' ||
+    typeof noOfTokens !== 'number' ||
+    (type !== 'YES' && type !== 'NO') ||
+    typeof event !== 'string' ||
+    !isAllowedPrice(price)
+  ) {
+    res.status(400).json({ error: 'invalid types' });
+    return;
   }
 
   const response = await RedisManager.getInstance().EngineProcessor({
-    type: "sell_tokens", 
+    type: 'sell_tokens',
     payload: {
-      userId, 
+      userId,
       noOfTokens,
-      type, 
-      event, 
-      price
-    }
-  })
+      type,
+      event,
+      price,
+    },
+  });
 
-  res.status(response.status).json({message: response.message})
+  res.status(response.status).json({ message: response.message });
 });
-
-
