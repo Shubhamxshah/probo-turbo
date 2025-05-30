@@ -124,6 +124,19 @@ export class Engine {
         }
       break;
       case 'buy_tokens':
+        try {
+          const { userId, event, noOfTokens, type, price } = message.payload;
+          const simpleres = this.buyOrder(userId, event, noOfTokens, type, price);
+          RedisManager.getInstance().sendToApi(clientId, {
+            type: 'simpleres',
+            payload: {
+              simpleres,
+            },
+          });
+        } catch(e) {
+          console.log("error selling stock", e)
+        }
+      break;
     }
   }
 
@@ -186,127 +199,197 @@ export class Engine {
     return `minted ${noOfTokens} YES and NO tokens for ${userId} in ${event}`;
   }
 
-  sellOrder(userId: string, event: string, noOfTokens: number, type: YesNo, price: AllowedPrice) {
-    // see if there are bids you can fulfill
-
-    const sellerStocks = this.stockBalances.get(userId);
-    if (!sellerStocks || !sellerStocks[event]) {
-      return `invalid order, seller doesnt contain this stocks`;
-    }
-    if (sellerStocks[event][type].available < noOfTokens) {
-      return `user doesnt have enough stocks to sell`;
-    }
-
-    let remainingQuantity = noOfTokens;
-    sellerStocks[event][type].available -= remainingQuantity;
-    sellerStocks[event][type].locked += remainingQuantity;
-
-    const orderbook = this.orderBook.get(event);
-    if (!orderbook) {
-      return `invalid orders, event doesnt exist in orderbook`;
-    }
-
-    let status = "matching now..."
-
-    const reverseType: YesNo = type === 'YES' ? 'NO' : 'YES';
-    const reversePrice: AllowedPrice = (1000 - Number(price)).toString() as AllowedPrice;
-
-    let bids = orderbook[type].bids[price];
-    let asks = orderbook[reverseType].asks[reversePrice];
-
-    while (remainingQuantity > 0) {
-      if (bids.total > 0) {
-        if (bids.orders[0]!.quantity >= remainingQuantity) {
-          bids.orders[0]!.quantity -= remainingQuantity;
-          bids.total -= remainingQuantity;
-          const bidderId = bids.orders[0]!.userId;
-          const bidderStocks = this.stockBalances.get(bidderId);
-          bidderStocks![event]![type].available += remainingQuantity;
-          const bidderBalance = this.balances.get(bidderId);
-          bidderBalance!.locked -= noOfTokens * Number(price);
-
-          sellerStocks[event][type].locked -= remainingQuantity;
-          const sellerBalance = this.balances.get(userId);
-          sellerBalance!.available += noOfTokens * Number(price);
-
-          if (bids.orders[0]!.quantity === 0) {
-            bids.orders.shift();
-          }
-          remainingQuantity = 0;
-          status = `Order filled completely`;
-        } else {
-          let quantity = bids.orders[0]!.quantity;
-          bids.orders[0]!.quantity = 0;
-          const bidderId = bids.orders[0]!.userId;
-          const bidderStocks = this.stockBalances.get(bidderId);
-          bidderStocks![event]![type].available += quantity;
-          const bidderBalance = this.balances.get(bidderId);
-          bidderBalance!.locked -= quantity * Number(price);
-
-          sellerStocks[event][type].locked -= quantity;
-          const sellerBalance = this.balances.get(userId);
-          sellerBalance!.available += quantity * Number(price);
-
-          remainingQuantity -= quantity;
-          bids.total -= quantity;
-          bids.orders.shift();
-         status = `Order filled partially`;
-        }
-      } else {
-        status = 'No bids at the ask price, trying to nullify with reverse Type asks ';
-      }
-    }
-    // see if there are asks in reverse order you can nullify with.
-    while (remainingQuantity > 0) {
-      if (asks.total > 0) {
-        if (asks.orders[0]!.quantity >= remainingQuantity) {
-          asks.orders[0]!.quantity -= remainingQuantity;
-          asks.total -= remainingQuantity;
-          const askerId = asks.orders[0]!.userId;
-          const askerStocks = this.stockBalances.get(askerId);
-          askerStocks![event]![reverseType].locked -= remainingQuantity;
-          const askerBalance = this.balances.get(askerId);
-          askerBalance!.available += noOfTokens * Number(price);
-
-          sellerStocks[event][type].locked -= remainingQuantity;
-          const sellerBalance = this.balances.get(userId);
-          sellerBalance!.available += noOfTokens * Number(price);
-
-          if (asks.orders[0]!.quantity === 0) {
-            asks.orders.shift();
-          }
-          remainingQuantity = 0;
-          status = `Order filled completely`;
-        } else {
-          let quantity = asks.orders[0]!.quantity;
-          asks.orders[0]!.quantity = 0;
-          const askerId = asks.orders[0]!.userId;
-          const askerStocks = this.stockBalances.get(askerId);
-          askerStocks![event]![reverseType].locked -= quantity;
-          const askerBalance = this.balances.get(askerId);
-          askerBalance!.locked += quantity * Number(price);
-
-          sellerStocks[event][type].locked -= quantity;
-          const sellerBalance = this.balances.get(userId);
-          sellerBalance!.available += quantity * Number(price);
-
-          remainingQuantity -= quantity;
-          asks.total -= quantity;
-          bids.orders.shift();
-          status = `Order filled partially`;
-        }
-      } else {
-        status = `cant fulfill even in reverse ask orders, will place it in asks to fulfill as pending`;
-      }
-    }
-
-    // finally place it on asks side
-    if (remainingQuantity > 0) {
-      orderbook[type].asks[price].orders.push({ userId, quantity: remainingQuantity });
-      orderbook[type].asks[price].total += remainingQuantity;
-      status = `order placed, waiting to be matched`
-    }
-
-    return status;
+sellOrder(userId: string, event: string, noOfTokens: number, type: YesNo, price: AllowedPrice) {
+  const sellerStocks = this.stockBalances.get(userId);
+  if (!sellerStocks || !sellerStocks[event]) {
+    return `Invalid order: seller does not own this stock.`;
   }
+
+  if (sellerStocks[event][type].available < noOfTokens) {
+    return `User does not have enough stocks to sell.`;
+  }
+
+  const orderbook = this.orderBook.get(event);
+  if (!orderbook) {
+    return `Invalid order: event does not exist in orderbook.`;
+  }
+
+  const reverseType: YesNo = type === 'YES' ? 'NO' : 'YES';
+  const reversePrice: AllowedPrice = (1000 - Number(price)).toString() as AllowedPrice;
+
+  let bids = orderbook[type].bids[price];
+  let reverseAsks = orderbook[reverseType].asks[reversePrice];
+
+  let remainingQuantity = noOfTokens;
+  let status = "Matching sell order...";
+
+  // Lock seller's stocks
+  sellerStocks[event][type].available -= remainingQuantity;
+  sellerStocks[event][type].locked += remainingQuantity;
+
+  const sellerBalance = this.balances.get(userId);
+
+  // Try to fulfill from direct bids
+  while (remainingQuantity > 0 && bids.total > 0) {
+    const order = bids.orders[0]!;
+    const matchedQty = Math.min(order.quantity, remainingQuantity);
+
+    const buyerId = order.userId;
+    const buyerStocks = this.stockBalances.get(buyerId);
+    const buyerBalance = this.balances.get(buyerId);
+
+    order.quantity -= matchedQty;
+    bids.total -= matchedQty;
+
+    // Update buyer
+    buyerStocks![event]![type].available += matchedQty;
+    buyerBalance!.locked -= matchedQty * Number(price);
+
+    // Update seller
+    sellerStocks[event][type].locked -= matchedQty;
+    sellerBalance!.available += matchedQty * Number(price);
+
+    if (order.quantity === 0) {
+      bids.orders.shift();
+    }
+
+    remainingQuantity -= matchedQty;
+    status = matchedQty === noOfTokens ? 'Order filled completely from direct bids' : 'Order partially filled from direct bids';
+  }
+
+  // Try to fulfill from reverse asks
+  while (remainingQuantity > 0 && reverseAsks.total > 0) {
+    const order = reverseAsks.orders[0]!;
+    const matchedQty = Math.min(order.quantity, remainingQuantity);
+
+    const counterpartyId = order.userId;
+    const counterStocks = this.stockBalances.get(counterpartyId);
+    const counterBalance = this.balances.get(counterpartyId);
+
+    order.quantity -= matchedQty;
+    reverseAsks.total -= matchedQty;
+
+    // Update reverse ask counterparty
+    counterStocks![event]![reverseType].locked -= matchedQty;
+    counterBalance!.available += matchedQty * Number(price); // they get paid for opposing bet
+
+    // Update seller
+    sellerStocks[event][type].locked -= matchedQty;
+    sellerBalance!.available += matchedQty * Number(price);
+
+    if (order.quantity === 0) {
+      reverseAsks.orders.shift();
+    }
+
+    remainingQuantity -= matchedQty;
+    status = matchedQty === noOfTokens ? 'Order filled completely via reverse asks' : 'Order partially filled via reverse asks';
+  }
+
+  // Put remaining on ask book
+  if (remainingQuantity > 0) {
+    orderbook[type].asks[price].orders.push({ userId, quantity: remainingQuantity });
+    orderbook[type].asks[price].total += remainingQuantity;
+    status = `Order partially matched, remaining ${remainingQuantity} placed on ask book`;
+  }
+
+  return status;
+}
+
+  buyOrder(userId: string, event: string, noOfTokens: number, type: YesNo, price: AllowedPrice) {
+  const totalCost = noOfTokens * Number(price);
+
+  const userBalance = this.balances.get(userId);
+  if (!userBalance || userBalance.available < totalCost) {
+    return `Insufficient balance`;
+  }
+
+  const orderbook = this.orderBook.get(event);
+  if (!orderbook) {
+    return `Event does not exist`;
+  }
+
+  let remainingQuantity = noOfTokens;
+  userBalance.available -= totalCost;
+  userBalance.locked += totalCost;
+
+  const buyerStocks = this.stockBalances.get(userId) || {};
+  if (!this.stockBalances.has(userId)) {
+    this.stockBalances.set(userId, buyerStocks);
+  }
+
+  if (!buyerStocks[event]) {
+    buyerStocks[event] = {
+      YES: { available: 0, locked: 0 },
+      NO: { available: 0, locked: 0 },
+    };
+  }
+
+  let status = "matching buy order...";
+  const reverseType: YesNo = type === 'YES' ? 'NO' : 'YES';
+  const reversePrice: AllowedPrice = (1000 - Number(price)).toString() as AllowedPrice;
+
+  const asks = orderbook[type].asks[price];
+  const reverseBids = orderbook[reverseType].bids[reversePrice];
+
+  while (remainingQuantity > 0 && asks.total > 0) {
+    const order = asks.orders[0]!;
+    const sellerId = order.userId;
+    const sellerStocks = this.stockBalances.get(sellerId);
+    const sellerBalance = this.balances.get(sellerId);
+
+    const matchedQuantity = Math.min(order.quantity, remainingQuantity);
+    order.quantity -= matchedQuantity;
+    asks.total -= matchedQuantity;
+
+    buyerStocks[event][type].available += matchedQuantity;
+    userBalance.locked -= matchedQuantity * Number(price);
+
+    sellerStocks![event]![type].locked -= matchedQuantity;
+    sellerBalance!.available += matchedQuantity * Number(price);
+
+    remainingQuantity -= matchedQuantity;
+
+    if (order.quantity === 0) {
+      asks.orders.shift();
+    }
+
+    status = matchedQuantity === noOfTokens ? 'Order filled completely' : 'Order filled partially';
+  }
+
+  // Try matching with reverse bids
+  while (remainingQuantity > 0 && reverseBids.total > 0) {
+    const order = reverseBids.orders[0]!;
+    const sellerId = order.userId;
+    const sellerStocks = this.stockBalances.get(sellerId);
+    const sellerBalance = this.balances.get(sellerId);
+
+    const matchedQuantity = Math.min(order.quantity, remainingQuantity);
+    order.quantity -= matchedQuantity;
+    reverseBids.total -= matchedQuantity;
+
+    buyerStocks[event][type].available += matchedQuantity;
+    userBalance.locked -= matchedQuantity * Number(price);
+
+    sellerStocks![event]![reverseType].locked -= matchedQuantity;
+    sellerBalance!.available += matchedQuantity * Number(price);
+
+    remainingQuantity -= matchedQuantity;
+
+    if (order.quantity === 0) {
+      reverseBids.orders.shift();
+    }
+
+    status = 'Order partially filled via reverse type';
+  }
+
+  // Place remaining on bid book
+  if (remainingQuantity > 0) {
+    orderbook[type].bids[price].orders.push({ userId, quantity: remainingQuantity });
+    orderbook[type].bids[price].total += remainingQuantity;
+
+    status = 'Buy order placed, waiting to match';
+  }
+
+  return status;
+}
 }
