@@ -175,13 +175,13 @@ export class Engine {
 
   sellOrder(userId: string, event: string, noOfTokens: number, type: YesNo, price: AllowedPrice) {
     // see if there are bids you can fulfill
-    
+
     const sellerStocks = this.stockBalances.get(userId);
     if (!sellerStocks || !sellerStocks[event]) {
-      return `invalid order, seller doesnt contain this stocks`
+      return `invalid order, seller doesnt contain this stocks`;
     }
     if (sellerStocks[event][type].available < noOfTokens) {
-      return `user doesnt have enough stocks to sell`
+      return `user doesnt have enough stocks to sell`;
     }
 
     let remainingQuantity = noOfTokens;
@@ -190,18 +190,18 @@ export class Engine {
 
     const orderbook = this.orderBook.get(event);
     if (!orderbook) {
-      return `invalid orders, event doesnt exist in orderbook`
+      return `invalid orders, event doesnt exist in orderbook`;
     }
 
-    const reverseType: YesNo = type === 'YES' ? "NO" : 'YES';
+    const reverseType: YesNo = type === 'YES' ? 'NO' : 'YES';
     const reversePrice: AllowedPrice = (1000 - Number(price)).toString() as AllowedPrice;
 
     let bids = orderbook[type].bids[price];
     let asks = orderbook[reverseType].asks[reversePrice];
-   
+
     while (remainingQuantity > 0) {
-      if ( bids.total > 0) {
-        if(bids.orders[0]!.quantity >= remainingQuantity) {
+      if (bids.total > 0) {
+        if (bids.orders[0]!.quantity >= remainingQuantity) {
           bids.orders[0]!.quantity -= remainingQuantity;
           bids.total -= remainingQuantity;
           const bidderId = bids.orders[0]!.userId;
@@ -218,7 +218,7 @@ export class Engine {
             bids.orders.shift();
           }
           remainingQuantity = 0;
-          return `Order filled completely`
+          return `Order filled completely`;
         } else {
           let quantity = bids.orders[0]!.quantity;
           bids.orders[0]!.quantity = 0;
@@ -235,10 +235,10 @@ export class Engine {
           remainingQuantity -= quantity;
           bids.total -= quantity;
           bids.orders.shift();
-          return `Order filled partially`         
+          return `Order filled partially`;
         }
       } else {
-        return 'No bids at the ask price, trying to nullify with reverse Type asks ' 
+        return 'No bids at the ask price, trying to nullify with reverse Type asks ';
       }
     }
     // see if there are asks in reverse order you can nullify with.
@@ -261,7 +261,7 @@ export class Engine {
             asks.orders.shift();
           }
           remainingQuantity = 0;
-          return `Order filled completely`
+          return `Order filled completely`;
         } else {
           let quantity = asks.orders[0]!.quantity;
           asks.orders[0]!.quantity = 0;
@@ -278,15 +278,17 @@ export class Engine {
           remainingQuantity -= quantity;
           asks.total -= quantity;
           bids.orders.shift();
-          return `Order filled partially`         
+          return `Order filled partially`;
         }
       } else {
-        return `cant fulfill even in reverse ask orders, will place it in asks to fulfill as pending`
+        return `cant fulfill even in reverse ask orders, will place it in asks to fulfill as pending`;
       }
     }
 
     // finally place it on asks side
-    orderbook[type].asks[price].orders.push({userId, quantity: remainingQuantity })
-    orderbook[type].asks[price].total += remainingQuantity;
+    if (remainingQuantity > 0) {
+      orderbook[type].asks[price].orders.push({ userId, quantity: remainingQuantity });
+      orderbook[type].asks[price].total += remainingQuantity;
+    }
   }
 }
