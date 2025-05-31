@@ -1,5 +1,6 @@
 export type MessageFromEngine = {
-  type: string, 
+  type: string,
+  status: number,
   payload: {
     simpleres: string
   }

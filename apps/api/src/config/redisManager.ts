@@ -1,6 +1,7 @@
 import Redis from 'ioredis';
 import { v4 as uuidv4 } from 'uuid';
 import { MessageFromApi } from '@repo/common/types/fromApi';
+import { MessageFromEngine } from '@repo/common/types/fromEngine';
 
 export class RedisManager {
   private client: Redis;
@@ -22,7 +23,7 @@ export class RedisManager {
   }
 
   public async EngineProcessor(message: MessageFromApi) {
-    return new Promise<MessageFromOrderbook>((resolve) => {
+    return new Promise<MessageFromEngine>((resolve) => {
       const id = uuidv4();
       this.client.subscribe(id, (response) => {
         if (response && typeof response === 'string') {
@@ -30,21 +31,21 @@ export class RedisManager {
           resolve(JSON.parse(response));
         }
       });
-      this.publisher.lpush('enginemessages', JSON.stringify({ clientId: id, message }));
+      this.publisher.lpush('engineMessages', JSON.stringify({ clientId: id, message }));
     });
   }
 
-  //TODO: type MessageToArchiver
-  public async ArchiverProcessor(message: MessageFromApi ) {
-    return new Promise<MessageFromOrderbook>((resolve) => {
-      const id = uuidv4();
-      this.client.subscribe(id, (message) => {
-        if (message && typeof message === "string") {
-          this.client.unsubscribe(id);
-          resolve(JSON.parse(message));
-        }
-      })
-      this.publisher.lpush("archiverMessages", JSON.stringify({clientId: id, message }));
-    })
-  }
+  ////TODO: type MessageToArchiver
+  //public async ArchiverProcessor(message: MessageFromApi ) {
+  //  return new Promise<MessageFromOrderbook>((resolve) => {
+  //    const id = uuidv4();
+  //    this.client.subscribe(id, (message) => {
+  //      if (message && typeof message === "string") {
+  //        this.client.unsubscribe(id);
+  //        resolve(JSON.parse(message));
+  //      }
+  //    })
+  //    this.publisher.lpush("archiverMessages", JSON.stringify({clientId: id, message }));
+  //  })
+  //}
 }

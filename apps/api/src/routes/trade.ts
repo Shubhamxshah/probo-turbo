@@ -32,7 +32,7 @@ tradeRouter.post('/buy', async (req, res) => {
     },
   });
 
-  res.status(response.status).json({ message: response.message });
+  res.status(response.status).json({ message: response.payload.simpleres });
 });
 
 tradeRouter.post('/sell', async (req, res) => {
