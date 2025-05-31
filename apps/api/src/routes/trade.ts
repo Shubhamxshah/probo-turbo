@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { RedisManager } from '../config/redisManager';
-import { AllowedPrice, allowedPrices } from '@repo/common/types/engine';
+import { AllowedPrice, allowedPrices } from '@repo/common';
 
 export const tradeRouter:Router = Router();
 

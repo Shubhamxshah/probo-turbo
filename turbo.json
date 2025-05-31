@@ -3,10 +3,16 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": ["^build", "^db:generate", "^db:migrate"],
+      "dependsOn": ["^build", "^db:generate"],
       "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"],
-      "env": ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN", "TWILIO_PHONE"]
+      "outputs": ["dist/**", ".next/**", "!.next/cache/**"],
+      "env": [
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET",
+        "TWILIO_ACCOUNT_SID",
+        "TWILIO_AUTH_TOKEN",
+        "TWILIO_PHONE"
+      ]
     },
     "lint": {
       "dependsOn": ["^lint"]
@@ -18,7 +24,25 @@
       "dependsOn": ["^db:generate"],
       "cache": false,
       "persistent": true,
-      "env": ["GOOGLE_CLIENT_ID", "GOOGLE_CLIENT_SECRET", "TWILIO_ACCOUNT_SID", "TWILIO_AUTH_TOKEN", "TWILIO_PHONE"]
+      "env": [
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET",
+        "TWILIO_ACCOUNT_SID",
+        "TWILIO_AUTH_TOKEN",
+        "TWILIO_PHONE"
+      ]
+    },
+    "start": {
+      "dependsOn": ["^db:generate"],
+      "cache": false,
+      "persistent": true,
+      "env": [
+        "GOOGLE_CLIENT_ID",
+        "GOOGLE_CLIENT_SECRET",
+        "TWILIO_ACCOUNT_SID",
+        "TWILIO_AUTH_TOKEN",
+        "TWILIO_PHONE"
+      ]
     },
     "db:generate": {
       "cache": false
@@ -29,7 +53,7 @@
     },
     "db:deploy": {
       "cache": false
-    }, 
+    },
     "db:studio": {
       "cache": false
     }

@@ -1,7 +1,7 @@
 import Redis from 'ioredis';
 import { v4 as uuidv4 } from 'uuid';
-import { MessageFromApi } from '@repo/common/types/fromApi';
-import { MessageFromEngine } from '@repo/common/types/fromEngine';
+import { MessageFromApi } from '@repo/common';
+import { MessageFromEngine } from '@repo/common';
 
 export class RedisManager {
   private client: Redis;
@@ -10,9 +10,9 @@ export class RedisManager {
 
   constructor() {
     this.client = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
-    this.client.connect();
+    console.log('client connected to redis');
     this.publisher = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');
-    this.publisher.connect();
+    console.log('publisher connected to redis');
   }
 
   public static getInstance() {
@@ -22,16 +22,24 @@ export class RedisManager {
     return this.instance;
   }
 
-  public async EngineProcessor(message: MessageFromApi) {
-    return new Promise<MessageFromEngine>((resolve) => {
+  public async EngineProcessor(message: MessageFromApi): Promise<MessageFromEngine> {
+    console.log(message);
+    return new Promise<MessageFromEngine>(async (resolve) => {
       const id = uuidv4();
-      this.client.subscribe(id, (response) => {
-        if (response && typeof response === 'string') {
+      console.log(typeof id)
+      const onMessage = (channel: string, messageStr: string) => {
+        if (channel === id) {
           this.client.unsubscribe(id);
-          resolve(JSON.parse(response));
+          this.client.removeListener('message', onMessage);
+          resolve(JSON.parse(messageStr));
         }
-      });
-      this.publisher.lpush('engineMessages', JSON.stringify({ clientId: id, message }));
+      };
+
+      this.client.on('message', onMessage);
+      await this.client.subscribe(id);
+      console.log(`subscribed to id`, id)
+      await this.publisher.lpush('engineMessages', JSON.stringify({ clientId: id, message }));
+      console.log('pushed to engine from redis')
     });
   }
 

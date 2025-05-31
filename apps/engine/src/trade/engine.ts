@@ -4,8 +4,8 @@ import {
   eventInitialize,
   Orderbook,
   StockBalances,
-} from '@repo/common/types/engine';
-import { MessageFromApi, YesNo } from '@repo/common/types/fromApi';
+} from '@repo/common';
+import { MessageFromApi, YesNo } from '@repo/common';
 import fs from 'fs';
 import { RedisManager } from '../config/redisManager';
 
@@ -14,6 +14,7 @@ export class Engine {
   private balances: Map<string, Balances>;
   private stockBalances: Map<string, StockBalances>;
   private static instance: Engine;
+ 
   constructor() {
     let snapshot = null;
     try {
@@ -52,13 +53,13 @@ export class Engine {
   }
 
   static getInstance() {
-    if (this.instance) {
+    if (!this.instance) {
       this.instance = new Engine();
     }
     return this.instance;
   }
 
-  public process({ message, clientId }: { message: MessageFromApi; clientId: string }) {
+  process({ message, clientId }: { message: MessageFromApi; clientId: string }) {
     switch (message.type) {
       case 'create_user':
         try {

@@ -1,4 +1,4 @@
-import { MessageFromEngine } from "@repo/common/types/fromEngine";
+import { MessageFromEngine } from "@repo/common";
 import Redis from "ioredis";
 
 export class RedisManager {
@@ -7,7 +7,7 @@ export class RedisManager {
 
   constructor() {
     this.client = new Redis(process.env.REDIS_URL || 'redis://localhost:6379')
-    this.client.connect();
+    console.log("redis connected in engine")
   }
 
   public static getInstance() {

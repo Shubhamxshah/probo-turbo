@@ -16,7 +16,10 @@ app.use("/api/v1/trade", tradeRouter);
 
 const PORT = process.env.PORT || 3001;
 
-app.listen(() => {
+app.get("/health", (_, res) => {
+  res.json({message: "hello shubham"})
+})
+app.listen(PORT, () => {
   console.log(`server listening on port ${PORT}`)
 })
 
