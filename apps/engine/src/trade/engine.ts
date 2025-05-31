@@ -8,6 +8,9 @@ import {
 import { MessageFromApi, YesNo } from '@repo/common';
 import fs from 'fs';
 import { RedisManager } from '../config/redisManager';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 export class Engine {
   private orderBook: Map<string, Orderbook>;
@@ -194,7 +197,7 @@ export class Engine {
   }
 
   MintTokens(userId: string, event: string, noOfTokens: number) {
-    const totalAmount = noOfTokens * 2 * 10;
+    const totalAmount = noOfTokens * 10 * 100;
 
     const userBalance = this.balances.get(userId);
     if (!userBalance) {

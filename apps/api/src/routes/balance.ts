@@ -20,7 +20,8 @@ balanceRouter.post('/check', async (req, res) => {
 });
 
 balanceRouter.post('/addfree', async (req, res) => {
-  const { userId, amount } = req.body;
+  let { userId, amount } = req.body;
+  amount *= 100;
 
   const response = await RedisManager.getInstance().EngineProcessor({
     type: 'add_money',
@@ -32,6 +33,22 @@ balanceRouter.post('/addfree', async (req, res) => {
 
   res.status(response.status).json({ message: response.payload.simpleres });
 });
+
+balanceRouter.post("/mint", async (req, res) => {
+  const {userId, noOfTokens, event} = req.body;
+
+  const response = await RedisManager.getInstance().EngineProcessor({
+    type: "mint_tokens", 
+    payload: {
+      userId, 
+      noOfTokens,
+      event
+    }
+  })
+
+  res.status(response.status).json({message: response.payload.simpleres})
+});
+
 
 //TODO: complete razorpay 
 // balanceRouter.post('/createOrder', async (req, res) => {

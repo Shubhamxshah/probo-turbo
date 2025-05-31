@@ -1,18 +1,385 @@
 {
-  "orderBook": [],
-  "stockBalances": [],
+  "orderBook": [
+    [
+      "ethusd100",
+      {
+        "YES": {
+          "bids": {
+            "50": {
+              "total": 0,
+              "orders": []
+            },
+            "100": {
+              "total": 0,
+              "orders": []
+            },
+            "150": {
+              "total": 0,
+              "orders": []
+            },
+            "200": {
+              "total": 0,
+              "orders": []
+            },
+            "250": {
+              "total": 0,
+              "orders": []
+            },
+            "300": {
+              "total": 0,
+              "orders": []
+            },
+            "350": {
+              "total": 0,
+              "orders": []
+            },
+            "400": {
+              "total": 0,
+              "orders": []
+            },
+            "450": {
+              "total": 0,
+              "orders": []
+            },
+            "500": {
+              "total": 0,
+              "orders": []
+            },
+            "550": {
+              "total": 0,
+              "orders": []
+            },
+            "600": {
+              "total": 0,
+              "orders": []
+            },
+            "650": {
+              "total": 0,
+              "orders": []
+            },
+            "700": {
+              "total": 0,
+              "orders": []
+            },
+            "750": {
+              "total": 0,
+              "orders": []
+            },
+            "800": {
+              "total": 0,
+              "orders": []
+            },
+            "850": {
+              "total": 0,
+              "orders": []
+            },
+            "900": {
+              "total": 0,
+              "orders": []
+            },
+            "950": {
+              "total": 0,
+              "orders": []
+            }
+          },
+          "asks": {
+            "50": {
+              "total": 0,
+              "orders": []
+            },
+            "100": {
+              "total": 0,
+              "orders": []
+            },
+            "150": {
+              "total": 0,
+              "orders": []
+            },
+            "200": {
+              "total": 0,
+              "orders": []
+            },
+            "250": {
+              "total": 0,
+              "orders": []
+            },
+            "300": {
+              "total": 0,
+              "orders": []
+            },
+            "350": {
+              "total": 0,
+              "orders": []
+            },
+            "400": {
+              "total": 0,
+              "orders": []
+            },
+            "450": {
+              "total": 0,
+              "orders": []
+            },
+            "500": {
+              "total": 0,
+              "orders": []
+            },
+            "550": {
+              "total": 0,
+              "orders": []
+            },
+            "600": {
+              "total": 0,
+              "orders": []
+            },
+            "650": {
+              "total": 0,
+              "orders": []
+            },
+            "700": {
+              "total": 0,
+              "orders": []
+            },
+            "750": {
+              "total": 3,
+              "orders": [
+                {
+                  "userId": "sbm2",
+                  "quantity": 3
+                }
+              ]
+            },
+            "800": {
+              "total": 0,
+              "orders": []
+            },
+            "850": {
+              "total": 0,
+              "orders": []
+            },
+            "900": {
+              "total": 0,
+              "orders": []
+            },
+            "950": {
+              "total": 0,
+              "orders": []
+            }
+          }
+        },
+        "NO": {
+          "bids": {
+            "50": {
+              "total": 0,
+              "orders": []
+            },
+            "100": {
+              "total": 0,
+              "orders": []
+            },
+            "150": {
+              "total": 0,
+              "orders": []
+            },
+            "200": {
+              "total": 0,
+              "orders": []
+            },
+            "250": {
+              "total": 0,
+              "orders": []
+            },
+            "300": {
+              "total": 0,
+              "orders": []
+            },
+            "350": {
+              "total": 0,
+              "orders": []
+            },
+            "400": {
+              "total": 0,
+              "orders": []
+            },
+            "450": {
+              "total": 0,
+              "orders": []
+            },
+            "500": {
+              "total": 0,
+              "orders": []
+            },
+            "550": {
+              "total": 0,
+              "orders": []
+            },
+            "600": {
+              "total": 0,
+              "orders": []
+            },
+            "650": {
+              "total": 0,
+              "orders": []
+            },
+            "700": {
+              "total": 0,
+              "orders": []
+            },
+            "750": {
+              "total": 0,
+              "orders": []
+            },
+            "800": {
+              "total": 0,
+              "orders": []
+            },
+            "850": {
+              "total": 0,
+              "orders": []
+            },
+            "900": {
+              "total": 0,
+              "orders": []
+            },
+            "950": {
+              "total": 0,
+              "orders": []
+            }
+          },
+          "asks": {
+            "50": {
+              "total": 0,
+              "orders": []
+            },
+            "100": {
+              "total": 0,
+              "orders": []
+            },
+            "150": {
+              "total": 0,
+              "orders": []
+            },
+            "200": {
+              "total": 0,
+              "orders": []
+            },
+            "250": {
+              "total": 0,
+              "orders": []
+            },
+            "300": {
+              "total": 0,
+              "orders": []
+            },
+            "350": {
+              "total": 0,
+              "orders": []
+            },
+            "400": {
+              "total": 0,
+              "orders": []
+            },
+            "450": {
+              "total": 0,
+              "orders": []
+            },
+            "500": {
+              "total": 0,
+              "orders": []
+            },
+            "550": {
+              "total": 0,
+              "orders": []
+            },
+            "600": {
+              "total": 0,
+              "orders": []
+            },
+            "650": {
+              "total": 0,
+              "orders": []
+            },
+            "700": {
+              "total": 0,
+              "orders": []
+            },
+            "750": {
+              "total": 13,
+              "orders": [
+                {
+                  "userId": "sbm2",
+                  "quantity": 10
+                },
+                {
+                  "userId": "sbm2",
+                  "quantity": 3
+                }
+              ]
+            },
+            "800": {
+              "total": 0,
+              "orders": []
+            },
+            "850": {
+              "total": 0,
+              "orders": []
+            },
+            "900": {
+              "total": 0,
+              "orders": []
+            },
+            "950": {
+              "total": 0,
+              "orders": []
+            }
+          }
+        }
+      }
+    ]
+  ],
+  "stockBalances": [
+    [
+      "sbm1",
+      {
+        "ethusd100": {
+          "YES": {
+            "available": 30,
+            "locked": 0
+          },
+          "NO": {
+            "available": 20,
+            "locked": 0
+          }
+        }
+      }
+    ],
+    [
+      "sbm2",
+      {
+        "ethusd100": {
+          "YES": {
+            "available": 0,
+            "locked": 3
+          },
+          "NO": {
+            "available": 0,
+            "locked": 13
+          }
+        }
+      }
+    ]
+  ],
   "balances": [
     [
       "sbm1",
       {
-        "available": 0,
+        "available": 175800,
         "locked": 0
       }
     ],
     [
       "sbm2",
       {
-        "available": 0,
+        "available": 194500,
         "locked": 0
       }
     ]
