@@ -63,9 +63,10 @@ export class Engine {
       case 'create_user':
         try {
           const userId = message.payload.userId;
-          const simpleres = this.createUser(userId);
+          const {message: simpleres, status} = this.createUser(userId);
           RedisManager.getInstance().sendToApi(clientId, {
             type: 'simpleres',
+            status,
             payload: {
               simpleres,
             },
@@ -77,9 +78,10 @@ export class Engine {
       case 'create_event':
         try {
           const eventName = message.payload.eventName;
-          const simpleres = this.createEvent(eventName);
+          const {message:simpleres, status} = this.createEvent(eventName);
           RedisManager.getInstance().sendToApi(clientId, {
             type: 'simpleres',
+            status,
             payload: {
               simpleres,
             },
@@ -91,9 +93,10 @@ export class Engine {
       case 'add_money':
         try {
           const { userId, amount } = message.payload;
-          const simpleres = this.AddMoney(userId, amount);
+          const {message:simpleres, status} = this.AddMoney(userId, amount);
           RedisManager.getInstance().sendToApi(clientId, {
             type: 'simpleres',
+            status,
             payload: {
               simpleres,
             },
@@ -105,9 +108,10 @@ export class Engine {
       case 'mint_tokens':
         try {
           const { userId, event, noOfTokens } = message.payload;
-          const simpleres = this.MintTokens(userId, event, noOfTokens);
+          const {message:simpleres, status} = this.MintTokens(userId, event, noOfTokens);
           RedisManager.getInstance().sendToApi(clientId, {
             type: 'simpleres',
+            status,
             payload: {
               simpleres,
             },
@@ -122,8 +126,9 @@ export class Engine {
           const simpleres = this.sellOrder(userId, event, noOfTokens, type, price);
           RedisManager.getInstance().sendToApi(clientId, {
             type: 'simpleres',
+            status: simpleres.status,
             payload: {
-              simpleres,
+              simpleres: simpleres.message,
             },
           });
         } catch (e) {
@@ -136,8 +141,9 @@ export class Engine {
           const simpleres = this.buyOrder(userId, event, noOfTokens, type, price);
           RedisManager.getInstance().sendToApi(clientId, {
             type: 'simpleres',
+            status: simpleres.status,
             payload: {
-              simpleres,
+              simpleres: simpleres.message,
             },
           });
         } catch (e) {
@@ -177,10 +183,12 @@ export class Engine {
     try {
       if (balances) {
         balances.available += amount; // objects are references, you can mutate it directly
-        return ({message: `added balance ${amount} to ${userId}`, status: 200});
+        return ({ message: `added balance ${amount} to ${userId}`, status: 200 });
       }
+      return ({ message: `user not exist`, status: 400 });
     } catch (error) {
-      return ({message: `user not exist`, status: 400});
+      console.log(error)
+      return ({ message: `user not exist`, status: 400 });
     }
   }
 
@@ -189,11 +197,11 @@ export class Engine {
 
     const userBalance = this.balances.get(userId);
     if (!userBalance) {
-      return `user does not exist`;
+      return { message: `user not exist`, status: 400 };
     }
 
     if (userBalance.available < totalAmount) {
-      return `insufficient balance, can't mint`;
+      return { message: `user has insufficient funds`, status: 400 };
     }
 
     userBalance.available -= totalAmount;
@@ -214,22 +222,25 @@ export class Engine {
     userStocks[event].YES.available += noOfTokens;
     userStocks[event].NO.available += noOfTokens;
 
-    return `minted ${noOfTokens} YES and NO tokens for ${userId} in ${event}`;
+    return {
+      message: `minted ${noOfTokens} YES and NO tokens for ${userId} in ${event}`,
+      status: 200,
+    };
   }
 
   sellOrder(userId: string, event: string, noOfTokens: number, type: YesNo, price: AllowedPrice) {
     const sellerStocks = this.stockBalances.get(userId);
     if (!sellerStocks || !sellerStocks[event]) {
-      return `Invalid order: seller does not own this stock.`;
+      return { message: `Invalid order: seller does not own this stock.`, status: 400 };
     }
 
     if (sellerStocks[event][type].available < noOfTokens) {
-      return `User does not have enough stocks to sell.`;
+      return { message: `User does not have enough stocks to sell.`, status: 400 };
     }
 
     const orderbook = this.orderBook.get(event);
     if (!orderbook) {
-      return `Invalid order: event does not exist in orderbook.`;
+      return { message: `Invalid order: event does not exist in orderbook.`, status: 400 };
     }
 
     const reverseType: YesNo = type === 'YES' ? 'NO' : 'YES';
@@ -316,7 +327,7 @@ export class Engine {
       status = `Order partially matched, remaining ${remainingQuantity} placed on ask book`;
     }
 
-    return status;
+    return { message: `${status}`, status: 200 };
   }
 
   buyOrder(userId: string, event: string, noOfTokens: number, type: YesNo, price: AllowedPrice) {
@@ -324,12 +335,12 @@ export class Engine {
 
     const userBalance = this.balances.get(userId);
     if (!userBalance || userBalance.available < totalCost) {
-      return `Insufficient balance`;
+      return { message: `Insufficient balance`, status: 400 };
     }
 
     const orderbook = this.orderBook.get(event);
     if (!orderbook) {
-      return `Event does not exist`;
+      return { message: `Event does not exist`, status: 200 };
     }
 
     let remainingQuantity = noOfTokens;
@@ -415,6 +426,6 @@ export class Engine {
       status = 'Buy order placed, waiting to match';
     }
 
-    return status;
+    return { message: `${status}`, status: 200 };
   }
 }

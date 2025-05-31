@@ -3,8 +3,8 @@ import { RedisManager } from '../config/redisManager';
 import { createRazorpayInstance } from '../config/razorpay.config';
 import crypto from 'crypto';
 
-const balanceRouter = Router();
-const razorpayInstance = createRazorpayInstance();
+export const balanceRouter:Router = Router();
+// const razorpayInstance = createRazorpayInstance();
 
 balanceRouter.post('/check', async (req, res) => {
   const { userId } = req.body;

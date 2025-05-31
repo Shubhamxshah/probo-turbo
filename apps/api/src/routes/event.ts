@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { RedisManager } from '../config/redisManager';
 
-const eventRouter = Router();
+export const eventRouter:Router = Router();
 
 eventRouter.post("/:event", async (req, res) => {
   const event = req.params.event;

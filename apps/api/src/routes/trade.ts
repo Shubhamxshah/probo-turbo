@@ -2,7 +2,7 @@ import { Router } from 'express';
 import { RedisManager } from '../config/redisManager';
 import { AllowedPrice, allowedPrices } from '@repo/common/types/engine';
 
-const tradeRouter = Router();
+export const tradeRouter:Router = Router();
 
 function isAllowedPrice(value: any): value is AllowedPrice {
   return allowedPrices.includes(value);
@@ -60,5 +60,5 @@ tradeRouter.post('/sell', async (req, res) => {
     },
   });
 
-  res.status(response.status).json({ message: response.message });
+  res.status(response.status).json({ message: response.payload.simpleres });
 });

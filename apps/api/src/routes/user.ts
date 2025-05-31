@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { RedisManager } from '../config/redisManager';
 
-const userRouter = Router();
+export const userRouter:Router = Router();
 
 userRouter.post("/:userId", async (req, res) => {
   const userId = req.params.userId;
