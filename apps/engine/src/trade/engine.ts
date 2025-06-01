@@ -135,6 +135,19 @@ export class Engine {
               simpleres: simpleres.message,
             },
           });
+
+          const currentBook = this.orderBook.get(event);
+          const onlyAsks = {
+            YES: {
+              asks: currentBook!.YES.asks
+            }, 
+            NO: {
+              asks: currentBook!.NO.asks
+            }
+          };
+
+          RedisManager.getInstance().publishMessage(event,onlyAsks);
+
         } catch (e) {
           console.log('error selling stock', e);
         }
@@ -150,6 +163,18 @@ export class Engine {
               simpleres: simpleres.message,
             },
           });
+
+          const currentBook = this.orderBook.get(event);
+          const onlyAsks = {
+            YES: {
+              asks: currentBook!.YES.asks
+            }, 
+            NO: {
+              asks: currentBook!.NO.asks
+            }
+          };
+
+          RedisManager.getInstance().publishMessage(event,onlyAsks);
         } catch (e) {
           console.log('error selling stock', e);
         }

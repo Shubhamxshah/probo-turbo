@@ -9,6 +9,16 @@ export interface Orderbook {
   };
 }
 
+export type WsMessage = {
+  YES: {
+    asks: tradeValues;
+  };
+  NO: {
+    asks: tradeValues;
+  };
+}
+
+
 interface tradeValues {
   '50': PriceValue;
   '100': PriceValue;
