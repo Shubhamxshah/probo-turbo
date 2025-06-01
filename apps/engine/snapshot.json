@@ -129,8 +129,21 @@
               "orders": []
             },
             "550": {
-              "total": 0,
-              "orders": []
+              "total": 12,
+              "orders": [
+                {
+                  "userId": "sbm1",
+                  "quantity": 4
+                },
+                {
+                  "userId": "sbm1",
+                  "quantity": 4
+                },
+                {
+                  "userId": "sbm1",
+                  "quantity": 4
+                }
+              ]
             },
             "600": {
               "total": 0,
@@ -271,8 +284,12 @@
               "orders": []
             },
             "350": {
-              "total": 8,
+              "total": 10,
               "orders": [
+                {
+                  "userId": "sbm1",
+                  "quantity": 2
+                },
                 {
                   "userId": "sbm1",
                   "quantity": 2
@@ -350,12 +367,12 @@
       {
         "ethusd100": {
           "YES": {
-            "available": 33,
-            "locked": 0
+            "available": 21,
+            "locked": 12
           },
           "NO": {
-            "available": 25,
-            "locked": 8
+            "available": 23,
+            "locked": 10
           }
         }
       }

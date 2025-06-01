@@ -11,13 +11,38 @@ export interface Orderbook {
 
 export type WsMessage = {
   YES: {
-    asks: tradeValues;
+    asks: tradeTotal;
   };
   NO: {
-    asks: tradeValues;
+    asks: tradeTotal;
   };
+};
+
+export interface tradeTotal {
+  '50': PriceTotal;
+  '100': PriceTotal;
+  '150': PriceTotal;
+  '200': PriceTotal;
+  '250': PriceTotal;
+  '300': PriceTotal;
+  '350': PriceTotal;
+  '400': PriceTotal;
+  '450': PriceTotal;
+  '500': PriceTotal;
+  '550': PriceTotal;
+  '600': PriceTotal;
+  '650': PriceTotal;
+  '700': PriceTotal;
+  '750': PriceTotal;
+  '800': PriceTotal;
+  '850': PriceTotal;
+  '900': PriceTotal;
+  '950': PriceTotal;
 }
 
+interface PriceTotal {
+  total: number;
+}
 
 interface tradeValues {
   '50': PriceValue;
@@ -149,7 +174,7 @@ export const eventInitialize = {
         orders: [],
       },
     },
-    asks : {
+    asks: {
       '50': {
         total: 0,
         orders: [],
@@ -307,7 +332,7 @@ export const eventInitialize = {
         orders: [],
       },
     },
-    asks : {
+    asks: {
       '50': {
         total: 0,
         orders: [],
@@ -389,9 +414,26 @@ export const eventInitialize = {
 };
 
 export const allowedPrices = [
-  "50", "100", "150", "200", "250", "300", "350", "400", "450", "500",
-  "550", "600", "650", "700", "750", "800", "850", "900", "950"
+  '50',
+  '100',
+  '150',
+  '200',
+  '250',
+  '300',
+  '350',
+  '400',
+  '450',
+  '500',
+  '550',
+  '600',
+  '650',
+  '700',
+  '750',
+  '800',
+  '850',
+  '900',
+  '950',
 ] as const;
 
 // Type derived from the values of the array
-export type AllowedPrice = typeof allowedPrices[number];
+export type AllowedPrice = (typeof allowedPrices)[number];

@@ -1,14 +1,8 @@
-import {
-  AllowedPrice,
-  Balances,
-  eventInitialize,
-  Orderbook,
-  StockBalances,
-} from '@repo/common';
+import { AllowedPrice, Balances, eventInitialize, Orderbook, StockBalances, tradeTotal } from '@repo/common';
 import { MessageFromApi, YesNo } from '@repo/common';
 import fs from 'fs';
 import { RedisManager } from '../config/redisManager';
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -17,7 +11,7 @@ export class Engine {
   private balances: Map<string, Balances>;
   private stockBalances: Map<string, StockBalances>;
   private static instance: Engine;
- 
+
   constructor() {
     let snapshot = null;
     try {
@@ -67,7 +61,7 @@ export class Engine {
       case 'create_user':
         try {
           const userId = message.payload.userId;
-          const {message: simpleres, status} = this.createUser(userId);
+          const { message: simpleres, status } = this.createUser(userId);
           RedisManager.getInstance().sendToApi(clientId, {
             type: 'simpleres',
             status,
@@ -82,7 +76,7 @@ export class Engine {
       case 'create_event':
         try {
           const eventName = message.payload.eventName;
-          const {message:simpleres, status} = this.createEvent(eventName);
+          const { message: simpleres, status } = this.createEvent(eventName);
           RedisManager.getInstance().sendToApi(clientId, {
             type: 'simpleres',
             status,
@@ -97,7 +91,7 @@ export class Engine {
       case 'add_money':
         try {
           const { userId, amount } = message.payload;
-          const {message:simpleres, status} = this.AddMoney(userId, amount);
+          const { message: simpleres, status } = this.AddMoney(userId, amount);
           RedisManager.getInstance().sendToApi(clientId, {
             type: 'simpleres',
             status,
@@ -112,7 +106,7 @@ export class Engine {
       case 'mint_tokens':
         try {
           const { userId, event, noOfTokens } = message.payload;
-          const {message:simpleres, status} = this.MintTokens(userId, event, noOfTokens);
+          const { message: simpleres, status } = this.MintTokens(userId, event, noOfTokens);
           RedisManager.getInstance().sendToApi(clientId, {
             type: 'simpleres',
             status,
@@ -137,17 +131,27 @@ export class Engine {
           });
 
           const currentBook = this.orderBook.get(event);
-          const onlyAsks = {
+
+          const onlyAsksWithTotals = {
             YES: {
-              asks: currentBook!.YES.asks
-            }, 
+              asks: Object.fromEntries(
+                Object.entries(currentBook!.YES.asks).map(([price, data]) => [
+                  price,
+                  { total: data.total },
+                ])
+              ) as unknown as tradeTotal,
+            },
             NO: {
-              asks: currentBook!.NO.asks
-            }
+              asks: Object.fromEntries(
+                Object.entries(currentBook!.NO.asks).map(([price, data]) => [
+                  price,
+                  { total: data.total },
+                ])
+              ) as unknown as tradeTotal,
+            },
           };
 
-          RedisManager.getInstance().publishMessage(event,onlyAsks);
-
+          RedisManager.getInstance().publishMessage(event, onlyAsksWithTotals);
         } catch (e) {
           console.log('error selling stock', e);
         }
@@ -165,16 +169,26 @@ export class Engine {
           });
 
           const currentBook = this.orderBook.get(event);
-          const onlyAsks = {
+          const onlyAsksWithTotals = {
             YES: {
-              asks: currentBook!.YES.asks
-            }, 
+              asks: Object.fromEntries(
+                Object.entries(currentBook!.YES.asks).map(([price, data]) => [
+                  price,
+                  { total: data.total },
+                ])
+              ) as unknown as tradeTotal,
+            },
             NO: {
-              asks: currentBook!.NO.asks
-            }
+              asks: Object.fromEntries(
+                Object.entries(currentBook!.NO.asks).map(([price, data]) => [
+                  price,
+                  { total: data.total },
+                ])
+              ) as unknown as tradeTotal,
+            },
           };
 
-          RedisManager.getInstance().publishMessage(event,onlyAsks);
+          RedisManager.getInstance().publishMessage(event, onlyAsksWithTotals);
         } catch (e) {
           console.log('error selling stock', e);
         }
@@ -212,12 +226,12 @@ export class Engine {
     try {
       if (balances) {
         balances.available += amount; // objects are references, you can mutate it directly
-        return ({ message: `added balance ${amount} to ${userId}`, status: 200 });
+        return { message: `added balance ${amount} to ${userId}`, status: 200 };
       }
-      return ({ message: `user not exist`, status: 400 });
+      return { message: `user not exist`, status: 400 };
     } catch (error) {
-      console.log(error)
-      return ({ message: `user not exist`, status: 400 });
+      console.log(error);
+      return { message: `user not exist`, status: 400 };
     }
   }
 
