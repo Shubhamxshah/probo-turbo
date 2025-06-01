@@ -21,9 +21,21 @@ const subscribeChannel = (room: string) => {
     channelSubscribers.set(room, 1);
     subscriberClient.subscribe(room);
   } else {
-    channelSubscribers.set(room, channelSubscribers.get(room)! + 1)
+    channelSubscribers.set(room, channelSubscribers.get(room)! + 1);
   }
-}
+};
+
+const unsubscribeChannel = (room: string) => {
+  const count = channelSubscribers.get(room);
+  if (count !== undefined) {
+    if (count <= 1) {
+      subscriberClient.unsubscribe(room);
+      channelSubscribers.delete(room);
+    } else {
+      channelSubscribers.set(room, count - 1);
+    }
+  }
+};
 
 wss.on('connection', function (ws) {
   const userId = uuid();
@@ -31,33 +43,40 @@ wss.on('connection', function (ws) {
   UserManager.set(ws, { userId, rooms: [] });
 
   ws.on('message', function message(data) {
-    const parsed = JSON.parse(data.toString());
-    const { type, room } = parsed;
+    try {
+      const parsed = JSON.parse(data.toString());
+      const { type, room } = parsed;
 
-    if (type === 'SUBSCRIBE') {
-      UserManager.get(ws)?.rooms.push(room);
-      subscriberClient.subscribe(room);
-    }
+      if (!type || !room) return;
 
-    if (type === 'UNSUBSCRIBE') {
-      const user = UserManager.get(ws);
-      if (user) {
-        user.rooms = user.rooms.filter(x => x !== room)
-      }
-
-      let roomFound = false;
-      for (const [_, otherUser] of UserManager) {
-        if (otherUser.rooms.includes(room)) {
-          roomFound = true;
+      if (type === 'SUBSCRIBE') {
+        const user = UserManager.get(ws);
+        if (user && !user.rooms.includes(room)) {
+          user.rooms.push(room);
+          subscribeChannel(room);
         }
       }
-      if (!roomFound) {
-        subscriberClient.unsubscribe(room);
+
+      if (type === 'UNSUBSCRIBE') {
+        const user = UserManager.get(ws);
+        if (user) {
+          user.rooms = user.rooms.filter((x) => x !== room);
+        }
+
+        unsubscribeChannel(room);
       }
+    } catch (err) {
+      console.error('failed to parse messaege', err);
     }
   });
 
   ws.on('close', () => {
+    const user = UserManager.get(ws);
+    if (user) {
+      for (const room of user.rooms) {
+        unsubscribeChannel(room);
+      }
+    }
     UserManager.delete(ws);
   });
 });
