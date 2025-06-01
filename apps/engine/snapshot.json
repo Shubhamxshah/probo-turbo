@@ -62,8 +62,13 @@
               "orders": []
             },
             "750": {
-              "total": 0,
-              "orders": []
+              "total": 3,
+              "orders": [
+                {
+                  "userId": "sbm1",
+                  "quantity": 3
+                }
+              ]
             },
             "800": {
               "total": 0,
@@ -140,13 +145,8 @@
               "orders": []
             },
             "750": {
-              "total": 3,
-              "orders": [
-                {
-                  "userId": "sbm2",
-                  "quantity": 3
-                }
-              ]
+              "total": 0,
+              "orders": []
             },
             "800": {
               "total": 0,
@@ -303,17 +303,8 @@
               "orders": []
             },
             "750": {
-              "total": 13,
-              "orders": [
-                {
-                  "userId": "sbm2",
-                  "quantity": 10
-                },
-                {
-                  "userId": "sbm2",
-                  "quantity": 3
-                }
-              ]
+              "total": 0,
+              "orders": []
             },
             "800": {
               "total": 0,
@@ -342,11 +333,11 @@
       {
         "ethusd100": {
           "YES": {
-            "available": 30,
+            "available": 33,
             "locked": 0
           },
           "NO": {
-            "available": 20,
+            "available": 33,
             "locked": 0
           }
         }
@@ -358,11 +349,11 @@
         "ethusd100": {
           "YES": {
             "available": 0,
-            "locked": 3
+            "locked": 0
           },
           "NO": {
             "available": 0,
-            "locked": 13
+            "locked": 0
           }
         }
       }
@@ -372,14 +363,14 @@
     [
       "sbm1",
       {
-        "available": 175800,
-        "locked": 0
+        "available": 161550,
+        "locked": 2250
       }
     ],
     [
       "sbm2",
       {
-        "available": 194500,
+        "available": 206500,
         "locked": 0
       }
     ]
