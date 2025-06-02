@@ -129,7 +129,7 @@
               "orders": []
             },
             "550": {
-              "total": 12,
+              "total": 31,
               "orders": [
                 {
                   "userId": "sbm1",
@@ -142,6 +142,46 @@
                 {
                   "userId": "sbm1",
                   "quantity": 4
+                },
+                {
+                  "userId": "sbm1",
+                  "quantity": 4
+                },
+                {
+                  "userId": "sbm1",
+                  "quantity": 4
+                },
+                {
+                  "userId": "sbm1",
+                  "quantity": 4
+                },
+                {
+                  "userId": "sbm1",
+                  "quantity": 1
+                },
+                {
+                  "userId": "sbm1",
+                  "quantity": 1
+                },
+                {
+                  "userId": "sbm1",
+                  "quantity": 1
+                },
+                {
+                  "userId": "sbm1",
+                  "quantity": 1
+                },
+                {
+                  "userId": "sbm1",
+                  "quantity": 1
+                },
+                {
+                  "userId": "sbm1",
+                  "quantity": 1
+                },
+                {
+                  "userId": "sbm1",
+                  "quantity": 1
                 }
               ]
             },
@@ -367,8 +407,8 @@
       {
         "ethusd100": {
           "YES": {
-            "available": 21,
-            "locked": 12
+            "available": 2,
+            "locked": 31
           },
           "NO": {
             "available": 23,

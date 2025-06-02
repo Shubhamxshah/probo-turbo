@@ -18,31 +18,7 @@ export type WsMessage = {
   };
 };
 
-export interface tradeTotal {
-  '50': PriceTotal;
-  '100': PriceTotal;
-  '150': PriceTotal;
-  '200': PriceTotal;
-  '250': PriceTotal;
-  '300': PriceTotal;
-  '350': PriceTotal;
-  '400': PriceTotal;
-  '450': PriceTotal;
-  '500': PriceTotal;
-  '550': PriceTotal;
-  '600': PriceTotal;
-  '650': PriceTotal;
-  '700': PriceTotal;
-  '750': PriceTotal;
-  '800': PriceTotal;
-  '850': PriceTotal;
-  '900': PriceTotal;
-  '950': PriceTotal;
-}
-
-interface PriceTotal {
-  total: number;
-}
+export type tradeTotal = Record<string, number>
 
 interface tradeValues {
   '50': PriceValue;

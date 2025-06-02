@@ -137,17 +137,17 @@ export class Engine {
               asks: Object.fromEntries(
                 Object.entries(currentBook!.YES.asks).map(([price, data]) => [
                   price,
-                  { total: data.total },
+                data.total,
                 ])
-              ) as unknown as tradeTotal,
+              ) as Record<string,number>,
             },
             NO: {
               asks: Object.fromEntries(
                 Object.entries(currentBook!.NO.asks).map(([price, data]) => [
                   price,
-                  { total: data.total },
+                 data.total,
                 ])
-              ) as unknown as tradeTotal,
+              ) as Record<string, number>,
             },
           };
 
@@ -174,17 +174,17 @@ export class Engine {
               asks: Object.fromEntries(
                 Object.entries(currentBook!.YES.asks).map(([price, data]) => [
                   price,
-                  { total: data.total },
+                 data.total,
                 ])
-              ) as unknown as tradeTotal,
+              ) as Record<string, number>,
             },
             NO: {
               asks: Object.fromEntries(
                 Object.entries(currentBook!.NO.asks).map(([price, data]) => [
                   price,
-                  { total: data.total },
+                  data.total,
                 ])
-              ) as unknown as tradeTotal,
+              ) as Record<string, number>,
             },
           };
 
