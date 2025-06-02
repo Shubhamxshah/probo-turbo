@@ -153,8 +153,10 @@ exports.Prisma.TransactionScalarFieldEnum = {
 exports.Prisma.StockScalarFieldEnum = {
   id: 'id',
   event: 'event',
-  Available: 'Available',
-  locked: 'locked',
+  yes_available: 'yes_available',
+  yes_locked: 'yes_locked',
+  no_available: 'no_available',
+  no_locked: 'no_locked',
   userId: 'userId'
 };
 

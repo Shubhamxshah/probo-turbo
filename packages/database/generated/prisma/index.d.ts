@@ -4957,72 +4957,92 @@ export namespace Prisma {
   }
 
   export type StockAvgAggregateOutputType = {
-    Available: number | null
-    locked: number | null
+    yes_available: number | null
+    yes_locked: number | null
+    no_available: number | null
+    no_locked: number | null
   }
 
   export type StockSumAggregateOutputType = {
-    Available: number | null
-    locked: number | null
+    yes_available: number | null
+    yes_locked: number | null
+    no_available: number | null
+    no_locked: number | null
   }
 
   export type StockMinAggregateOutputType = {
     id: string | null
     event: string | null
-    Available: number | null
-    locked: number | null
+    yes_available: number | null
+    yes_locked: number | null
+    no_available: number | null
+    no_locked: number | null
     userId: string | null
   }
 
   export type StockMaxAggregateOutputType = {
     id: string | null
     event: string | null
-    Available: number | null
-    locked: number | null
+    yes_available: number | null
+    yes_locked: number | null
+    no_available: number | null
+    no_locked: number | null
     userId: string | null
   }
 
   export type StockCountAggregateOutputType = {
     id: number
     event: number
-    Available: number
-    locked: number
+    yes_available: number
+    yes_locked: number
+    no_available: number
+    no_locked: number
     userId: number
     _all: number
   }
 
 
   export type StockAvgAggregateInputType = {
-    Available?: true
-    locked?: true
+    yes_available?: true
+    yes_locked?: true
+    no_available?: true
+    no_locked?: true
   }
 
   export type StockSumAggregateInputType = {
-    Available?: true
-    locked?: true
+    yes_available?: true
+    yes_locked?: true
+    no_available?: true
+    no_locked?: true
   }
 
   export type StockMinAggregateInputType = {
     id?: true
     event?: true
-    Available?: true
-    locked?: true
+    yes_available?: true
+    yes_locked?: true
+    no_available?: true
+    no_locked?: true
     userId?: true
   }
 
   export type StockMaxAggregateInputType = {
     id?: true
     event?: true
-    Available?: true
-    locked?: true
+    yes_available?: true
+    yes_locked?: true
+    no_available?: true
+    no_locked?: true
     userId?: true
   }
 
   export type StockCountAggregateInputType = {
     id?: true
     event?: true
-    Available?: true
-    locked?: true
+    yes_available?: true
+    yes_locked?: true
+    no_available?: true
+    no_locked?: true
     userId?: true
     _all?: true
   }
@@ -5116,8 +5136,10 @@ export namespace Prisma {
   export type StockGroupByOutputType = {
     id: string
     event: string
-    Available: number
-    locked: number
+    yes_available: number
+    yes_locked: number
+    no_available: number
+    no_locked: number
     userId: string
     _count: StockCountAggregateOutputType | null
     _avg: StockAvgAggregateOutputType | null
@@ -5143,8 +5165,10 @@ export namespace Prisma {
   export type StockSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     event?: boolean
-    Available?: boolean
-    locked?: boolean
+    yes_available?: boolean
+    yes_locked?: boolean
+    no_available?: boolean
+    no_locked?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stock"]>
@@ -5152,8 +5176,10 @@ export namespace Prisma {
   export type StockSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     event?: boolean
-    Available?: boolean
-    locked?: boolean
+    yes_available?: boolean
+    yes_locked?: boolean
+    no_available?: boolean
+    no_locked?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stock"]>
@@ -5161,8 +5187,10 @@ export namespace Prisma {
   export type StockSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     event?: boolean
-    Available?: boolean
-    locked?: boolean
+    yes_available?: boolean
+    yes_locked?: boolean
+    no_available?: boolean
+    no_locked?: boolean
     userId?: boolean
     user?: boolean | UserDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["stock"]>
@@ -5170,12 +5198,14 @@ export namespace Prisma {
   export type StockSelectScalar = {
     id?: boolean
     event?: boolean
-    Available?: boolean
-    locked?: boolean
+    yes_available?: boolean
+    yes_locked?: boolean
+    no_available?: boolean
+    no_locked?: boolean
     userId?: boolean
   }
 
-  export type StockOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "event" | "Available" | "locked" | "userId", ExtArgs["result"]["stock"]>
+  export type StockOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "event" | "yes_available" | "yes_locked" | "no_available" | "no_locked" | "userId", ExtArgs["result"]["stock"]>
   export type StockInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
   }
@@ -5194,8 +5224,10 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       event: string
-      Available: number
-      locked: number
+      yes_available: number
+      yes_locked: number
+      no_available: number
+      no_locked: number
       userId: string
     }, ExtArgs["result"]["stock"]>
     composites: {}
@@ -5623,8 +5655,10 @@ export namespace Prisma {
   interface StockFieldRefs {
     readonly id: FieldRef<"Stock", 'String'>
     readonly event: FieldRef<"Stock", 'String'>
-    readonly Available: FieldRef<"Stock", 'Int'>
-    readonly locked: FieldRef<"Stock", 'Int'>
+    readonly yes_available: FieldRef<"Stock", 'Int'>
+    readonly yes_locked: FieldRef<"Stock", 'Int'>
+    readonly no_available: FieldRef<"Stock", 'Int'>
+    readonly no_locked: FieldRef<"Stock", 'Int'>
     readonly userId: FieldRef<"Stock", 'String'>
   }
     
@@ -9363,8 +9397,10 @@ export namespace Prisma {
   export const StockScalarFieldEnum: {
     id: 'id',
     event: 'event',
-    Available: 'Available',
-    locked: 'locked',
+    yes_available: 'yes_available',
+    yes_locked: 'yes_locked',
+    no_available: 'no_available',
+    no_locked: 'no_locked',
     userId: 'userId'
   };
 
@@ -9756,8 +9792,10 @@ export namespace Prisma {
     NOT?: StockWhereInput | StockWhereInput[]
     id?: StringFilter<"Stock"> | string
     event?: StringFilter<"Stock"> | string
-    Available?: IntFilter<"Stock"> | number
-    locked?: IntFilter<"Stock"> | number
+    yes_available?: IntFilter<"Stock"> | number
+    yes_locked?: IntFilter<"Stock"> | number
+    no_available?: IntFilter<"Stock"> | number
+    no_locked?: IntFilter<"Stock"> | number
     userId?: StringFilter<"Stock"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }
@@ -9765,8 +9803,10 @@ export namespace Prisma {
   export type StockOrderByWithRelationInput = {
     id?: SortOrder
     event?: SortOrder
-    Available?: SortOrder
-    locked?: SortOrder
+    yes_available?: SortOrder
+    yes_locked?: SortOrder
+    no_available?: SortOrder
+    no_locked?: SortOrder
     userId?: SortOrder
     user?: UserOrderByWithRelationInput
   }
@@ -9777,8 +9817,10 @@ export namespace Prisma {
     AND?: StockWhereInput | StockWhereInput[]
     OR?: StockWhereInput[]
     NOT?: StockWhereInput | StockWhereInput[]
-    Available?: IntFilter<"Stock"> | number
-    locked?: IntFilter<"Stock"> | number
+    yes_available?: IntFilter<"Stock"> | number
+    yes_locked?: IntFilter<"Stock"> | number
+    no_available?: IntFilter<"Stock"> | number
+    no_locked?: IntFilter<"Stock"> | number
     userId?: StringFilter<"Stock"> | string
     user?: XOR<UserScalarRelationFilter, UserWhereInput>
   }, "id" | "event">
@@ -9786,8 +9828,10 @@ export namespace Prisma {
   export type StockOrderByWithAggregationInput = {
     id?: SortOrder
     event?: SortOrder
-    Available?: SortOrder
-    locked?: SortOrder
+    yes_available?: SortOrder
+    yes_locked?: SortOrder
+    no_available?: SortOrder
+    no_locked?: SortOrder
     userId?: SortOrder
     _count?: StockCountOrderByAggregateInput
     _avg?: StockAvgOrderByAggregateInput
@@ -9802,8 +9846,10 @@ export namespace Prisma {
     NOT?: StockScalarWhereWithAggregatesInput | StockScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Stock"> | string
     event?: StringWithAggregatesFilter<"Stock"> | string
-    Available?: IntWithAggregatesFilter<"Stock"> | number
-    locked?: IntWithAggregatesFilter<"Stock"> | number
+    yes_available?: IntWithAggregatesFilter<"Stock"> | number
+    yes_locked?: IntWithAggregatesFilter<"Stock"> | number
+    no_available?: IntWithAggregatesFilter<"Stock"> | number
+    no_locked?: IntWithAggregatesFilter<"Stock"> | number
     userId?: StringWithAggregatesFilter<"Stock"> | string
   }
 
@@ -10260,55 +10306,69 @@ export namespace Prisma {
   export type StockCreateInput = {
     id?: string
     event: string
-    Available: number
-    locked: number
+    yes_available: number
+    yes_locked: number
+    no_available: number
+    no_locked: number
     user: UserCreateNestedOneWithoutStocksInput
   }
 
   export type StockUncheckedCreateInput = {
     id?: string
     event: string
-    Available: number
-    locked: number
+    yes_available: number
+    yes_locked: number
+    no_available: number
+    no_locked: number
     userId: string
   }
 
   export type StockUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     event?: StringFieldUpdateOperationsInput | string
-    Available?: IntFieldUpdateOperationsInput | number
-    locked?: IntFieldUpdateOperationsInput | number
+    yes_available?: IntFieldUpdateOperationsInput | number
+    yes_locked?: IntFieldUpdateOperationsInput | number
+    no_available?: IntFieldUpdateOperationsInput | number
+    no_locked?: IntFieldUpdateOperationsInput | number
     user?: UserUpdateOneRequiredWithoutStocksNestedInput
   }
 
   export type StockUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     event?: StringFieldUpdateOperationsInput | string
-    Available?: IntFieldUpdateOperationsInput | number
-    locked?: IntFieldUpdateOperationsInput | number
+    yes_available?: IntFieldUpdateOperationsInput | number
+    yes_locked?: IntFieldUpdateOperationsInput | number
+    no_available?: IntFieldUpdateOperationsInput | number
+    no_locked?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
   }
 
   export type StockCreateManyInput = {
     id?: string
     event: string
-    Available: number
-    locked: number
+    yes_available: number
+    yes_locked: number
+    no_available: number
+    no_locked: number
     userId: string
   }
 
   export type StockUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     event?: StringFieldUpdateOperationsInput | string
-    Available?: IntFieldUpdateOperationsInput | number
-    locked?: IntFieldUpdateOperationsInput | number
+    yes_available?: IntFieldUpdateOperationsInput | number
+    yes_locked?: IntFieldUpdateOperationsInput | number
+    no_available?: IntFieldUpdateOperationsInput | number
+    no_locked?: IntFieldUpdateOperationsInput | number
   }
 
   export type StockUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     event?: StringFieldUpdateOperationsInput | string
-    Available?: IntFieldUpdateOperationsInput | number
-    locked?: IntFieldUpdateOperationsInput | number
+    yes_available?: IntFieldUpdateOperationsInput | number
+    yes_locked?: IntFieldUpdateOperationsInput | number
+    no_available?: IntFieldUpdateOperationsInput | number
+    no_locked?: IntFieldUpdateOperationsInput | number
     userId?: StringFieldUpdateOperationsInput | string
   }
 
@@ -10906,35 +10966,45 @@ export namespace Prisma {
   export type StockCountOrderByAggregateInput = {
     id?: SortOrder
     event?: SortOrder
-    Available?: SortOrder
-    locked?: SortOrder
+    yes_available?: SortOrder
+    yes_locked?: SortOrder
+    no_available?: SortOrder
+    no_locked?: SortOrder
     userId?: SortOrder
   }
 
   export type StockAvgOrderByAggregateInput = {
-    Available?: SortOrder
-    locked?: SortOrder
+    yes_available?: SortOrder
+    yes_locked?: SortOrder
+    no_available?: SortOrder
+    no_locked?: SortOrder
   }
 
   export type StockMaxOrderByAggregateInput = {
     id?: SortOrder
     event?: SortOrder
-    Available?: SortOrder
-    locked?: SortOrder
+    yes_available?: SortOrder
+    yes_locked?: SortOrder
+    no_available?: SortOrder
+    no_locked?: SortOrder
     userId?: SortOrder
   }
 
   export type StockMinOrderByAggregateInput = {
     id?: SortOrder
     event?: SortOrder
-    Available?: SortOrder
-    locked?: SortOrder
+    yes_available?: SortOrder
+    yes_locked?: SortOrder
+    no_available?: SortOrder
+    no_locked?: SortOrder
     userId?: SortOrder
   }
 
   export type StockSumOrderByAggregateInput = {
-    Available?: SortOrder
-    locked?: SortOrder
+    yes_available?: SortOrder
+    yes_locked?: SortOrder
+    no_available?: SortOrder
+    no_locked?: SortOrder
   }
 
   export type SessionCountOrderByAggregateInput = {
@@ -11674,15 +11744,19 @@ export namespace Prisma {
   export type StockCreateWithoutUserInput = {
     id?: string
     event: string
-    Available: number
-    locked: number
+    yes_available: number
+    yes_locked: number
+    no_available: number
+    no_locked: number
   }
 
   export type StockUncheckedCreateWithoutUserInput = {
     id?: string
     event: string
-    Available: number
-    locked: number
+    yes_available: number
+    yes_locked: number
+    no_available: number
+    no_locked: number
   }
 
   export type StockCreateOrConnectWithoutUserInput = {
@@ -11829,8 +11903,10 @@ export namespace Prisma {
     NOT?: StockScalarWhereInput | StockScalarWhereInput[]
     id?: StringFilter<"Stock"> | string
     event?: StringFilter<"Stock"> | string
-    Available?: IntFilter<"Stock"> | number
-    locked?: IntFilter<"Stock"> | number
+    yes_available?: IntFilter<"Stock"> | number
+    yes_locked?: IntFilter<"Stock"> | number
+    no_available?: IntFilter<"Stock"> | number
+    no_locked?: IntFilter<"Stock"> | number
     userId?: StringFilter<"Stock"> | string
   }
 
@@ -12315,8 +12391,10 @@ export namespace Prisma {
   export type StockCreateManyUserInput = {
     id?: string
     event: string
-    Available: number
-    locked: number
+    yes_available: number
+    yes_locked: number
+    no_available: number
+    no_locked: number
   }
 
   export type TransactionCreateManyUserInput = {
@@ -12407,22 +12485,28 @@ export namespace Prisma {
   export type StockUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     event?: StringFieldUpdateOperationsInput | string
-    Available?: IntFieldUpdateOperationsInput | number
-    locked?: IntFieldUpdateOperationsInput | number
+    yes_available?: IntFieldUpdateOperationsInput | number
+    yes_locked?: IntFieldUpdateOperationsInput | number
+    no_available?: IntFieldUpdateOperationsInput | number
+    no_locked?: IntFieldUpdateOperationsInput | number
   }
 
   export type StockUncheckedUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     event?: StringFieldUpdateOperationsInput | string
-    Available?: IntFieldUpdateOperationsInput | number
-    locked?: IntFieldUpdateOperationsInput | number
+    yes_available?: IntFieldUpdateOperationsInput | number
+    yes_locked?: IntFieldUpdateOperationsInput | number
+    no_available?: IntFieldUpdateOperationsInput | number
+    no_locked?: IntFieldUpdateOperationsInput | number
   }
 
   export type StockUncheckedUpdateManyWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     event?: StringFieldUpdateOperationsInput | string
-    Available?: IntFieldUpdateOperationsInput | number
-    locked?: IntFieldUpdateOperationsInput | number
+    yes_available?: IntFieldUpdateOperationsInput | number
+    yes_locked?: IntFieldUpdateOperationsInput | number
+    no_available?: IntFieldUpdateOperationsInput | number
+    no_locked?: IntFieldUpdateOperationsInput | number
   }
 
   export type TransactionUpdateWithoutUserInput = {

@@ -5,4 +5,13 @@ export type ArchiverMessage = {
     available: number;
     locked: number;
   };
+} | {
+  type: "mint";
+  payload: {
+    userId: string,
+    event: string, 
+    balanceAvailable: number, 
+    yesStockAvailable: number, 
+    noStockAvailable: number
+  }
 };

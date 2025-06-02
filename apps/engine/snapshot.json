@@ -439,6 +439,21 @@
           }
         }
       }
+    ],
+    [
+      "3qBxWjRgR2Y2g2kiB3ck6cxHavxajPN5",
+      {
+        "ethusd100": {
+          "YES": {
+            "available": 50,
+            "locked": 0
+          },
+          "NO": {
+            "available": 50,
+            "locked": 0
+          }
+        }
+      }
     ]
   ],
   "balances": [
@@ -459,7 +474,7 @@
     [
       "3qBxWjRgR2Y2g2kiB3ck6cxHavxajPN5",
       {
-        "available": 100000,
+        "available": 50000,
         "locked": 0
       }
     ]

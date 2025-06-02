@@ -99,18 +99,17 @@ export class Engine {
               simpleres,
             },
           });
-          
+
           const available = this.balances.get(userId)!.available;
           const locked = this.balances.get(userId)!.locked;
           RedisManager.getInstance().pushToArchiver({
-            type: "balance", 
+            type: 'balance',
             payload: {
-              userId, 
-              available, 
-              locked
-            }
-          })
-          
+              userId,
+              available,
+              locked,
+            },
+          });
         } catch (error) {
           console.log('error adding money', error);
         }
@@ -141,6 +140,8 @@ export class Engine {
               simpleres: simpleres.message,
             },
           });
+
+          //TODO: send to archiver
         } catch (e) {
           console.log('error selling stock', e);
         }
@@ -156,6 +157,7 @@ export class Engine {
               simpleres: simpleres.message,
             },
           });
+          //TODO: send to archiver
         } catch (e) {
           console.log('error selling stock', e);
         }
@@ -251,6 +253,17 @@ export class Engine {
 
     userStocks[event].YES.available += noOfTokens;
     userStocks[event].NO.available += noOfTokens;
+
+    RedisManager.getInstance().pushToArchiver({
+      type: 'mint',
+      payload: {
+        userId,
+        event,
+        balanceAvailable: userBalance.available, 
+        yesStockAvailable: userStocks[event].YES.available, 
+        noStockAvailable: userStocks[event].NO.available
+      },
+    });
 
     return {
       message: `minted ${noOfTokens} YES and NO tokens for ${userId} in ${event}`,
@@ -360,7 +373,6 @@ export class Engine {
     // send event to websocket
     const onlyAsksWithTotals = this.generateAsks(event);
     RedisManager.getInstance().publishMessage(event, onlyAsksWithTotals!);
-
     return { message: `${status}`, status: 200 };
   }
 

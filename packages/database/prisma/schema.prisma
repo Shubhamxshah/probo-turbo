@@ -61,8 +61,10 @@ enum YesNo {
 model Stock {
   id              String @id @default(uuid())
   event           String @unique
-  Available       Int 
-  locked          Int
+  yes_available       Int 
+  yes_locked          Int
+  no_available        Int 
+  no_locked           Int
   userId          String
   user            User    @relation(fields: [userId], references: [id], onDelete: Cascade)
   }

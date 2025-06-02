@@ -14,16 +14,23 @@ export class Archiver {
   }
 
   process(message: ArchiverMessage) {
-    if (!message.type) {
+    const { type, payload } = message;
+    if (!type || !payload) {
       return;
     }
 
-    switch (message.type) {
-      case 'balance':
-        const { payload } = message;
+    switch (type) {
+      case 'balance': {
         const { userId, available, locked } = payload;
         this.UpdateBalance(userId, available, locked);
         break;
+      }
+
+      case 'mint': {
+        const { userId, event, balanceAvailable, yesStockAvailable, noStockAvailable } = payload;
+        this.MintStocks(userId, event, balanceAvailable, yesStockAvailable, noStockAvailable);
+        break;
+      }
     }
   }
 
@@ -47,4 +54,34 @@ export class Archiver {
       `balance of ${userId} updated or created, available: ${available} & locked: ${locked}`
     );
   }
+
+  async MintStocks(userId: string, event: string, balanceAvailable: number, yesStockAvailable: number, noStockAvailable: number) {
+    await prisma.balance.update({
+      where: {
+        userId,
+      },
+      data: {
+        available: balanceAvailable,
+      },
+    });
+
+    await prisma.stock.upsert({
+      where: {
+        event,
+      },
+      update: {
+        yes_available: yesStockAvailable, 
+        no_available: noStockAvailable
+      },
+      create: {
+        yes_available: yesStockAvailable,
+        no_available: noStockAvailable,
+        yes_locked: 0,
+        no_locked: 0,
+        event, 
+        userId
+      }
+    });
+  }
 }
+
