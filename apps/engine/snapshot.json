@@ -129,7 +129,7 @@
               "orders": []
             },
             "550": {
-              "total": 31,
+              "total": 33,
               "orders": [
                 {
                   "userId": "sbm1",
@@ -154,6 +154,14 @@
                 {
                   "userId": "sbm1",
                   "quantity": 4
+                },
+                {
+                  "userId": "sbm1",
+                  "quantity": 1
+                },
+                {
+                  "userId": "sbm1",
+                  "quantity": 1
                 },
                 {
                   "userId": "sbm1",
@@ -407,8 +415,8 @@
       {
         "ethusd100": {
           "YES": {
-            "available": 2,
-            "locked": 31
+            "available": 0,
+            "locked": 33
           },
           "NO": {
             "available": 23,

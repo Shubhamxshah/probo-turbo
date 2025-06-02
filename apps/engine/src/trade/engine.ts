@@ -129,9 +129,6 @@ export class Engine {
               simpleres: simpleres.message,
             },
           });
-
-          const onlyAsksWithTotals = this.generateAsks(event);
-          RedisManager.getInstance().publishMessage(event, onlyAsksWithTotals!);
         } catch (e) {
           console.log('error selling stock', e);
         }
@@ -348,6 +345,10 @@ export class Engine {
       status = `Order partially matched, remaining ${remainingQuantity} placed on ask book`;
     }
 
+    // send event to websocket
+    const onlyAsksWithTotals = this.generateAsks(event);
+    RedisManager.getInstance().publishMessage(event, onlyAsksWithTotals!);
+
     return { message: `${status}`, status: 200 };
   }
 
@@ -446,6 +447,10 @@ export class Engine {
 
       status = 'Buy order placed, waiting to match';
     }
+
+    // send event to websocket
+    const onlyAsksWithTotals = this.generateAsks(event);
+    RedisManager.getInstance().publishMessage(event, onlyAsksWithTotals!);
 
     return { message: `${status}`, status: 200 };
   }
