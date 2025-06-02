@@ -10135,15 +10135,15 @@ export namespace Prisma {
 
   export type BalanceCreateInput = {
     id?: string
-    available: number
-    locked: number
+    available?: number
+    locked?: number
     user: UserCreateNestedOneWithoutBalanceInput
   }
 
   export type BalanceUncheckedCreateInput = {
     id?: string
-    available: number
-    locked: number
+    available?: number
+    locked?: number
     userId: string
   }
 
@@ -10163,8 +10163,8 @@ export namespace Prisma {
 
   export type BalanceCreateManyInput = {
     id?: string
-    available: number
-    locked: number
+    available?: number
+    locked?: number
     userId: string
   }
 
@@ -11727,14 +11727,14 @@ export namespace Prisma {
 
   export type BalanceCreateWithoutUserInput = {
     id?: string
-    available: number
-    locked: number
+    available?: number
+    locked?: number
   }
 
   export type BalanceUncheckedCreateWithoutUserInput = {
     id?: string
-    available: number
-    locked: number
+    available?: number
+    locked?: number
   }
 
   export type BalanceCreateOrConnectWithoutUserInput = {

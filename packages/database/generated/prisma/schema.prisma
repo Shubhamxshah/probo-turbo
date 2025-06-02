@@ -31,8 +31,8 @@ model User {
 
 model Balance {
   id        String @id @default(uuid())
-  available Int
-  locked    Int
+  available Int    @default(0)
+  locked    Int    @default(0)
   userId    String @unique
   user      User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 }

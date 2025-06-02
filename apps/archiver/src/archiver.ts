@@ -28,16 +28,23 @@ export class Archiver {
   }
 
   async UpdateBalance(userId: string, available: number, locked: number) {
-    await prisma.balance.update({
+    await prisma.balance.upsert({
       where: {
         userId,
       },
-      data: {
+      update: {
+        available,
+        locked,
+      },
+      create: {
+        userId,
         available,
         locked,
       },
     });
-    console.log(`balance of ${userId} updated, available: ${available} & locked: ${locked}`);
-    return;
+
+    console.log(
+      `balance of ${userId} updated or created, available: ${available} & locked: ${locked}`
+    );
   }
 }
