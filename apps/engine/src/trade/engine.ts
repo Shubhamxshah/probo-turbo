@@ -1,4 +1,4 @@
-import { AllowedPrice, Balances, eventInitialize, Orderbook, StockBalances, tradeTotal } from '@repo/common';
+import { AllowedPrice, Balances, eventInitialize, Orderbook, StockBalances } from '@repo/common';
 import { MessageFromApi, YesNo } from '@repo/common';
 import fs from 'fs';
 import { RedisManager } from '../config/redisManager';
@@ -130,28 +130,8 @@ export class Engine {
             },
           });
 
-          const currentBook = this.orderBook.get(event);
-
-          const onlyAsksWithTotals = {
-            YES: {
-              asks: Object.fromEntries(
-                Object.entries(currentBook!.YES.asks).map(([price, data]) => [
-                  price,
-                data.total,
-                ])
-              ) as Record<string,number>,
-            },
-            NO: {
-              asks: Object.fromEntries(
-                Object.entries(currentBook!.NO.asks).map(([price, data]) => [
-                  price,
-                 data.total,
-                ])
-              ) as Record<string, number>,
-            },
-          };
-
-          RedisManager.getInstance().publishMessage(event, onlyAsksWithTotals);
+          const onlyAsksWithTotals = this.generateAsks(event);
+          RedisManager.getInstance().publishMessage(event, onlyAsksWithTotals!);
         } catch (e) {
           console.log('error selling stock', e);
         }
@@ -168,27 +148,8 @@ export class Engine {
             },
           });
 
-          const currentBook = this.orderBook.get(event);
-          const onlyAsksWithTotals = {
-            YES: {
-              asks: Object.fromEntries(
-                Object.entries(currentBook!.YES.asks).map(([price, data]) => [
-                  price,
-                 data.total,
-                ])
-              ) as Record<string, number>,
-            },
-            NO: {
-              asks: Object.fromEntries(
-                Object.entries(currentBook!.NO.asks).map(([price, data]) => [
-                  price,
-                  data.total,
-                ])
-              ) as Record<string, number>,
-            },
-          };
-
-          RedisManager.getInstance().publishMessage(event, onlyAsksWithTotals);
+          const onlyAsksWithTotals = this.generateAsks(event);
+          RedisManager.getInstance().publishMessage(event, onlyAsksWithTotals!);
         } catch (e) {
           console.log('error selling stock', e);
         }
@@ -196,6 +157,23 @@ export class Engine {
     }
   }
 
+  generateAsks(event: string) {
+    const currentBook = this.orderBook.get(event);
+    if (!currentBook) return null;
+
+    const result: Record<YesNo, { asks: Record<string, number> }> = {
+      YES: { asks: {} },
+      NO: { asks: {} },
+    };
+
+    (['YES', 'NO'] as YesNo[]).forEach((type) => {
+      result[type].asks = Object.fromEntries(
+        Object.entries(currentBook[type].asks).map(([price, data]) => [price, data.total])
+      );
+    });
+
+    return result;
+  }
   createUser(userId: string) {
     try {
       this.balances.set(userId, {
