@@ -132,6 +132,32 @@ exports.Prisma.UserScalarFieldEnum = {
   phoneNumberVerified: 'phoneNumberVerified'
 };
 
+exports.Prisma.BalanceScalarFieldEnum = {
+  id: 'id',
+  available: 'available',
+  locked: 'locked',
+  userId: 'userId'
+};
+
+exports.Prisma.TransactionScalarFieldEnum = {
+  id: 'id',
+  event: 'event',
+  type: 'type',
+  noOfTokens: 'noOfTokens',
+  price: 'price',
+  filled: 'filled',
+  mode: 'mode',
+  userId: 'userId'
+};
+
+exports.Prisma.StockScalarFieldEnum = {
+  id: 'id',
+  event: 'event',
+  Available: 'Available',
+  locked: 'locked',
+  userId: 'userId'
+};
+
 exports.Prisma.SessionScalarFieldEnum = {
   id: 'id',
   expiresAt: 'expiresAt',
@@ -182,10 +208,21 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.YesNo = exports.$Enums.YesNo = {
+  YES: 'YES',
+  NO: 'NO'
+};
 
+exports.Mode = exports.$Enums.Mode = {
+  BUY: 'BUY',
+  SELL: 'SELL'
+};
 
 exports.Prisma.ModelName = {
   User: 'User',
+  Balance: 'Balance',
+  Transaction: 'Transaction',
+  Stock: 'Stock',
   Session: 'Session',
   Account: 'Account',
   Verification: 'Verification'

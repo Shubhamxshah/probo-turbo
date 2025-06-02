@@ -1,5 +1,8 @@
 import Redis from 'ioredis';
 import { Engine } from './trade/engine';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 async function main() {
   const client = new Redis(process.env.REDIS_URL || 'redis://localhost:6379');

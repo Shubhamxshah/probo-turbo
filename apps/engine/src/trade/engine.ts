@@ -99,6 +99,18 @@ export class Engine {
               simpleres,
             },
           });
+          
+          const available = this.balances.get(userId)!.available;
+          const locked = this.balances.get(userId)!.locked;
+          RedisManager.getInstance().pushToArchiver({
+            type: "balance", 
+            payload: {
+              userId, 
+              available, 
+              locked
+            }
+          })
+          
         } catch (error) {
           console.log('error adding money', error);
         }

@@ -60,6 +60,9 @@ importers:
       '@repo/common':
         specifier: workspace:*
         version: link:../../packages/common
+      '@repo/db':
+        specifier: workspace:*
+        version: link:../../packages/database
       cors:
         specifier: ^2.8.5
         version: 2.8.5
@@ -156,6 +159,9 @@ importers:
       '@repo/common':
         specifier: workspace:*
         version: link:../../packages/common
+      '@repo/db':
+        specifier: workspace:*
+        version: link:../../packages/database
       bufferutil:
         specifier: ^4.0.1
         version: 4.0.9
