@@ -194,13 +194,16 @@ export class Engine {
   //TODO: deleteEvent
 
   AddMoney(userId: string, amount: number) {
+    if (!this.balances.has(userId)) {
+      this.balances.set(userId, {
+        available: 0,
+        locked: 0,
+      });
+    }
     const balances = this.balances.get(userId);
     try {
-      if (balances) {
-        balances.available += amount; // objects are references, you can mutate it directly
-        return { message: `added balance ${amount} to ${userId}`, status: 200 };
-      }
-      return { message: `user not exist`, status: 400 };
+      balances!.available += amount; // objects are references, you can mutate it directly
+      return { message: `added balance ${amount} to ${userId}`, status: 200 };
     } catch (error) {
       console.log(error);
       return { message: `user not exist`, status: 400 };

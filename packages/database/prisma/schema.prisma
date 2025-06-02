@@ -21,9 +21,51 @@ model User {
   phoneNumber           String?
   phoneNumberVerified   Boolean?
 
+  stocks                Stock[]
+  transactions          Transaction[]
+  balance               Balance?
   @@unique([email])
   @@map("user")
 }
+
+model Balance {
+    id            String   @id @default(uuid())
+    available     Int      
+    locked        Int       
+    userId        String   @unique
+    user          User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  }
+
+model Transaction {
+    id          String    @id @default(uuid())
+    event       String 
+    type        YesNo
+    noOfTokens  Int 
+    price       String 
+    filled      Boolean
+    mode        Mode 
+    userId      String
+    user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  }
+
+enum Mode {
+  BUY 
+  SELL 
+}
+
+enum YesNo {
+  YES
+  NO 
+}
+
+model Stock {
+  id              String @id @default(uuid())
+  event           String @unique
+  Available       Int 
+  locked          Int
+  userId          String
+  user            User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  }
 
 model Session {
   id        String   @id
