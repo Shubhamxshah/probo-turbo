@@ -144,9 +144,6 @@ export class Engine {
               simpleres: simpleres.message,
             },
           });
-
-          const onlyAsksWithTotals = this.generateAsks(event);
-          RedisManager.getInstance().publishMessage(event, onlyAsksWithTotals!);
         } catch (e) {
           console.log('error selling stock', e);
         }
