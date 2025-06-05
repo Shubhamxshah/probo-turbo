@@ -1,12 +1,12 @@
-import { useNavigate } from "react-router-dom";
+import { useRouter } from "next/navigation";
 
 export const RoutingCompo = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   return (
     <>
       <div
-        onClick={() => navigate("/events")}
+        onClick={() => router.push("/dashboard")}
         className="font-semibold text-gray-500 cursor-pointer"
       >
         Home {">"} events details

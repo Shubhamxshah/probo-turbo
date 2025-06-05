@@ -1,3 +1,5 @@
+'use client'
+
 import { LuSettings } from "react-icons/lu";
 import { IoIosArrowDown } from "react-icons/io";
 import errorIcon from "../assets/error.avif";
