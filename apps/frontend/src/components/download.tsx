@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from "react";
 import android from "../assets/androidQR.png";
 import ios from "../assets/iosQR.png";
@@ -59,7 +61,7 @@ export const Download = ({ setIsDownload }: downloadType) => {
                   !androidBtn ? "border-[#35ADFC] bg-[#ECF7FE]" : ""
                 } text-base font-semibold p-3 flex gap-2 rounded-lg px-12`}
               >
-                <img width={20} height={20} src={iosIcon} alt="iosIcon" />
+                <Image width={20} height={20} src={iosIcon} alt="iosIcon" />
                 App Store
               </button>
             </div>
