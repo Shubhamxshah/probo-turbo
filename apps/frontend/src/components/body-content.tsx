@@ -1,3 +1,5 @@
+'use client'
+
 import { TopStories } from "./topStories";
 import download from "../assets/downloadapp.avif";
 import { symbols } from "../db/data";
@@ -11,7 +13,7 @@ export const BodyContent = () => {
   const [isDownload, setIsDownload] = useState(false)
   return (
     <>
-      <div className="p-4 relative px-10 flex">
+      <div className="p-4 relative px-10 flex max-w-7xl mx-auto">
 
         <div className="lg:w-[70%] w-[100%] ">
           <h1 className="text-xl font-semibold mb-3">Top Stories</h1>
@@ -23,6 +25,7 @@ export const BodyContent = () => {
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
               {symbols.map((symbol) => (
                 <TradeCard
+                  key={symbol.id}
                   symbol={symbol}
                   url={symbol.url}
                   yesPrice={symbol.yesPrice}
