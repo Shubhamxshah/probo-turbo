@@ -1,19 +1,15 @@
 import React from 'react';
-import { authClient } from '@/lib/auth-client';
-import { auth } from "@/lib/auth"
-import { headers } from "next/headers";
+import Navbar from '@/components/Navbar';
+import { Separator } from '@repo/ui/components/base/separator';
 
-const Dashboard = async () => {
+const Dashboard = () => {
   // const { data: session, error } = await authClient.getSession();
   // console.log("session is" , session, error);
   
-  const session = await auth.api.getSession({
-    headers: await headers()
-  })
 
-  console.log("server session", session?.user.id)
-  return <div>Dashboard
-    <pre>{JSON.stringify(session, null, 2)}</pre>
+  return <div>
+    <Navbar />
+    <Separator className='mt-2 max-w-7xl mx-auto'/>
   </div>;
 };
 
