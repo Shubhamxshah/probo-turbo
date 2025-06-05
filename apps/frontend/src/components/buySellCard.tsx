@@ -81,7 +81,7 @@ export const BuySellCard = () => {
               <span className="px-4 font-semibold">₹{price.toFixed(1)}</span>
               <button
                 value="+"
-                onClick={() => price < 10 && setPrice(prev => prev + 0.5)}
+                onClick={() => price < 9.5 && setPrice(prev => prev + 0.5)}
                 className={`w-10 flex items-center justify-center ${
                   price === 10 ? 'text-gray-300' : 'text-[#9EC2FC] hover:bg-gray-50'
                 } bg-gray-50`}

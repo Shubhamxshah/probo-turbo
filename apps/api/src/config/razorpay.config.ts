@@ -1,4 +1,7 @@
 import Razorpay from "razorpay";
+import dotenv from "dotenv";
+
+dotenv.config();
 
 //TODO: perhaps make this a singleton
 export const createRazorpayInstance = () => {

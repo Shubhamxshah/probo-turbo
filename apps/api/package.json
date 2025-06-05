@@ -11,6 +11,7 @@
     "@repo/common": "workspace:*",
     "bullmq": "^5.53.0",
     "cors": "^2.8.5",
+    "dotenv": "^16.5.0",
     "express": "^4.21.2",
     "ioredis": "^5.6.1",
     "razorpay": "^2.9.6",
