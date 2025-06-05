@@ -7,6 +7,8 @@ import { ProgressBar } from "./progressBar";
 import { ReadMoreText } from "../utils/readMore";
 import { BuySellCard } from "./buySellCard";
 import Image from "next/image";
+import Navbar from "./Navbar";
+import { Separator } from "@repo/ui/components/base/separator";
 
 const navigationBar = [
   {
@@ -116,6 +118,9 @@ export const EventsCompo = () => {
   };
 
   return (
+    <>
+    <Navbar />
+    <Separator className="max-w-7xl mx-auto mt-2" />
     <div className="flex flex-col md:flex-row px-4 md:px-8 lg:px-16 xl:px-24 pt-6 md:pt-10">
       <div className="w-full md:w-2/3 md:pr-6 lg:pr-12 xl:pr-24 space-y-6 md:space-y-10">
         <RoutingCompo />
@@ -263,5 +268,6 @@ export const EventsCompo = () => {
         <BuySellCard />
       </div>
     </div>
+    </>
   );
 };
