@@ -15,7 +15,7 @@ export class Engine {
   constructor() {
     let snapshot = null;
     try {
-      if (process.env.WITH_SNAPSHOT) {
+      if (process.env.WITH_SNAPSHOT === 'true') {
         snapshot = fs.readFileSync('./snapshot.json'); // returns a buffer
       }
     } catch (error) {
@@ -134,11 +134,11 @@ export class Engine {
           const { userId } = message.payload;
           const { available, locked, status } = this.CheckBalance(userId);
           RedisManager.getInstance().sendToApi(clientId, {
-            type: "check_balance",
+            type: 'check_balance',
             status,
             payload: {
               available,
-              locked
+              locked,
             },
           });
         } catch (error) {
@@ -255,6 +255,12 @@ export class Engine {
   MintTokens(userId: string, event: string, noOfTokens: number) {
     const totalAmount = noOfTokens * 10 * 100;
 
+    if (!this.balances.has(userId)) {
+      this.balances.set(userId, {
+        available: 5000,
+        locked: 0,
+      });
+    }
     const userBalance = this.balances.get(userId);
     if (!userBalance) {
       return { message: `user not exist`, status: 400 };

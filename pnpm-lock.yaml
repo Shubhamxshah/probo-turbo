@@ -149,6 +149,9 @@ importers:
       twilio:
         specifier: ^5.6.1
         version: 5.6.1
+      ws:
+        specifier: ^8.18.2
+        version: 8.18.2(bufferutil@4.0.9)(utf-8-validate@5.0.10)
     devDependencies:
       '@repo/eslint-config':
         specifier: workspace:*
@@ -168,6 +171,9 @@ importers:
       '@types/react-dom':
         specifier: '19'
         version: 19.0.3(@types/react@19.0.8)
+      '@types/ws':
+        specifier: ^8.18.1
+        version: 8.18.1
       eslint:
         specifier: ^9
         version: 9.21.0(jiti@2.4.2)

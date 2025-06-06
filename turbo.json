@@ -12,7 +12,8 @@
         "TWILIO_ACCOUNT_SID",
         "TWILIO_AUTH_TOKEN",
         "TWILIO_PHONE", 
-        "BACKEND_URL"
+        "BACKEND_URL", 
+        "WS_URL"
       ]
     },
     "lint": {
@@ -31,7 +32,8 @@
         "TWILIO_ACCOUNT_SID",
         "TWILIO_AUTH_TOKEN",
         "TWILIO_PHONE", 
-        "BACKEND_URL"
+        "BACKEND_URL", 
+        "WS_URL"
       ]
     },
     "start": {
@@ -44,7 +46,8 @@
         "TWILIO_ACCOUNT_SID",
         "TWILIO_AUTH_TOKEN",
         "TWILIO_PHONE",
-        "BACKEND_URL"
+        "BACKEND_URL", 
+        "WS_URL"
       ]
     },
     "db:generate": {

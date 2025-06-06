@@ -1,7 +1,7 @@
 {
   "orderBook": [
     [
-      "ethusd100",
+      "btc",
       {
         "YES": {
           "bids": {
@@ -62,13 +62,8 @@
               "orders": []
             },
             "750": {
-              "total": 3,
-              "orders": [
-                {
-                  "userId": "sbm1",
-                  "quantity": 3
-                }
-              ]
+              "total": 0,
+              "orders": []
             },
             "800": {
               "total": 0,
@@ -121,83 +116,37 @@
               "orders": []
             },
             "450": {
-              "total": 0,
-              "orders": []
-            },
-            "500": {
-              "total": 0,
-              "orders": []
-            },
-            "550": {
-              "total": 33,
+              "total": 350,
               "orders": [
                 {
                   "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 1
+                  "quantity": 100
                 },
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 250
+                }
+              ]
+            },
+            "500": {
+              "total": 100,
+              "orders": [
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 100
+                }
+              ]
+            },
+            "550": {
+              "total": 102,
+              "orders": [
                 {
                   "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
                   "quantity": 2
                 },
                 {
                   "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 2
-                },
-                {
-                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 2
-                },
-                {
-                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 2
-                },
-                {
-                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 2
-                },
-                {
-                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 2
-                },
-                {
-                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 2
-                },
-                {
-                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 2
-                },
-                {
-                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 2
-                },
-                {
-                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 2
-                },
-                {
-                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 2
-                },
-                {
-                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 2
-                },
-                {
-                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 2
-                },
-                {
-                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 2
-                },
-                {
-                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 2
-                },
-                {
-                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 2
+                  "quantity": 100
                 }
               ]
             },
@@ -214,16 +163,59 @@
               "orders": []
             },
             "750": {
-              "total": 0,
-              "orders": []
+              "total": 300,
+              "orders": [
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 100
+                },
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 200
+                }
+              ]
             },
             "800": {
-              "total": 0,
-              "orders": []
+              "total": 300,
+              "orders": [
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 100
+                },
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 200
+                }
+              ]
             },
             "850": {
-              "total": 0,
-              "orders": []
+              "total": 340,
+              "orders": [
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 100
+                },
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 10
+                },
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 10
+                },
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 10
+                },
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 10
+                },
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 200
+                }
+              ]
             },
             "900": {
               "total": 0,
@@ -340,27 +332,11 @@
               "orders": []
             },
             "350": {
-              "total": 10,
+              "total": 100,
               "orders": [
                 {
-                  "userId": "sbm1",
-                  "quantity": 2
-                },
-                {
-                  "userId": "sbm1",
-                  "quantity": 2
-                },
-                {
-                  "userId": "sbm1",
-                  "quantity": 2
-                },
-                {
-                  "userId": "sbm1",
-                  "quantity": 2
-                },
-                {
-                  "userId": "sbm1",
-                  "quantity": 2
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 100
                 }
               ]
             },
@@ -389,24 +365,56 @@
               "orders": []
             },
             "700": {
-              "total": 0,
-              "orders": []
+              "total": 350,
+              "orders": [
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 100
+                },
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 250
+                }
+              ]
             },
             "750": {
               "total": 0,
               "orders": []
             },
             "800": {
-              "total": 0,
-              "orders": []
+              "total": 600,
+              "orders": [
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 100
+                },
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 500
+                }
+              ]
             },
             "850": {
-              "total": 0,
-              "orders": []
+              "total": 100,
+              "orders": [
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 100
+                }
+              ]
             },
             "900": {
-              "total": 0,
-              "orders": []
+              "total": 600,
+              "orders": [
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 100
+                },
+                {
+                  "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
+                  "quantity": 500
+                }
+              ]
             },
             "950": {
               "total": 0,
@@ -419,76 +427,16 @@
   ],
   "stockBalances": [
     [
-      "sbm1",
-      {
-        "ethusd100": {
-          "YES": {
-            "available": 0,
-            "locked": 0
-          },
-          "NO": {
-            "available": 23,
-            "locked": 10
-          }
-        }
-      }
-    ],
-    [
-      "sbm2",
-      {
-        "ethusd100": {
-          "YES": {
-            "available": 0,
-            "locked": 0
-          },
-          "NO": {
-            "available": 0,
-            "locked": 0
-          }
-        }
-      }
-    ],
-    [
-      "3qBxWjRgR2Y2g2kiB3ck6cxHavxajPN5",
-      {
-        "ethusd100": {
-          "YES": {
-            "available": 50,
-            "locked": 0
-          },
-          "NO": {
-            "available": 50,
-            "locked": 0
-          }
-        }
-      }
-    ],
-    [
       "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
       {
-        "ethusd100": {
+        "btc": {
           "YES": {
-            "available": 8,
-            "locked": 33
+            "available": 8348,
+            "locked": 1492
           },
           "NO": {
-            "available": 12310,
-            "locked": 0
-          }
-        }
-      }
-    ],
-    [
-      "mLjNq8O0c0YFhjJ1HQ9960PusfiCxFai",
-      {
-        "ethusd100": {
-          "YES": {
-            "available": 12302,
-            "locked": 0
-          },
-          "NO": {
-            "available": 0,
-            "locked": 0
+            "available": 8090,
+            "locked": 1750
           }
         }
       }
@@ -496,37 +444,9 @@
   ],
   "balances": [
     [
-      "sbm1",
-      {
-        "available": 179700,
-        "locked": 2250
-      }
-    ],
-    [
-      "sbm2",
-      {
-        "available": 206500,
-        "locked": 0
-      }
-    ],
-    [
-      "3qBxWjRgR2Y2g2kiB3ck6cxHavxajPN5",
-      {
-        "available": 50000,
-        "locked": 0
-      }
-    ],
-    [
       "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
       {
-        "available": 1104537950,
-        "locked": 0
-      }
-    ],
-    [
-      "mLjNq8O0c0YFhjJ1HQ9960PusfiCxFai",
-      {
-        "available": 1993444200,
+        "available": 990165000,
         "locked": 0
       }
     ],

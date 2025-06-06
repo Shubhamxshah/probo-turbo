@@ -10,8 +10,9 @@ async function main() {
   while (true) {
     const result = await client.brpop('engineMessages', 0); // Note: 0 is a number, not string
     if (result) {
+      console.log(result);
       const [_key, value] = result; // result is a tuple: [key, value]
-      const parsed = JSON.parse(value);
+      const parsed = JSON.parse(value.toString());
       console.log(parsed)
       Engine.getInstance().process(parsed);
     } 
