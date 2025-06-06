@@ -2,18 +2,37 @@
 
 import { LuSettings } from "react-icons/lu";
 import { IoIosArrowDown } from "react-icons/io";
-import errorIcon from "../assets/error.avif";
 import { Switch } from "../utils/switch";
-import { useState } from "react";
-import Image from "next/image";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { authClient } from "@/lib/auth-client";
 
 
 export const BuySellCard = () => {
+  const [userId, setUserId] = useState("");
   const [buyTab, setBuyTab] = useState("yes");
   const [price, setPrice] = useState(0.5);
   const [quantity, setQuantity] = useState(1);
   const [advancedOption, setAdvancedOption] = useState(false);
 
+  useEffect(() => {
+    async function fetchUser () {
+      const {data: session} = await authClient.getSession();
+      setUserId(session!.user.id);
+    } 
+
+    fetchUser();
+  }, [])
+  const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3001"
+  const placeOrder = () => {
+    axios.post(`${BACKEND_URL}/api/v1/trade/buy`, {
+      userId,
+      noOfTokens:quantity,
+      event: "btc",
+      type: buyTab,
+      price: String(price*100)
+    })
+  }
   return (
     <div className="border rounded-xl w-full bg-white shadow-sm">
       <div className="p-4 md:p-5 space-y-4">
@@ -185,27 +204,27 @@ export const BuySellCard = () => {
         </div>
 
         {/* Error State */}
-        <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-          <div className="flex items-center gap-3">
-            <Image
-              src={errorIcon}
-              alt="Insufficient balance"
-              className="w-6 h-6 object-contain"
-            />
-            <div>
-              <p className="font-semibold text-sm text-gray-900">Insufficient balance</p>
-              <button className="text-xs text-gray-600 hover:text-gray-900">Learn more</button>
-            </div>
-          </div>
-          <button className="px-4 py-2 text-sm font-semibold text-white bg-black rounded-lg hover:bg-gray-800">
-            Recharge
-          </button>
-        </div>
+        {/* <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg"> */}
+        {/*   <div className="flex items-center gap-3"> */}
+        {/*     <Image */}
+        {/*       src={errorIcon} */}
+        {/*       alt="Insufficient balance" */}
+        {/*       className="w-6 h-6 object-contain" */}
+        {/*     /> */}
+        {/*     <div> */}
+        {/*       <p className="font-semibold text-sm text-gray-900">Insufficient balance</p> */}
+        {/*       <button className="text-xs text-gray-600 hover:text-gray-900">Learn more</button> */}
+        {/*     </div> */}
+        {/*   </div> */}
+        {/*   <button className="px-4 py-2 text-sm font-semibold text-white bg-black rounded-lg hover:bg-gray-800"> */}
+        {/*     Recharge */}
+        {/*   </button> */}
+        {/* </div> */}
 
         {/* Place Order Button */}
         <button
-          disabled
-          className="w-full py-4 text-white bg-gray-200 rounded-lg font-semibold transition-colors duration-200"
+          className="w-full py-4 text-white bg-black/90 rounded-lg font-semibold transition-colors duration-200 cursor-pointer"
+          onClick={placeOrder}
         >
           Place order
         </button>
