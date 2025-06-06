@@ -21,7 +21,7 @@ import { authClient } from '@/lib/auth-client';
 const AddMoney = () => {
   const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3001';
 
-  const [money, setMoney] = useState('0');
+  const [money, setMoney] = useState('');
   const [userId, setUserId] = useState('');
   useEffect(() => {
     const fetchSession = async () => {
@@ -53,7 +53,7 @@ const AddMoney = () => {
       const options = {
         courseId: 1,
         amount: price,
-        userId
+        userId,
       };
 
       const res = await axios.post(`${BACKEND_URL}/api/v1/balance/createOrder`, options);
@@ -72,8 +72,8 @@ const AddMoney = () => {
             order_id: response.razorpay_order_id,
             payment_id: response.razorpay_payment_id,
             signature: response.razorpay_signature,
-            amount: price, 
-            userId
+            amount: price,
+            userId,
           };
 
           axios
@@ -112,7 +112,23 @@ const AddMoney = () => {
             <AlertDialogDescription className="text-black/80">
               Youre all set to add balance to your account!
             </AlertDialogDescription>
-            <Input value={money} onChange={(e) => setMoney(e.target.value)} />
+            <Input
+              value={money}
+              onChange={(e) => {
+                let val = e.target.value;
+
+                // Strip non-numeric characters
+                val = val.replace(/\D/g, '');
+
+                // Limit length to 5 digits
+                if (val.length > 5) {
+                  val = val.slice(0, 5);
+                }
+
+                setMoney(val);
+              }}
+              placeholder='500'
+            />
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>

@@ -6,7 +6,7 @@ export async function middleware(request: NextRequest) {
   console.log('Middleware running for:', pathname) // Debug log
   
   // Allow access to the root route ('/') without authentication
-  if (pathname === '/') {
+  if (pathname === '/' || pathname === '/auth') {
     return NextResponse.next()
   }
   
