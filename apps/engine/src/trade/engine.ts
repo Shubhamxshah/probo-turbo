@@ -129,6 +129,23 @@ export class Engine {
           console.log('error adding money', error);
         }
         break;
+      case 'check_balance':
+        try {
+          const { userId } = message.payload;
+          const { available, locked, status } = this.CheckBalance(userId);
+          RedisManager.getInstance().sendToApi(clientId, {
+            type: "check_balance",
+            status,
+            payload: {
+              available,
+              locked
+            },
+          });
+        } catch (error) {
+          console.log('error adding money', error);
+        }
+        break;
+
       case 'sell_tokens':
         try {
           const { userId, event, noOfTokens, type, price } = message.payload;
@@ -208,19 +225,30 @@ export class Engine {
   //TODO: deleteEvent
 
   AddMoney(userId: string, amount: number) {
-    if (!this.balances.has(userId)) {
-      this.balances.set(userId, {
-        available: 0,
-        locked: 0,
-      });
-    }
     const balances = this.balances.get(userId);
+    amount *= 100;
     try {
       balances!.available += amount; // objects are references, you can mutate it directly
       return { message: `added balance ${amount} to ${userId}`, status: 200 };
     } catch (error) {
       console.log(error);
       return { message: `user not exist`, status: 400 };
+    }
+  }
+
+  CheckBalance(userId: string) {
+    try {
+      if (!this.balances.has(userId)) {
+        this.balances.set(userId, {
+          available: 5000,
+          locked: 0,
+        });
+      }
+      const balances = this.balances.get(userId);
+      return { available: balances!.available, locked: balances!.locked, status: 200 };
+    } catch (error) {
+      console.log(error);
+      return { available: 0, locked: 0, status: 400 };
     }
   }
 
@@ -259,9 +287,9 @@ export class Engine {
       payload: {
         userId,
         event,
-        balanceAvailable: userBalance.available, 
-        yesStockAvailable: userStocks[event].YES.available, 
-        noStockAvailable: userStocks[event].NO.available
+        balanceAvailable: userBalance.available,
+        yesStockAvailable: userStocks[event].YES.available,
+        noStockAvailable: userStocks[event].NO.available,
       },
     });
 

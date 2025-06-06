@@ -19,7 +19,7 @@ balanceRouter.post('/check', async (req, res) => {
     },
   });
 
-  res.status(response.status).json({ message: response.payload.simpleres });
+  res.status(response.status).json({ available: response.payload.available });
 });
 
 balanceRouter.post('/addfree', async (req, res) => {
@@ -100,7 +100,7 @@ balanceRouter.post("/mint", async (req, res) => {
        },
      });
 
-     res.status(200).json(200).json({
+     res.status(200).json({
        success: true,
        message: response.payload.simpleres
      });

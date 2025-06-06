@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Button } from "@repo/ui/components/base/button";
+import { Button } from '@repo/ui/components/base/button';
 import { IndianRupeeIcon } from 'lucide-react';
 import axios from 'axios';
 import {
@@ -16,12 +16,22 @@ import {
   AlertDialogTrigger,
 } from '@repo/ui/components/base/alert-dialog';
 import { Input } from '@repo/ui/components/base/input';
+import { authClient } from '@/lib/auth-client';
 
 const AddMoney = () => {
   const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3001';
 
-  const [money, setMoney] = useState("0");
-
+  const [money, setMoney] = useState('0');
+  const [userId, setUserId] = useState('');
+  useEffect(() => {
+    const fetchSession = async () => {
+      const { data: session } = await authClient.getSession();
+      if (session) {
+        setUserId(session.user.id);
+      }
+    };
+    fetchSession();
+  }, []);
   const loadScript = (src: string) => {
     return new Promise((resolve) => {
       const script = document.createElement('script');
@@ -37,13 +47,13 @@ const AddMoney = () => {
   };
 
   const onPayment = async (amount: string) => {
-
     const price = Number(amount);
     // create order
     try {
       const options = {
         courseId: 1,
         amount: price,
+        userId
       };
 
       const res = await axios.post(`${BACKEND_URL}/api/v1/balance/createOrder`, options);
@@ -62,17 +72,15 @@ const AddMoney = () => {
             order_id: response.razorpay_order_id,
             payment_id: response.razorpay_payment_id,
             signature: response.razorpay_signature,
+            amount: price, 
+            userId
           };
 
           axios
             .post(`${BACKEND_URL}/api/v1/balance/verifyPayment`, options2)
             .then((res) => {
               console.log(res.data);
-              if (res.data.success) {
-                alert('Payment successful');
-              } else {
-                alert('payment rejected');
-              }
+              window.location.reload();
             })
             .catch((err) => {
               console.log(err);
@@ -101,8 +109,10 @@ const AddMoney = () => {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>Enter Amount</AlertDialogTitle>
-            <AlertDialogDescription className='text-black/80'>Youre all set to add balance to your account!</AlertDialogDescription>
-            <Input value={money} onChange={(e) => setMoney(e.target.value)} /> 
+            <AlertDialogDescription className="text-black/80">
+              Youre all set to add balance to your account!
+            </AlertDialogDescription>
+            <Input value={money} onChange={(e) => setMoney(e.target.value)} />
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
