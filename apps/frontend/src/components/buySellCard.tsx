@@ -24,14 +24,16 @@ export const BuySellCard = () => {
     fetchUser();
   }, [])
   const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3001"
-  const placeOrder = () => {
-    axios.post(`${BACKEND_URL}/api/v1/trade/buy`, {
+  const placeOrder = async () => {
+    await axios.post(`${BACKEND_URL}/api/v1/trade/buy`, {
       userId,
       noOfTokens:quantity,
       event: "btc",
       type: buyTab,
       price: String(price*100)
-    })
+    });
+
+    window.location.reload();
   }
   return (
     <div className="border rounded-xl w-full bg-white shadow-sm">

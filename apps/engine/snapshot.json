@@ -420,11 +420,11 @@
               ]
             },
             "750": {
-              "total": 492,
+              "total": 489,
               "orders": [
                 {
                   "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
-                  "quantity": 100
+                  "quantity": 97
                 },
                 {
                   "userId": "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
@@ -2996,11 +2996,26 @@
         "btc": {
           "YES": {
             "available": 8668,
-            "locked": 2452
+            "locked": 2449
           },
           "NO": {
             "available": 8410,
             "locked": 2710
+          }
+        }
+      }
+    ],
+    [
+      "2EFJt40D5VvhCQ3G0FzCteLp9Cpdsiij",
+      {
+        "btc": {
+          "YES": {
+            "available": 3,
+            "locked": 0
+          },
+          "NO": {
+            "available": 0,
+            "locked": 0
           }
         }
       }
@@ -3010,14 +3025,14 @@
     [
       "LDzVTLGAX2Who2OJhUsV36G7XLnnnzU9",
       {
-        "available": 988885000,
+        "available": 988887250,
         "locked": 0
       }
     ],
     [
       "2EFJt40D5VvhCQ3G0FzCteLp9Cpdsiij",
       {
-        "available": 5000,
+        "available": 2750,
         "locked": 0
       }
     ]
