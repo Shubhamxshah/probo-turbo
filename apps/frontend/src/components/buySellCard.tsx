@@ -10,7 +10,7 @@ import { authClient } from "@/lib/auth-client";
 
 export const BuySellCard = () => {
   const [userId, setUserId] = useState("");
-  const [buyTab, setBuyTab] = useState("yes");
+  const [buyTab, setBuyTab] = useState("YES");
   const [price, setPrice] = useState(0.5);
   const [quantity, setQuantity] = useState(1);
   const [advancedOption, setAdvancedOption] = useState(false);
@@ -47,9 +47,9 @@ export const BuySellCard = () => {
             className="w-full rounded-lg border-2 flex h-12 overflow-hidden"
           >
             <button
-              value="yes"
+              value="YES"
               className={`w-1/2 transition-all duration-200 font-semibold text-sm ${
-                buyTab === "yes"
+                buyTab === "YES"
                   ? "bg-[#197BFF] text-white"
                   : "bg-white text-gray-700 hover:bg-gray-50"
               }`}
@@ -57,9 +57,9 @@ export const BuySellCard = () => {
               YES ₹9.5
             </button>
             <button
-              value="no"
+              value="NO"
               className={`w-1/2 transition-all duration-200 font-semibold text-sm ${
-                buyTab === "no"
+                buyTab === "NO"
                   ? "bg-[#E6675A] text-white"
                   : "bg-white text-gray-700 hover:bg-gray-50"
               }`}
