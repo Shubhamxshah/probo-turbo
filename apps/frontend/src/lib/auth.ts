@@ -1,10 +1,9 @@
 import { betterAuth } from 'better-auth';
 import { prismaAdapter } from 'better-auth/adapters/prisma';
-import { PrismaClient } from '@repo/db';
+import { prisma } from '@repo/db';
 import { phoneNumber } from 'better-auth/plugins';
 import twilio from 'twilio';
 
-const prisma = new PrismaClient();
 export const auth = betterAuth({
   database: prismaAdapter(prisma, {
     provider: 'postgresql',

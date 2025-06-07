@@ -7,6 +7,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { authClient } from "@/lib/auth-client";
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001"
 
 export const BuySellCard = () => {
   const [userId, setUserId] = useState("");
@@ -23,7 +24,6 @@ export const BuySellCard = () => {
 
     fetchUser();
   }, [])
-  const BACKEND_URL = process.env.BACKEND_URL || "http://localhost:3001"
   const placeOrder = async () => {
     await axios.post(`${BACKEND_URL}/api/v1/trade/buy`, {
       userId,

@@ -18,8 +18,8 @@ import {
 import { Input } from '@repo/ui/components/base/input';
 import { authClient } from '@/lib/auth-client';
 
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001';
 const AddMoney = () => {
-  const BACKEND_URL = process.env.BACKEND_URL || 'http://localhost:3001';
 
   const [money, setMoney] = useState('');
   const [userId, setUserId] = useState('');
