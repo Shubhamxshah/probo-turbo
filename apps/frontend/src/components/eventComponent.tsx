@@ -10,6 +10,7 @@ import Image from 'next/image';
 import Navbar from './Navbar';
 import { Separator } from '@repo/ui/components/base/separator';
 
+const WS_URL = process.env.NEXT_PUBLIC_WS_URL || 'ws://localhost:8080';
 const navigationBar = [
   {
     id: 1,
@@ -121,7 +122,6 @@ export const EventsCompo = () => {
   }
 
   useEffect(() => {
-    const WS_URL = process.env.WS_URL || 'ws://localhost:8080';
     const ws = new WebSocket(WS_URL);
 
     const options = {
