@@ -88,6 +88,20 @@ export class Engine {
           console.log('error creating event in engine', e);
         }
         break;
+      case 'reset':
+        try {
+          const { message: simpleres, status } = this.resetEvent();
+          RedisManager.getInstance().sendToApi(clientId, {
+            type: 'simpleres',
+            status,
+            payload: {
+              simpleres,
+            },
+          });
+        } catch (e) {
+          console.log('error creating event in engine', e);
+        }
+        break;
       case 'add_money':
         try {
           const { userId, amount } = message.payload;
@@ -222,7 +236,34 @@ export class Engine {
     }
   }
 
-  //TODO: deleteEvent
+  //TODO: createEvent
+  resetEvent() {
+    try {
+      this.orderBook.set('btc', eventInitialize);
+      this.balances.set('e0XMZgd8t5zR3B6t6os1euTMrXoMeRk3', {
+        available: 50000000,
+        locked: 0,
+      });
+
+      let userStocks = this.stockBalances.get("e0XMZgd8t5zR3B6t6os1euTMrXoMeRk3");
+      if (!userStocks) {
+        userStocks = {};
+        this.stockBalances.set("e0XMZgd8t5zR3B6t6os1euTMrXoMeRk3", userStocks);
+      }
+
+      if (!userStocks["btc"]) {
+        userStocks["btc"] = {
+          YES: { available: 0, locked: 0 },
+          NO: { available: 0, locked: 0 },
+        };
+      }
+
+      return { message: `btc orderbook reset`, status: 200 };
+    } catch (e) {
+      console.log(e);
+      return { message: `event reset of btc failed`, status: 400 };
+    }
+  }
 
   AddMoney(userId: string, amount: number) {
     const balances = this.balances.get(userId);

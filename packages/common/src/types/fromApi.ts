@@ -46,6 +46,8 @@ export type MessageFromApi = {
     type: YesNo, 
     price: AllowedPrice
   }
+} | {
+  type: "reset"
 }
 
 export type YesNo = "YES" | "NO"

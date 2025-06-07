@@ -1,6 +1,9 @@
 import Redis from 'ioredis';
 import { WebSocket, WebSocketServer } from 'ws';
 import { v4 as uuid } from 'uuid';
+import dotenv from "dotenv"
+
+dotenv.config();
 
 const wss = new WebSocketServer({ port: 8080 });
 
