@@ -1,38 +1,45 @@
-'use client'
+'use client';
 
-import { LuSettings } from "react-icons/lu";
-import { IoIosArrowDown } from "react-icons/io";
-import { Switch } from "../utils/switch";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { authClient } from "@/lib/auth-client";
+import { LuSettings } from 'react-icons/lu';
+import { IoIosArrowDown } from 'react-icons/io';
+import { Switch } from '../utils/switch';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+import { authClient } from '@/lib/auth-client';
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:3001"
+const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3001';
 
 export const BuySellCard = () => {
-  const [userId, setUserId] = useState("");
-  const [buyTab, setBuyTab] = useState("YES");
+  const [userId, setUserId] = useState('');
+  const [buyTab, setBuyTab] = useState('YES');
   const [price, setPrice] = useState(0.5);
   const [quantity, setQuantity] = useState(1);
   const [advancedOption, setAdvancedOption] = useState(false);
+  const [isPlacing, setIsPlacing] = useState(false);
 
   useEffect(() => {
-    async function fetchUser () {
-      const {data: session} = await authClient.getSession();
+    async function fetchUser() {
+      const { data: session } = await authClient.getSession();
       setUserId(session!.user.id);
-    } 
+    }
 
     fetchUser();
-  }, [])
+  }, []);
+
   const placeOrder = async () => {
-    await axios.post(`${BACKEND_URL}/api/v1/trade/buy`, {
-      userId,
-      noOfTokens:quantity,
-      event: "btc",
-      type: buyTab,
-      price: String(price*100)
-    });
-  }
+    setIsPlacing(true);
+    try {
+      await axios.post(`${BACKEND_URL}/api/v1/trade/buy`, {
+        userId,
+        noOfTokens: quantity,
+        event: 'btc',
+        type: buyTab,
+        price: String(price * 100),
+      });
+    } finally {
+      setIsPlacing(false);
+    }
+  };
   return (
     <div className="border rounded-xl w-full bg-white shadow-sm">
       <div className="p-4 md:p-5 space-y-4">
@@ -40,8 +47,8 @@ export const BuySellCard = () => {
         <div className="relative w-full">
           <div
             onClick={(e: any) => {
-              if (e.target.nodeName === "BUTTON") {
-                setBuyTab(e.target.getAttribute("value"));
+              if (e.target.nodeName === 'BUTTON') {
+                setBuyTab(e.target.getAttribute('value'));
               }
             }}
             className="w-full rounded-lg border-2 flex h-12 overflow-hidden"
@@ -49,9 +56,9 @@ export const BuySellCard = () => {
             <button
               value="YES"
               className={`w-1/2 transition-all duration-200 font-semibold text-sm ${
-                buyTab === "YES"
-                  ? "bg-[#197BFF] text-white"
-                  : "bg-white text-gray-700 hover:bg-gray-50"
+                buyTab === 'YES'
+                  ? 'bg-[#197BFF] text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-50'
               }`}
             >
               YES ₹9.5
@@ -59,9 +66,9 @@ export const BuySellCard = () => {
             <button
               value="NO"
               className={`w-1/2 transition-all duration-200 font-semibold text-sm ${
-                buyTab === "NO"
-                  ? "bg-[#E6675A] text-white"
-                  : "bg-white text-gray-700 hover:bg-gray-50"
+                buyTab === 'NO'
+                  ? 'bg-[#E6675A] text-white'
+                  : 'bg-white text-gray-700 hover:bg-gray-50'
               }`}
             >
               NO ₹0.5
@@ -80,7 +87,7 @@ export const BuySellCard = () => {
         <div className="relative bg-white border rounded-xl p-5 shadow-sm">
           {/* Triangle Pointer */}
           <div className="absolute -top-2.5 left-10 w-5 h-5 bg-white border-l border-t border-gray-200 rotate-45"></div>
-          
+
           {/* Price Controls */}
           <div className="flex items-center justify-between mb-8">
             <div>
@@ -90,7 +97,7 @@ export const BuySellCard = () => {
             <div className="flex items-center h-10 border rounded-lg overflow-hidden">
               <button
                 value="-"
-                onClick={() => price > 0.5 && setPrice(prev => prev - 0.5)}
+                onClick={() => price > 0.5 && setPrice((prev) => prev - 0.5)}
                 className={`w-10 flex items-center justify-center ${
                   price === 0.5 ? 'text-gray-300' : 'text-[#9EC2FC] hover:bg-gray-50'
                 } bg-gray-50`}
@@ -100,7 +107,7 @@ export const BuySellCard = () => {
               <span className="px-4 font-semibold">₹{price.toFixed(1)}</span>
               <button
                 value="+"
-                onClick={() => price < 9.5 && setPrice(prev => prev + 0.5)}
+                onClick={() => price < 9.5 && setPrice((prev) => prev + 0.5)}
                 className={`w-10 flex items-center justify-center ${
                   price === 10 ? 'text-gray-300' : 'text-[#9EC2FC] hover:bg-gray-50'
                 } bg-gray-50`}
@@ -119,7 +126,7 @@ export const BuySellCard = () => {
             <div className="flex items-center h-10 border rounded-lg overflow-hidden">
               <button
                 value="-"
-                onClick={() => quantity > 1 && setQuantity(prev => prev - 1)}
+                onClick={() => quantity > 1 && setQuantity((prev) => prev - 1)}
                 className={`w-10 flex items-center justify-center ${
                   quantity === 1 ? 'text-gray-300' : 'text-[#9EC2FC] hover:bg-gray-50'
                 } bg-gray-50`}
@@ -129,7 +136,7 @@ export const BuySellCard = () => {
               <span className="px-4 font-semibold">{quantity}</span>
               <button
                 value="+"
-                onClick={() => quantity < 5 && setQuantity(prev => prev + 1)}
+                onClick={() => quantity < 5 && setQuantity((prev) => prev + 1)}
                 className={`w-10 flex items-center justify-center ${
                   quantity === 5 ? 'text-gray-300' : 'text-[#9EC2FC] hover:bg-gray-50'
                 } bg-gray-50`}
@@ -142,7 +149,9 @@ export const BuySellCard = () => {
           {/* Price Summary */}
           <div className="flex justify-between px-4">
             <div className="text-center">
-              <p className="text-lg font-semibold text-gray-900">₹{(price * quantity).toFixed(1)}</p>
+              <p className="text-lg font-semibold text-gray-900">
+                ₹{(price * quantity).toFixed(1)}
+              </p>
               <p className="text-sm text-gray-500">You put</p>
             </div>
             <div className="text-center">
@@ -198,7 +207,7 @@ export const BuySellCard = () => {
             Advanced Options
             <IoIosArrowDown
               size={18}
-              className={`transition-transform duration-200 ${advancedOption ? "rotate-180" : ""}`}
+              className={`transition-transform duration-200 ${advancedOption ? 'rotate-180' : ''}`}
             />
           </button>
         </div>
@@ -222,13 +231,42 @@ export const BuySellCard = () => {
         {/* </div> */}
 
         {/* Place Order Button */}
-        <button
-          className="w-full py-4 text-white bg-black/90 rounded-lg font-semibold transition-colors duration-200 cursor-pointer"
-          onClick={placeOrder}
-        >
-          Place order
-        </button>
       </div>
+      <button
+        className={`w-full py-4 rounded-lg font-semibold transition-all duration-200 cursor-pointer flex justify-center items-center ${
+          isPlacing ? 'bg-gray-700 cursor-not-allowed' : 'bg-black/90 text-white hover:bg-black'
+        }`}
+        onClick={placeOrder}
+        disabled={isPlacing}
+      >
+        {isPlacing ? (
+          <>
+            <svg
+              className="animate-spin h-5 w-5 mr-2 text-white"
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <circle
+                className="opacity-25"
+                cx="12"
+                cy="12"
+                r="10"
+                stroke="currentColor"
+                strokeWidth="4"
+              />
+              <path
+                className="opacity-75"
+                fill="currentColor"
+                d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"
+              />
+            </svg>
+            Placing...
+          </>
+        ) : (
+          'Place Order'
+        )}
+      </button>
     </div>
   );
 };
