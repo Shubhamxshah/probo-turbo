@@ -15,7 +15,7 @@ export const BuySellCard = () => {
   const [price, setPrice] = useState(0.5);
   const [quantity, setQuantity] = useState(1);
   const [advancedOption, setAdvancedOption] = useState(false);
-  const [isPlacing, setIsPlacing] = useState(false);
+  const [status, setStatus] = useState("idle");
 
   useEffect(() => {
     async function fetchUser() {
@@ -27,7 +27,8 @@ export const BuySellCard = () => {
   }, []);
 
   const placeOrder = async () => {
-    setIsPlacing(true);
+    if (status !== "idle") return;
+    setStatus("loading");
     try {
       await axios.post(`${BACKEND_URL}/api/v1/trade/buy`, {
         userId,
@@ -36,9 +37,10 @@ export const BuySellCard = () => {
         type: buyTab,
         price: String(price * 100),
       });
+      setStatus("success")
     } finally {
       setTimeout(() => {
-        setIsPlacing(false);
+        setStatus("idle");
       }, 500)
     }
   };
@@ -234,41 +236,60 @@ export const BuySellCard = () => {
 
         {/* Place Order Button */}
       </div>
-      <button
-        className={`w-full py-4 mt-4 rounded-lg font-semibold transition-all duration-200 cursor-pointer flex justify-center items-center ${
-          isPlacing ? 'bg-gray-700 cursor-not-allowed' : 'bg-black/90 text-white hover:bg-black'
+    <button
+      className={`w-full py-4 rounded-lg font-semibold transition-all duration-200 flex items-center justify-center gap-2
+        ${
+          status === "loading"
+            ? "bg-black/90 text-white cursor-not-allowed"
+            : status === "success"
+            ? "bg-green-600 text-white"
+            : "bg-black/90 text-white hover:bg-black"
         }`}
-        onClick={placeOrder}
-        disabled={isPlacing}
-      >
-        {isPlacing ? (
-          <>
-            <svg
-              className="animate-spin h-5 w-5 mr-2 text-white"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-            >
-              <circle
-                className="opacity-25"
-                cx="12"
-                cy="12"
-                r="10"
-                stroke="currentColor"
-                strokeWidth="4"
-              />
-              <path
-                className="opacity-75"
-                fill="currentColor"
-                d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"
-              />
-            </svg>
-            Placing...
-          </>
-        ) : (
-          'Place Order'
-        )}
-      </button>
-    </div>
+      onClick={placeOrder}
+      disabled={status === "loading"}
+    >
+      {status === "loading" && (
+        <>
+          <svg
+            className="animate-spin h-5 w-5 text-white"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            />
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8v4l3-3-3-3v4a8 8 0 100 16v-4l-3 3 3 3v-4a8 8 0 01-8-8z"
+            />
+          </svg>
+          Placing...
+        </>
+      )}
+
+      {status === "success" && (
+        <>
+          <svg
+            className="h-5 w-5 text-white"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="3"
+            viewBox="0 0 24 24"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+          </svg>
+          Placed!
+        </>
+      )}
+
+      {status === "idle" && "Place Order"}
+    </button>    </div>
   );
 };
