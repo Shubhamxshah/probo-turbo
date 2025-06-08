@@ -240,6 +240,10 @@ export class Engine {
   resetEvent() {
     try {
       this.orderBook.set('btc', eventInitialize);
+      this.balances.set('e0XMZgd8t5zR3B6t6os1euTMrXoMeRk3', {
+        available: 50000000,
+        locked: 0,
+      });
 
       let userStocks = this.stockBalances.get("e0XMZgd8t5zR3B6t6os1euTMrXoMeRk3");
       if (!userStocks) {
