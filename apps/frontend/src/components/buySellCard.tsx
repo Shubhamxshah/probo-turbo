@@ -37,7 +37,9 @@ export const BuySellCard = () => {
         price: String(price * 100),
       });
     } finally {
-      setIsPlacing(false);
+      setTimeout(() => {
+        setIsPlacing(false);
+      }, 500)
     }
   };
   return (
@@ -233,7 +235,7 @@ export const BuySellCard = () => {
         {/* Place Order Button */}
       </div>
       <button
-        className={`w-full py-4 rounded-lg font-semibold transition-all duration-200 cursor-pointer flex justify-center items-center ${
+        className={`w-full py-4 mt-4 rounded-lg font-semibold transition-all duration-200 cursor-pointer flex justify-center items-center ${
           isPlacing ? 'bg-gray-700 cursor-not-allowed' : 'bg-black/90 text-white hover:bg-black'
         }`}
         onClick={placeOrder}
