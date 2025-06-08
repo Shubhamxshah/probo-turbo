@@ -1,7 +1,7 @@
 module.exports = {
   apps: [
     {
-      name: 'turborepo-start',
+      name: 'probo',
       script: 'npx',
       args: 'turbo start',
       cwd: './',
