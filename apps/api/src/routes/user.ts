@@ -16,12 +16,4 @@ userRouter.post("/:userId", async (req, res) => {
   res.status(response.status).json({message: response.payload.simpleres})
 });
 
-userRouter.post("/reset", async (_, res) => {
-
-  const response = await RedisManager.getInstance().EngineProcessor({
-    type: "reset", 
-  })
-
-  res.status(response.status).json({message: response.payload.simpleres})
-});
 
