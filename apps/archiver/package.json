@@ -4,8 +4,6 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "",
-    "start": "node ./dist/index.js",
-    "build": "tsc",
     "dev": "nodemon ./src/index.ts"
   },
   "dependencies": {

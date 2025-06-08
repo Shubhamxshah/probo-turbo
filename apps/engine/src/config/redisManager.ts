@@ -21,9 +21,9 @@ export class RedisManager {
       this.client.publish(clientId, JSON.stringify(message));
   }
 
-  public pushToArchiver(message: ArchiverMessage) {
-    this.client.lpush("archiver", JSON.stringify(message))
-  }
+  // public pushToArchiver(message: ArchiverMessage) {
+  //   this.client.lpush("archiver", JSON.stringify(message))
+  // }
 
   public publishMessage(channel: string, message: WsMessage) {
     this.client.publish(channel, JSON.stringify(message))

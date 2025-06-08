@@ -114,16 +114,16 @@ export class Engine {
             },
           });
 
-          const available = this.balances.get(userId)!.available;
-          const locked = this.balances.get(userId)!.locked;
-          RedisManager.getInstance().pushToArchiver({
-            type: 'balance',
-            payload: {
-              userId,
-              available,
-              locked,
-            },
-          });
+          // const available = this.balances.get(userId)!.available;
+          // const locked = this.balances.get(userId)!.locked;
+          // RedisManager.getInstance().pushToArchiver({
+          //   type: 'balance',
+          //   payload: {
+          //     userId,
+          //     available,
+          //     locked,
+          //   },
+          // });
         } catch (error) {
           console.log('error adding money', error);
         }
@@ -139,6 +139,8 @@ export class Engine {
               simpleres,
             },
           });
+          //TODO: send to archiver 
+
         } catch (error) {
           console.log('error adding money', error);
         }
@@ -329,16 +331,16 @@ export class Engine {
     userStocks[event].YES.available += noOfTokens;
     userStocks[event].NO.available += noOfTokens;
 
-    RedisManager.getInstance().pushToArchiver({
-      type: 'mint',
-      payload: {
-        userId,
-        event,
-        balanceAvailable: userBalance.available,
-        yesStockAvailable: userStocks[event].YES.available,
-        noStockAvailable: userStocks[event].NO.available,
-      },
-    });
+    // RedisManager.getInstance().pushToArchiver({
+    //   type: 'mint',
+    //   payload: {
+    //     userId,
+    //     event,
+    //     balanceAvailable: userBalance.available,
+    //     yesStockAvailable: userStocks[event].YES.available,
+    //     noStockAvailable: userStocks[event].NO.available,
+    //   },
+    // });
 
     return {
       message: `minted ${noOfTokens} YES and NO tokens for ${userId} in ${event}`,
