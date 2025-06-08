@@ -32,8 +32,6 @@ export const BuySellCard = () => {
       type: buyTab,
       price: String(price*100)
     });
-
-    window.location.reload();
   }
   return (
     <div className="border rounded-xl w-full bg-white shadow-sm">
