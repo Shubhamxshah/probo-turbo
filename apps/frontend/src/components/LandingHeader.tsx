@@ -1,3 +1,5 @@
+'use client'
+
 import Image from "next/image"
 import { Button } from "@repo/ui/components/base/button"
 import { Poppins } from 'next/font/google'
