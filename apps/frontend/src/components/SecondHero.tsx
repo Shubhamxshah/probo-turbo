@@ -5,9 +5,9 @@ import SelectTab from './selectTab'
 
 const SecondHero = () => {
   return (
-      <div className='hidden md:flex bg-black/90 h-3/5 pl-40  mt-2'>
+      <div className='hidden md:flex bg-black/90 h-3/5 pl-20  mt-2'>
         <SelectTab />
-        <div className='pr-96 pt-6 pb-6'>
+        <div className='pr-32 pt-6 pb-6'>
         <div className='pr-20'>
           <PhoneVideo />
         </div>
