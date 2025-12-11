@@ -62,7 +62,7 @@ const AddMoney = () => {
       console.log(data);
 
       const paymentObject = new (window as any).Razorpay({
-        key: 'rzp_test_mId6JJc4QCnPYo',
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID,
         order_id: data.id,
         ...data,
         handler: function (response: any) {
