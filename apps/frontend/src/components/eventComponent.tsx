@@ -1,8 +1,6 @@
 import { RoutingCompo } from '../utils/routingComp';
-import bitcoing from '../assets/bitcoin.avif';
 import { useState, useEffect } from 'react';
 import { PriceTable } from './pricingTable';
-import userProfile from '../assets/userprofile.avif';
 import { ProgressBar } from './progressBar';
 import { ReadMoreText } from '../utils/readMore';
 import { BuySellCard } from './buySellCard';
@@ -43,35 +41,35 @@ const orderBookTab = [
 const progressData = [
   {
     id: 1,
-    userIcon: userProfile,
+    userIcon: "/userprofile.avif",
     userName: ['Prober', 'Prober'],
     yesValue: 6.5,
     noValue: 3.5,
   },
   {
     id: 2,
-    userIcon: userProfile,
+    userIcon: "/userprofile.avif",
     userName: ['Prober', 'Prober'],
     yesValue: 4,
     noValue: 6,
   },
   {
     id: 3,
-    userIcon: userProfile,
+    userIcon: "/userprofile.avif",
     userName: ['Prober', 'Prober'],
     yesValue: 5,
     noValue: 5,
   },
   {
     id: 4,
-    userIcon: userProfile,
+    userIcon: "/userprofile.avif",
     userName: ['Prober', 'Prober'],
     yesValue: 2,
     noValue: 8,
   },
   {
     id: 5,
-    userIcon: userProfile,
+    userIcon: "/userprofile.avif",
     userName: ['Prober', 'Prober'],
     yesValue: 4,
     noValue: 6,
@@ -173,8 +171,10 @@ export const EventsCompo = () => {
           <div className="pt-6 md:pt-10 flex flex-col md:flex-row gap-4 md:gap-5 items-center md:items-start">
             <Image
               className="rounded-full object-contain w-16 h-16 md:w-24 md:h-24 xl:w-[100px] xl:h-[100px]"
-              src={bitcoing}
+              src="/bitcoin.avif"
               alt="bitcoin"
+              width={100}
+              height={100}
             />
             <h1 className="font-bold text-2xl md:text-3xl xl:text-4xl text-center md:text-left">
               Bitcoin to be priced at 67364.34 USDT or more at 03:55 AM?

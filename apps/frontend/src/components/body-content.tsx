@@ -1,10 +1,8 @@
 'use client'
 
 import { TopStories } from "./topStories";
-import download from "../assets/downloadapp.avif";
 import { symbols } from "../db/data";
 import { TradeCard } from "./tradCard";
-import tshirt from "../assets/Tshirt.avif";
 import { Download } from "./download";
 import { useState } from "react";
 import Image from "next/image";
@@ -52,7 +50,7 @@ export const BodyContent = () => {
               className="object-contain"
               width={100}
               height={100}
-              src={download}
+              src="/downloadapp.avif"
               alt="download"
             />
           </div>
@@ -62,7 +60,7 @@ export const BodyContent = () => {
               className="rounded-lg object-contain"
               width={80}
               height={60}
-              src={tshirt}
+              src="/Tshirt.avif"
               alt="tshirt"
             />
             <div className="ml-4">

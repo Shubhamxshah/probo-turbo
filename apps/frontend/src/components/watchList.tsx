@@ -1,5 +1,4 @@
 import { useState } from "react";
-import watchlist from "../assets/watchlist.svg";
 import { FaAngleUp } from "react-icons/fa6";
 import Image from "next/image";
 
@@ -21,7 +20,7 @@ function Watchlist() {
         onClick={toggleWatchlist}
       >
         <div className="flex items-center">
-          <Image className="w-8 h-8 mr-2" src={watchlist} alt="Watchlist" />
+          <Image className="w-8 h-8 mr-2" src="/watchlist.svg" alt="Watchlist" width={32} height={32} />
           <h3 className="font-semibold">Watchlist</h3>
         </div>
         <span className={`transform transition ${isOpen ? "rotate-180" : ""}`}>

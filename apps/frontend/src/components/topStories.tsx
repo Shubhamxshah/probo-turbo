@@ -1,4 +1,3 @@
-import topStoriesIcon from "../assets/topstories.avif";
 import { Button } from "../utils/buttons";
 import ProbabilityGraph from "./graph";
 import { ReadMoreText } from "../utils/readMore";
@@ -24,7 +23,7 @@ export const TopStories = () => {
               className="object-contain ml-4 -mt-10"
               width={60}
               height={60}
-              src={topStoriesIcon}
+              src="/topstories.avif"
               alt="icon"
             />
           </h1>

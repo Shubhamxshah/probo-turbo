@@ -1,15 +1,8 @@
 'use client'
 
 import { useEffect, useState } from "react";
-import headerImage from "../assets/lendingheader.avif";
 import { Download } from "./download";
 import { useRouter } from "next/navigation";
-import startqoutes from "../assets/Startquotes.avif";
-import endqoutes from "../assets/Endquotes.avif";
-import nazar from "../assets/nazar.avif";
-import khabar from "../assets/khabar.avif";
-import jigar from "../assets/jigar.avif";
-import sabar from "../assets/sabar.avif";
 import Image from "next/image";
 
 type TabType = 'samachar' | 'vichaar' | 'vyapaar';
@@ -58,7 +51,7 @@ export const LandingComp = () => {
               width={70}
               height={70}
               className="object-contain h-fit mr-4 w-12 lg:w-auto"
-              src={startqoutes}
+              src="/Startquotes.avif"
               alt="quote"
             />
             <span className="text-center md:text-left">News that creates trading</span>
@@ -69,7 +62,7 @@ export const LandingComp = () => {
               width={70}
               height={70}
               className="object-contain h-fit rotate-180 w-12 lg:w-auto mt-4 lg:mt-0"
-              src={endqoutes}
+              src="/Endquotes.avif"
               alt="quote"
             />
           </div>
@@ -78,14 +71,14 @@ export const LandingComp = () => {
         {/* Cards Section */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mt-20">
           {[
-            { name: "Nazar", img: nazar, text: "Keep an eye on the happenings around you. Be it Politics, Sports, Entertainment and more." },
-            { name: "Khabar", img: khabar, text: "Understand the news without the noise. Get to the crux of every matter and develop an opinion." },
-            { name: "Jigar", img: jigar, text: "Have the courage to stand by your opinions about upcoming world events by investing in them." },
-            { name: "Sabar", img: sabar, text: "Have the patience to negotiate market ups and downs, and take a decision as events unfold." }
+            { name: "Nazar", img: "/nazar.avif", text: "Keep an eye on the happenings around you. Be it Politics, Sports, Entertainment and more." },
+            { name: "Khabar", img: "/khabar.avif", text: "Understand the news without the noise. Get to the crux of every matter and develop an opinion." },
+            { name: "Jigar", img: "/jigar.avif", text: "Have the courage to stand by your opinions about upcoming world events by investing in them." },
+            { name: "Sabar", img: "/sabar.avif", text: "Have the patience to negotiate market ups and downs, and take a decision as events unfold." }
           ].map((item) => (
             <div key={item.name} className="relative flex flex-col items-center pb-24">
               <div className="relative">
-                <Image src={item.img} alt={item.name.toLowerCase()} className="w-full" />
+                <Image src={item.img} alt={item.name.toLowerCase()} width={200} height={200} className="w-full" />
                 <div className="absolute inset-0 bg-purple-200 rounded-full -z-10"></div>
               </div>
               <div className="absolute bottom-0 bg-white p-4 w-11/12 text-center shadow-lg">

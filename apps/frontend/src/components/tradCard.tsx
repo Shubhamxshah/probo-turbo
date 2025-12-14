@@ -1,5 +1,3 @@
-import trades from "../assets/trades.avif";
-import coma from "../assets/coma.avif";
 import { Button } from "../utils/buttons";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
@@ -37,7 +35,7 @@ export const TradeCard = ({
             className="mr-1"
             width={15}
             height={15}
-            src={trades}
+            src="/trades.avif"
             alt="trades"
           />
           {totalTrades} traders
@@ -57,7 +55,7 @@ export const TradeCard = ({
             className="object-contain"
             width={15}
             height={15}
-            src={coma}
+            src="/coma.avif"
             alt="coma"
           />
           {description}

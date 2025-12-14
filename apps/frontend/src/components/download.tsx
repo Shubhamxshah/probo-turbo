@@ -1,10 +1,6 @@
 'use client'
 
 import { useState } from "react";
-import android from "../assets/androidQR.png";
-import ios from "../assets/iosQR.png";
-import androidIcon from "../assets/androidicon.svg";
-import iosIcon from "../assets/iosicon.svg";
 import { IoCloseOutline } from "react-icons/io5";
 import Image from "next/image";
 
@@ -27,7 +23,7 @@ export const Download = ({ setIsDownload }: downloadType) => {
                 className="flex mt-5"
                 width={200}
                 height={200}
-                src={android}
+                src="/androidQR.png"
                 alt="android"
               />
             ) : (
@@ -35,7 +31,7 @@ export const Download = ({ setIsDownload }: downloadType) => {
                 className="flex mt-5"
                 width={200}
                 height={200}
-                src={ios}
+                src="/iosQR.png"
                 alt="ios"
               />
             )}
@@ -50,7 +46,7 @@ export const Download = ({ setIsDownload }: downloadType) => {
                 <Image
                   width={20}
                   height={20}
-                  src={androidIcon}
+                  src="/androidicon.svg"
                   alt="androidicon"
                 />
                 Android
@@ -61,7 +57,7 @@ export const Download = ({ setIsDownload }: downloadType) => {
                   !androidBtn ? "border-[#35ADFC] bg-[#ECF7FE]" : ""
                 } text-base font-semibold p-3 flex gap-2 rounded-lg px-12`}
               >
-                <Image width={20} height={20} src={iosIcon} alt="iosIcon" />
+                <Image width={20} height={20} src="/iosicon.svg" alt="iosIcon" />
                 App Store
               </button>
             </div>
