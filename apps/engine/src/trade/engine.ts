@@ -249,6 +249,9 @@ export class Engine {
       // Initialize btc orderbook
       this.orderBook.set('btc', eventInitialize);
 
+      // Save the reset state to snapshot immediately
+      this.saveSnapshot();
+
       console.log('✅ All data cleared - orderbook, balances, and stock balances reset');
       return { message: `All data reset successfully`, status: 200 };
     } catch (e) {
