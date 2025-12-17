@@ -300,7 +300,7 @@ export class Engine {
 
     if (!this.balances.has(userId)) {
       this.balances.set(userId, {
-        available: 5000,
+        available: 5000000,
         locked: 0,
       });
     }

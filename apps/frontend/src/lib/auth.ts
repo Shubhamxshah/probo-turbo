@@ -5,6 +5,7 @@ import { phoneNumber } from 'better-auth/plugins';
 import twilio from 'twilio';
 
 export const auth = betterAuth({
+  baseURL: process.env.BETTER_AUTH_URL || 'http://localhost:3000',
   database: prismaAdapter(prisma, {
     provider: 'postgresql',
   }),
