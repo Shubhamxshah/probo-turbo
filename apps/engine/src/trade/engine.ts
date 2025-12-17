@@ -241,29 +241,19 @@ export class Engine {
   //TODO: createEvent
   resetEvent() {
     try {
+      // Clear all data structures completely
+      this.orderBook.clear();
+      this.balances.clear();
+      this.stockBalances.clear();
+
+      // Initialize btc orderbook
       this.orderBook.set('btc', eventInitialize);
-      this.balances.set('e0XMZgd8t5zR3B6t6os1euTMrXoMeRk3', {
-        available: 80000000,
-        locked: 0,
-      });
 
-      let userStocks = this.stockBalances.get("e0XMZgd8t5zR3B6t6os1euTMrXoMeRk3");
-      if (!userStocks) {
-        userStocks = {};
-        this.stockBalances.set("e0XMZgd8t5zR3B6t6os1euTMrXoMeRk3", userStocks);
-      }
-
-      if (!userStocks["btc"]) {
-        userStocks["btc"] = {
-          YES: { available: 0, locked: 0 },
-          NO: { available: 0, locked: 0 },
-        };
-      }
-
-      return { message: `btc orderbook reset`, status: 200 };
+      console.log('✅ All data cleared - orderbook, balances, and stock balances reset');
+      return { message: `All data reset successfully`, status: 200 };
     } catch (e) {
       console.log(e);
-      return { message: `event reset of btc failed`, status: 400 };
+      return { message: `event reset failed`, status: 400 };
     }
   }
 
