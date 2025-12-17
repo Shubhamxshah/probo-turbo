@@ -23,8 +23,7 @@ balanceRouter.post('/check', async (req, res) => {
 });
 
 balanceRouter.post('/addfree', async (req, res) => {
-  let { userId, amount } = req.body;
-  amount *= 100;
+  const { userId, amount } = req.body;
 
   const response = await RedisManager.getInstance().EngineProcessor({
     type: 'add_money',
