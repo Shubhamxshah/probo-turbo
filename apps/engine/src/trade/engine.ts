@@ -259,6 +259,12 @@ export class Engine {
 
   AddMoney(userId: string, amount: number) {
     const balances = this.balances.get(userId);
+    if (!balances) {
+      this.balances.set(userId, {
+        available: 0,
+        locked: 0,
+      });
+    }
     amount *= 100;
     try {
       balances!.available += amount; // objects are references, you can mutate it directly
