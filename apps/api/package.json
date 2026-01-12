@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "main": "dist/index.js",
   "scripts": {
-    "start": "node ./dist/index.js",
-    "build": "tsc",
-    "dev": "nodemon ./src/index.ts"
+    "start": "node init && node ./dist/index.js",
+    "build": "node init && tsc",
+    "dev": "node init && nodemon ./src/index.ts"
   },
   "dependencies": {
     "@repo/common": "workspace:*",

@@ -4,7 +4,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "",
-    "dev": "nodemon ./src/index.ts"
+    "dev": "node init && nodemon ./src/index.ts"
   },
   "dependencies": {
     "@repo/common": "workspace:*",

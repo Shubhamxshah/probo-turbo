@@ -6,10 +6,10 @@
   "types": "./dist/index.d.ts",
   "exports": "./dist/index.js",
   "scripts": {
-    "dev": "tsup --watch",
-    "build": "tsup",
+    "dev": "node init && tsup --watch",
+    "build": "node init && tsup",
     "clean": "rimraf dist",
-    "start": "node dist/index.js "
+    "start": "node init && node dist/index.js "
   },
   "devDependencies": {
     "@repo/typescript-config": "workspace:*"
